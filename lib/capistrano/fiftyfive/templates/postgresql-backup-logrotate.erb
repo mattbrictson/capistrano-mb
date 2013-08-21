@@ -1,0 +1,11 @@
+<%= postgresql_backup_path %> {
+  daily
+  nomissingok
+  rotate 30
+  ifempty
+  create 600 <%= user %>
+  dateext
+  postrotate
+    /usr/bin/sudo -u <%= user %> PGPASSFILE=<%= postgresql_pgpass_path %> /usr/bin/pg_dump -Fc -Z9 -O -x <%= postgresql_dump_options %> -h <%= postgresql_host %> -U <%= postgresql_user %> -f <%= postgresql_backup_path %> <%= postgresql_database %>
+  endscript
+}

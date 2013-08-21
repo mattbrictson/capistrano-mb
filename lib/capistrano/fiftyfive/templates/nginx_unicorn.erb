@@ -1,0 +1,99 @@
+# Based on https://github.com/defunkt/unicorn/blob/master/examples/nginx.conf
+
+upstream unicorn_<%= application %> {
+  # fail_timeout=0 means we always retry an upstream even if it failed
+  # to return a good HTTP response (in case the Unicorn master nukes a
+  # single worker for timing out).
+  server unix:/tmp/unicorn.<%= application %>.sock fail_timeout=0;
+}
+
+<% [80, 443].each do |port| %>
+
+  <% nginx_redirect_hosts.each do |orig, desired| %>
+    server {
+      listen <%= port %>;
+      server_name <%= orig %>;
+      return 301 <%= nginx_force_https ? "https" : "$scheme" %>://<%= desired %>$request_uri;
+    }
+  <% end %>
+
+  server {
+    listen <%= port %> default deferred; # for Linux
+
+    <% if port == 80 && nginx_force_https %>
+      rewrite ^(.*) https://$http_host$1 permanent;
+    <% else %>
+
+      client_max_body_size 4G;
+      server_name _;
+
+      # ~2 seconds is often enough for most folks to parse HTML/CSS and
+      # retrieve needed images/icons/frames, connections are cheap in
+      # nginx so increasing this is generally safe...
+      keepalive_timeout 5;
+
+      # path for static files
+      root <%= current_path %>/public;
+
+      # Capistrano `deploy:web:disable` support
+      if (-f $document_root/system/maintenance.html) {
+        return 503;
+      }
+      error_page 503 @maintenance;
+      location @maintenance {
+        rewrite  ^(.*)$  /system/maintenance.html last;
+        break;
+      }
+
+      <% if port == 443 %>
+        ssl on;
+        ssl_ciphers RC4:HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers on;
+        ssl_certificate /etc/ssl/<%= application %>.crt;
+        ssl_certificate_key /etc/ssl/<%= application %>.key;
+
+        <% if nginx_force_https %>
+          add_header Strict-Transport-Security "max-age=631138519";
+        <% end %>
+      <% end %>
+
+      # Far-future expires and gzip for fingerprinted assets
+      location ^~ /<%= assets_prefix %>/ {
+        gzip_static on;
+        expires max;
+        add_header Cache-Control public;
+      }
+
+      include /etc/nginx/<%= application%>-locations/*;
+
+      # Prefer to serve static files directly from nginx to avoid unnecessary
+      # data copies from the application server.
+      try_files $uri/index.html $uri @unicorn;
+
+      location @unicorn {
+        # an HTTP header important enough to have its own Wikipedia entry:
+        #   http://en.wikipedia.org/wiki/X-Forwarded-For
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        # this helps Rack set the proper URL scheme for doing HTTPS redirects:
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # pass the Host: header from the client right along so redirects
+        # can be set properly within the Rack application
+        proxy_set_header Host $http_host;
+
+        # we don't want nginx trying to do something clever with
+        # redirects, we set the Host: header above already.
+        proxy_redirect off;
+
+        proxy_pass http://unicorn_<%= application %>;
+      }
+
+      # Rails error pages
+      error_page 500 502 503 504 /500.html;
+      location = /500.html {
+        root <%= current_path %>/public;
+      }
+    <% end %>
+  }
+<% end %>
