@@ -9,7 +9,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
     set_default(:cron_role, :cron)
     set_default(:crontab_template_path) do
-      raise ":crontab_template_path be set"
+      raise ":crontab_template_path must be set"
     end
 
     namespace :cron do
