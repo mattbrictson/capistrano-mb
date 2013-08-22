@@ -9,7 +9,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   namespace :fiftyfive do
 
-    set_default(:secrets_roles, [:app, :db, :worker])
+    set_default(:secrets_roles, [:app, :db, :delayed_job])
     set_default(:secret_keys) { %w(rails_secret_token postmark_api_key) }
 
     namespace :secrets do
