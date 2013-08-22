@@ -2,36 +2,56 @@ require "capistrano/fiftyfive"
 
 Capistrano::Fiftyfive.register_hooks(:ufw) do
   after "deploy:install", "fiftyfive:ufw:install"
-  after "deploy:setup",   "fiftyfive:ufw:setup"
+  after "deploy:setup",   "fiftyfive:ufw:allow_ssh"
+  after "deploy:setup",   "fiftyfive:ufw:allow_http"
+  after "deploy:setup",   "fiftyfive:ufw:allow_postgresql"
 end
 
 Capistrano::Configuration.instance(:must_exist).load do
 
   namespace :fiftyfive do
 
-    set_default(:ufw_roles, [:web])
+    set_default(:ufw_ssh_roles) { roles.keys }
+    set_default(:ufw_allow_postgresql_connections_from_hosts, [])
 
     namespace :ufw do
-      desc "Install the latest ufw package"
-      task :install, :roles => lambda { ufw_roles } do
-        install_package("ufw")
-      end
 
-      desc "Setup ufw firewall rules"
-      task :setup, :roles => lambda { ufw_roles } do
+      def default_deny_and(*commands)
         stop
         run "#{sudo} ufw default deny"
-        %w(ssh http https).each { |svc| run "#{sudo} ufw allow #{svc}" }
+        commands.each { |cmd| run "#{sudo} ufw #{cmd}" }
         start
       end
 
+      desc "Install the latest ufw package"
+      task :install do
+        install_package("ufw")
+      end
+
+      desc "Allow ssh"
+      task :allow_ssh, :roles => lambda { ufw_ssh_roles } do
+        default_deny_and("allow ssh")
+      end
+
+      desc "Allow http and https"
+      task :allow_http, :roles => :web do
+        default_deny_and("allow http", "allow https")
+      end
+
+      desc "Allow postgresql (5432)"
+      task :allow_postgresql, :roles => :db do
+        ufw_allow_postgresql_connections_from_hosts.each do |host|
+          default_deny_and("allow from #{host} to any port 5432")
+        end
+      end
+
       desc "Start ufw"
-      task :start, :roles => lambda { ufw_roles } do
+      task :start do
         run "yes | #{sudo} ufw enable"
       end
 
       desc "Stop ufw"
-      task :stop, :roles => lambda { ufw_roles } do
+      task :stop do
         run "#{sudo} ufw disable"
       end
     end
