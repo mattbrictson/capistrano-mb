@@ -15,7 +15,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :fiftyfive do
 
     set_default(:postgresql_host, "localhost")
-    set_default(:postgresql_client_roles, [:app, :delayed_job, :backup])
+    set_default(:postgresql_client_roles, [:app, :db, :delayed_job, :backup])
     set_default(:postgresql_backup_role, [:backup])
     set_default(:postgresql_user) { application.gsub('-', '_') }
     set_default(:postgresql_pgpass_path) { "#{shared_path}/config/pgpass" }
