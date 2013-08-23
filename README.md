@@ -97,7 +97,7 @@ recipes in your deploy.rb, including `:autorun => true`.
 2. SSH into that VPS as root and run `aptitude update && aptitude safe-upgrade`
 3. Create the admin group: `groupadd admin`
 4. Create a deployer user in that group: `adduser deployer --ingroup admin`
-6. Generate or install the appropriate SSL certificate and key files for your site in `/etc/ssl`.
+6. If you have an SSL key and certificate prepared, install them in `/etc/ssl`. Otherwise, you can run `cap fiftyfive:ssl:generate_self_signed_crt` to quickly create a temporary self-signed one.
 7. Now, from your Rails project on your local machine, fire off these commands. These will install various packages, compile Ruby, set up the database, and deploy your app.
 
         cap deploy:install
