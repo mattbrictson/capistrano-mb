@@ -28,8 +28,15 @@ if defined?(Capistrano::Configuration)
         end
       end
 
+      def aptitude_update(opts={})
+        if opts[:force] || ! fetch(:fiftyfive_utils_aptitude_update, false)
+          run "#{sudo} aptitude -q -q -y update"
+          set(:fiftyfive_utils_aptitude_update, true)
+        end
+      end
+
       def install_packages(*packages)
-        run "#{sudo} aptitude -q -q -y update"
+        aptitude_update
         run "#{sudo} aptitude -y install #{packages.join(' ')}"
       end
 
