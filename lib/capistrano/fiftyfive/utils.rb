@@ -37,7 +37,10 @@ if defined?(Capistrano::Configuration)
 
       def install_packages(*packages)
         aptitude_update
-        run "#{sudo} aptitude -y install #{packages.join(' ')}"
+        packages.each do |pkg|
+          run "dpkg -s #{pkg} 2>/dev/null |grep -q 'ok installed' || "\
+              "#{sudo} aptitude -y install #{pkg}"
+        end
       end
 
       def install_package(package)
