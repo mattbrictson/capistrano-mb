@@ -29,6 +29,11 @@ application's Gemfile:
       gem 'capistrano-fiftyfive', :github => '55minutes/capistrano-fiftyfive', :branch => :master
     end
 
+If you plan on using the `dotenv` recipe (recommended), make sure you also
+include the dotenv-rails gem:
+
+    gem 'dotenv-rails'
+
 And then execute:
 
     $ bundle
@@ -70,8 +75,8 @@ If you want full control over how tasks are incorporated into the deploy
 process, set `:autorun => false`. Then declare your own rules using the
 standard capistrano hooks. For example:
 
-    Capistrano::Fiftyfive.load(:only => :secrets, :autorun => false)
-    after "deploy:finalize_update", "fiftyfive:secrets:symlink"
+    Capistrano::Fiftyfive.load(:only => :postgresql, :autorun => false)
+    after "deploy:finalize_update", "fiftyfive:postgresql:symlink"
 
 
 ### A working example
