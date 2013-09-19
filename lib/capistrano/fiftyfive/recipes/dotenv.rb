@@ -15,7 +15,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       desc "Generate the .env configuration file."
       task :setup, :roles => lambda { dotenv_roles } do
         unless dotenv_keys.empty?
-          logger.log Logger::IMPORTANT,
+          logger.log Capistrano::Logger::IMPORTANT,
                      "Please specify config for the #{rails_env} environment."
         end
 
