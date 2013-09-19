@@ -16,11 +16,12 @@ Capistrano::Configuration.instance(:must_exist).load do
       task :setup, :roles => lambda { dotenv_roles } do
         unless dotenv_keys.empty?
           logger.log Capistrano::Logger::IMPORTANT,
-                     "Please specify config for the #{rails_env} environment."
+                     "Please specify config for the #{rails_env.to_s.upcase} "\
+                     "environment."
         end
 
         env_text = dotenv_keys.each_with_object("") do |k, text|
-          value = Capistrano::CLI.password_prompt("#{k}=")
+          value = Capistrano::CLI.password_prompt("#{k}= ")
           text << "#{k}=#{value}\n"
         end
 
