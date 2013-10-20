@@ -47,7 +47,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       task :check do
         begin
           run("rbenv versions | grep '#{ruby_version}'")
-        rescue
+        rescue Capistrano::CommandError
           logger.log(Capistrano::Logger::IMPORTANT, "Required Ruby version is not installed: #{ruby_version}")
           logger.log(Capistrano::Logger::IMPORTANT, "Run rbenv:upgrade to install it")
           exit(1)
