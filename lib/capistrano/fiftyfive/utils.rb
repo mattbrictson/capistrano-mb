@@ -6,6 +6,14 @@ if defined?(Capistrano::Configuration)
         set(name, *args, &block) unless exists?(name)
       end
 
+      def execute_tasks(*tasks)
+        tasks.each { |t| find_and_execute_task(t) }
+      end
+
+      def execute_task(task)
+        execute_tasks(task)
+      end
+
       def template(from, to, opts={})
         owner = opts.delete(:owner)
 
