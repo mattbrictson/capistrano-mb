@@ -31,7 +31,7 @@ Capistrano::Configuration.instance(:must_exist).load do
         run "#{sudo} rm -f /etc/nginx/sites-enabled/default"
         run "#{sudo} mkdir -p /etc/nginx/#{application}-locations"
 
-        restart
+        execute_task("fiftyfive:nginx:restart")
       end
 
       %w[start stop restart].each do |command|

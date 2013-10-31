@@ -17,10 +17,10 @@ Capistrano::Configuration.instance(:must_exist).load do
     namespace :ufw do
 
       def default_deny_and(*commands)
-        stop
+        execute_task("fiftyfive:ufw:stop")
         run "#{sudo} ufw default deny"
         commands.each { |cmd| run "#{sudo} ufw #{cmd}" }
-        start
+        execute_task("fiftyfive:ufw:start")
       end
 
       desc "Install the latest ufw package"
