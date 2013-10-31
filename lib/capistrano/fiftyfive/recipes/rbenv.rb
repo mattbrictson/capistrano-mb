@@ -20,10 +20,10 @@ Capistrano::Configuration.instance(:must_exist).load do
       task :install do
         install_packages("curl", "git-core")
 
-        install_rbenv
-        modify_bashrc
-        bootstrap_ubuntu_for_ruby_compile
-        compile_ruby
+        execute_task("fiftyfive:rbenv:install_rbenv")
+        execute_task("fiftyfive:rbenv:modify_bashrc")
+        execute_task("fiftyfive:rbenv:bootstrap_ubuntu_for_ruby_compile")
+        execute_task("fiftyfive:rbenv:compile_ruby")
       end
 
       desc "Set up standard variables for rbenv"
@@ -33,14 +33,14 @@ Capistrano::Configuration.instance(:must_exist).load do
 
       desc "Install the latest version of Ruby"
       task :upgrade do
-        update_rbenv
-        bootstrap_ubuntu_for_ruby_compile
-        compile_ruby
+        execute_task("fiftyfive:rbenv:update_rbenv")
+        execute_task("fiftyfive:rbenv:bootstrap_ubuntu_for_ruby_compile")
+        execute_task("fiftyfive:rbenv:compile_ruby")
       end
 
       desc "Update just rbenv and its plugins, without compiling Ruby"
       task :update do
-        update_rbenv
+        execute_task("fiftyfive:rbenv:update_rbenv")
       end
 
       desc "Check that the specified version of Ruby is properly installed"
