@@ -3,8 +3,8 @@ distinguished_name="req_distinguished_name"
 prompt="no"
 
 [ req_distinguished_name ]
-C="<%= ssl_csr_country %>"
-ST="<%= ssl_csr_state %>"
-L="<%= ssl_csr_city %>"
-O="<%= ssl_csr_org %>"
-CN="<%= ssl_csr_name %>"
+C="<%= fetch(:fiftyfive_ssl_csr_country) %>"
+ST="<%= fetch(:fiftyfive_ssl_csr_state) %>"
+L="<%= fetch(:fiftyfive_ssl_csr_city) %>"
+O="<%= fetch(:fiftyfive_ssl_csr_org) %>"
+CN="<%= fetch(:fiftyfive_ssl_csr_name) %>"

@@ -1,6 +1,6 @@
 # capistrano-fiftyfive
 
-**Additional recipes for use with capistrano to automate installation of a
+**Additional recipes for use with Capistrano 3.x to automate installation of a
 full-stack Rails environment!** No need to mess with Chef, Puppet, etc.
 Several of these recipes are based on the
 [Capistrano Recipes (#337)][cast337] and
@@ -20,13 +20,18 @@ All recipes are tailored for:
 
 ## Installation
 
+Please note that this project requires **Capistrano 3.x** which is complete
+rewrite of the Capistrano 2.x you may be used to. The two versions are not
+compatible.
+
 ### 1. Gemfile
 
-Add the capistrano-fiftyfive gem to the development group of your Rails
-application's Gemfile:
+Add these gems to the development group of your Rails application's Gemfile:
 
     group :development do
-      gem 'capistrano-fiftyfive', :github => '55minutes/capistrano-fiftyfive', :branch => :master
+      gem 'capistrano-bundler'
+      gem 'capistrano-rails'
+      gem 'capistrano-fiftyfive', :github => '55minutes/capistrano-fiftyfive', :branch => "capistrano-3.0"
     end
 
 And then execute:
@@ -34,51 +39,74 @@ And then execute:
     $ bundle
 
 
-### 2. Load the recipes
+### 2. cap install
 
-Add this to your app's `config/deploy.rb`:
+If your project doesn't yet have a `Capfile`, run `cap install` with the list
+of desired stages (environments):
 
-    require "capistrano/fiftyfive"
-    Capistrano::Fiftyfive.load(:autorun => true)
-    set :project_root, File.expand_path("../..", __FILE__)
+    cap install STAGES=staging,production
 
-**This will load all the capistrano-fiftyfive recipes, and run their tasks
-automatically during appropriate times of the deploy lifecycle.** If you
-want to customize this behavior, see step 3 below.
+
+### 3. Capfile
+
+Add these lines to the **bottom** of your app's `Capfile`
+(order is important!):
+
+    require 'capistrano/bundler'
+    require 'capistrano/fiftyfive'
+    require 'capistrano/rails/assets'
+
+
+### 4. Choose which recipes to auto-run
+
+Most of the capistrano-fiftyfive recipes are designed to run automatically as
+part of `cap [stage] deploy`. Several recipes also contribute to
+`cap [stage] provision`, for installing and setting up various bits of the
+Rails infrastructure, like nginx, unicorn, and postgres.
+
+*This auto-run behavior is fully under your control.*  In your `deploy.rb`,
+set `:fiftyfive_recipes` to an array of the desired recipes.
+If you don't want a recipe to execute as part of `deploy`, simple omit it from
+the list.
+
+This list will suffice for most out-of-the-box Rails apps. The order of the
+list is not important.
+
+    set :fiftyfive_recipes, %w(
+      aptitude
+      logrotate
+      migrate
+      nginx
+      postgresql
+      rbenv
+      secrets
+      seed
+      ssl
+      ufw
+      unicorn
+      user
+      version
+    )
+
+Even if you don't include a recipe in the auto-run list, you can still invoke
+the tasks of those recipes manually at your discretion.
+
+
+### 5. Configuration
 
 Many of the recipes have default settings that can be overridden. Use your
-deploy.rb file to specify these overrides. If you use multistage, you can do
-environment-specific overrides. Here's an example:
+`deploy.rb` file to specify these overrides. Or, you can override per stage.
+Here is an example override:
 
-    set :unicorn_workers, 8
+    set :fiftyfive_unicorn_workers, 8
 
-See the Reference section below for the full list of settings and their
-default values.
-
-
-### 3. (Advanced) Customize which recipes are loaded and executed
-
-Certain recipes can be excluded, using the `:exclude` option:
-
-    Capistrano::Fiftyfive.load(:exclude => [:cron, :delayed_job], :autorun => true)
-
-If you know exactly the recipes you want, use `:only`:
-
-    Capistrano::Fiftyfive.load(:only => [:nginx, :unicorn], :autorun => true)
-
-If you want full control over how tasks are incorporated into the deploy
-process, set `:autorun => false`. Then declare your own rules using the
-standard capistrano hooks. For example:
-
-    Capistrano::Fiftyfive.load(:only => :secrets, :autorun => false)
-    after "deploy:finalize_update", "fiftyfive:secrets:symlink"
+For the full list of settings and their default values, refer to
+[defaults.rake][].
 
 
 ### A working example
 
-Check out our [rails-starter][] project for a sample deploy.rb with multistage
-integration.
-
+Check out our [rails-starter][] project for a sample Capfile and deploy.rb.
 
 ## Usage
 
@@ -86,23 +114,24 @@ The power of the capistrano-fiftyfive recipes is that they take care of the
 entire setup of a bare Ubuntu 12.04 server, all the way to a fully configured
 and running Rails app on top up Unicorn, Nginx, rbenv, and PostgreSQL.
 
-Of course, if you want full control, you can also run tasks individually.
+Of course, if you want full control, feel free to fork this project and make
+it your own.
 
 ### Deploying to a new server from scratch
 
 These steps assume you have loaded the full set of capistrano-fiftyfive
-recipes in your deploy.rb, including `:autorun => true`.
+recipes in your Capfile.
 
 1. Provision an Ubuntu 12.04 VPS at your hosting provider of choice.
-2. SSH into that VPS as root and run `aptitude update && aptitude safe-upgrade`
-3. Create the admin group: `groupadd admin`
-4. Create a deployer user in that group: `adduser deployer --ingroup admin`
-6. If you have an SSL key and certificate prepared, install them in `/etc/ssl`. Otherwise, you can run `cap fiftyfive:ssl:generate_self_signed_crt` to quickly create a temporary self-signed one.
-7. Now, from your Rails project on your local machine, fire off these commands. These will install various packages, compile Ruby, set up the database, and deploy your app.
+2. Install your public SSH key for the root user.
+3. SSH into that VPS as root and run `aptitude update && aptitude safe-upgrade`
+   to ensure your server has the latest packages.
+4. Repeat steps 1 and 2 for all the servers in your cluster, if you are using
+   a multi-server setup (e.g. separate web, app, and database servers).
+5. Let capistrano-fiftyfive take it from here:
 
-        cap deploy:install
-        cap deploy:setup
-        cap deploy:cold
+        cap provision
+        cap deploy
 
 ### Running individual tasks
 
@@ -113,12 +142,7 @@ For a full description of the recipes you've installed, run:
 All tasks from capistrano-fiftyfive will be prefixed with `fiftyfive:`. You
 can run these tasks just like any other capistrano task, like so:
 
-    cap fiftyfive:postgresql:setup_pgpass
-
-
-## Reference
-
-TODO
+    cap staging fiftyfive:migrate
 
 
 ## Contributing
@@ -133,5 +157,5 @@ TODO
 [Postmark]:https://postmarkapp.com
 [cast337]:http://railscasts.com/episodes/337-capistrano-recipes
 [cast373]:http://railscasts.com/episodes/373-zero-downtime-deployment
-[hooks]:https://github.com/55minutes/capistrano-fiftyfive/blob/master/lib/capistrano/fiftyfive/autorun.rb
+[defaults.rake]:https://github.com/55minutes/rails-starter/blob/master/.rspec
 [rails-starter]:https://github.com/55minutes/rails-starter/tree/master/config

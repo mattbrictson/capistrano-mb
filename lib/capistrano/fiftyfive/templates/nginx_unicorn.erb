@@ -1,26 +1,26 @@
 # Based on https://github.com/defunkt/unicorn/blob/master/examples/nginx.conf
 
-upstream unicorn_<%= application %> {
+upstream unicorn_<%= application_basename %> {
   # fail_timeout=0 means we always retry an upstream even if it failed
   # to return a good HTTP response (in case the Unicorn master nukes a
   # single worker for timing out).
-  server unix:/tmp/unicorn.<%= application %>.sock fail_timeout=0;
+  server unix:/tmp/unicorn.<%= application_basename %>.sock fail_timeout=0;
 }
 
 <% [80, 443].each do |port| %>
 
-  <% nginx_redirect_hosts.each do |orig, desired| %>
+  <% fetch(:fiftyfive_nginx_redirect_hosts).each do |orig, desired| %>
     server {
       listen <%= port %>;
       server_name <%= orig %>;
-      return 301 <%= nginx_force_https ? "https" : "$scheme" %>://<%= desired %>$request_uri;
+      return 301 <%= fetch(:fiftyfive_nginx_force_https) ? "https" : "$scheme" %>://<%= desired %>$request_uri;
     }
   <% end %>
 
   server {
     listen <%= port %> default deferred; # for Linux
 
-    <% if port == 80 && nginx_force_https %>
+    <% if port == 80 && fetch(:fiftyfive_nginx_force_https) %>
       rewrite ^(.*) https://$http_host$1 permanent;
     <% else %>
 
@@ -49,22 +49,22 @@ upstream unicorn_<%= application %> {
         ssl on;
         ssl_ciphers RC4:HIGH:!aNULL:!MD5;
         ssl_prefer_server_ciphers on;
-        ssl_certificate /etc/ssl/<%= application %>.crt;
-        ssl_certificate_key /etc/ssl/<%= application %>.key;
+        ssl_certificate /etc/ssl/<%= application_basename %>.crt;
+        ssl_certificate_key /etc/ssl/<%= application_basename %>.key;
 
-        <% if nginx_force_https %>
+        <% if fetch(:fiftyfive_nginx_force_https) %>
           add_header Strict-Transport-Security "max-age=631138519";
         <% end %>
       <% end %>
 
       # Far-future expires and gzip for fingerprinted assets
-      location ^~ /<%= assets_prefix %>/ {
+      location ^~ /<%= fetch(:assets_prefix, "assets") %>/ {
         gzip_static on;
         expires max;
         add_header Cache-Control public;
       }
 
-      include /etc/nginx/<%= application%>-locations/*;
+      include /etc/nginx/<%= application_basename%>-locations/*;
 
       # Prefer to serve static files directly from nginx to avoid unnecessary
       # data copies from the application server.
@@ -86,7 +86,7 @@ upstream unicorn_<%= application %> {
         # redirects, we set the Host: header above already.
         proxy_redirect off;
 
-        proxy_pass http://unicorn_<%= application %>;
+        proxy_pass http://unicorn_<%= application_basename %>;
       }
 
       # Rails error pages

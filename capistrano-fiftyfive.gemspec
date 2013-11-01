@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Matt Brictson"]
   spec.email         = ["opensource@55minutes.com"]
   spec.description   = \
-    "Recipes that we use at 55 Minutes to standardize our Rails deployments. "\
-    "These are tailored for Ubuntu 12.04 LTS, PostgreSQL, Nginx, Unicorn, "\
-    "rbenv, and Rails 3/4."
+    "Capistrano 3.x recipes that we use at 55 Minutes to standardize "\
+    "our Rails deployments. These are tailored for Ubuntu 12.04 LTS, "\
+    "PostgreSQL, Nginx, Unicorn, rbenv, and Rails 3/4."
   spec.summary       = %q{Additional Capistrano recipes from 55 Minutes}
   spec.homepage      = "https://github.com/55minutes/capistrano-fiftyfive"
   spec.license       = "MIT"
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "capistrano", "~> 2.15"
+  spec.add_dependency "capistrano", ">= 3.0.0"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

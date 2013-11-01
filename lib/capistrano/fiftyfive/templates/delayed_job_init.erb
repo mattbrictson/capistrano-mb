@@ -11,8 +11,8 @@
 set -e
 
 # Feel free to change any of the following variables for your app:
-CMD="cd <%= current_path %>; RAILS_ENV=<%= rails_env %> script/delayed_job"
-AS_USER=<%= delayed_job_user %>
+CMD="cd <%= current_path %>; RAILS_ENV=<%= fetch(:rails_env) %> <%= fetch(:fiftyfive_delayed_job_script) %>"
+AS_USER=<%= fetch(:fiftyfive_delayed_job_user, user) %>
 set -u
 
 run () {
@@ -25,12 +25,12 @@ run () {
 
 case "$1" in
 start)
-  run "$CMD start <%= delayed_job_args %>"
+  run "$CMD start <%= fetch(:fiftyfive_delayed_job_args) %>"
   ;;
 stop)
   run "$CMD stop"
   ;;
 restart)
-  run "$CMD restart <%= delayed_job_args %>"
+  run "$CMD restart <%= fetch(:fiftyfive_delayed_job_args) %>"
   ;;
 esac
