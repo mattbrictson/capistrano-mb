@@ -6,7 +6,7 @@ namespace :fiftyfive do
   namespace :secrets do
     task :create_yml do
       keys = fetch(:fiftyfive_secrets_keys)
-      keys.each { |k| ask_secretly(k) }
+      keys.each { |k| ask_secretly(k) && fetch(k) }
 
       on roles(:all) do
         secrets = keys.each_with_object({}) do |key, h|
