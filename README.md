@@ -20,7 +20,7 @@ All recipes are tailored for:
 
 ## Installation
 
-Please note that this project requires **Capistrano 3.x** which is complete
+Please note that this project requires **Capistrano 3.x** which is a complete
 rewrite of the Capistrano 2.x you may be used to. The two versions are not
 compatible.
 
@@ -66,7 +66,7 @@ Rails infrastructure, like nginx, unicorn, and postgres.
 
 *This auto-run behavior is fully under your control.*  In your `deploy.rb`,
 set `:fiftyfive_recipes` to an array of the desired recipes.
-If you don't want a recipe to execute as part of `deploy`, simple omit it from
+If you don't want a recipe to execute as part of `deploy`, simply omit it from
 the list.
 
 This list will suffice for most out-of-the-box Rails apps. The order of the
@@ -157,5 +157,5 @@ can run these tasks just like any other capistrano task, like so:
 [Postmark]:https://postmarkapp.com
 [cast337]:http://railscasts.com/episodes/337-capistrano-recipes
 [cast373]:http://railscasts.com/episodes/373-zero-downtime-deployment
-[defaults.rake]:https://github.com/55minutes/rails-starter/blob/master/.rspec
+[defaults.rake]:lib/capistrano/tasks/defaults.rake
 [rails-starter]:https://github.com/55minutes/rails-starter/tree/master/config
