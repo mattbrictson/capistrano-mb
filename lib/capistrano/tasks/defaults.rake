@@ -11,6 +11,7 @@ namespace :load do
       secrets
       seed
       ssl
+      symlink
       ufw
       unicorn
       user

@@ -22,7 +22,7 @@ namespace :fiftyfive do
     end
 
     task :config_rb do
-      on roles(:app) do
+      on roles(:all) do
         template "unicorn.rb.erb", "#{shared_path}/config/unicorn.rb"
       end
     end
