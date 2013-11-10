@@ -126,16 +126,16 @@ recipes in your Capfile.
 2. Install your public SSH key for the root user.
 3. SSH into that VPS as root and run `aptitude update && aptitude safe-upgrade`
    to ensure your server has the latest packages.
-4. Repeat steps 1 and 2 for all the servers in your cluster, if you are using
+4. Repeat steps 1-3 for all the servers in your cluster, if you are using
    a multi-server setup (e.g. separate web, app, and database servers).
 5. Let capistrano-fiftyfive take it from here:
 
-        cap provision
-        cap deploy
+        cap staging provision
+        cap staging deploy
 
 ### Running individual tasks
 
-For a full description of the recipes you've installed, run:
+For a full description of all available tasks, run:
 
     cap -T
 
