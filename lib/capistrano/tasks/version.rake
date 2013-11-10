@@ -6,13 +6,16 @@ namespace :fiftyfive do
   namespace :version do
     task :write_initializer do
       git_version = {}
+      branch = fetch(:branch)
 
       on roles(:all).first do
         with fetch(:git_environmental_variables) do
           within repo_path do
-            git_version[:tag] = capture(:git, "describe --always --tag").chomp
+            git_version[:tag] = \
+              capture(:git, "describe", branch, "--always --tag").chomp
             git_version[:date] = \
-              capture(:git, 'log -1 --format="%ad" --date=short').chomp
+              capture(:git, "log", branch, '-1 --format="%ad" --date=short')\
+              .chomp
           end
         end
       end
