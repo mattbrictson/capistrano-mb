@@ -1,20 +1,15 @@
 fiftyfive_recipe :aptitude do
-  during :provision, %w(install upgrade)
+  during :provision, %w(upgrade install)
 end
 
 namespace :fiftyfive do
   namespace :aptitude do
 
-    desc "Run `aptitude update` and then run `aptitude safe-upgrade` for "\
-         "the packages required by the roles of each server."
+    desc "Run `aptitude update` and then run `aptitude safe-upgrade`"
     task :upgrade do
       privileged_on roles(:all) do |host|
-        packages = _each_package(host).map { |pkg, _| pkg }
-
-        if packages.any?
-          execute :aptitude, "-q -q -y update"
-          execute :aptitude, "-q -q -y safe-upgrade", *packages
-        end
+        _update
+        _safe_upgrade
       end
     end
 
@@ -23,12 +18,19 @@ namespace :fiftyfive do
          "each server."
     task :install do
       privileged_on roles(:all) do |host|
+        packages_to_install = []
+        repos_to_add = []
+
         _each_package(host) do |pkg, repo|
           unless _already_installed?(pkg)
-            _add_repository(repo) unless repo.nil?
-            _install(pkg)
+            repos_to_add << repo unless repo.nil?
+            packages_to_install << pkg
           end
         end
+
+        repos_to_add.each { |repo| _add_repository(repo) }
+        _update
+        packages_to_install.each { |pkg| _install(pkg) }
       end
     end
 
@@ -44,7 +46,21 @@ namespace :fiftyfive do
     end
 
     def _install(pkg)
-      execute :aptitude, "-y -q install", pkg
+      with :debian_frontend => "noninteractive" do
+        execute :aptitude, "-y -q install", pkg
+      end
+    end
+
+    def _update
+      with :debian_frontend => "noninteractive" do
+        execute :aptitude, "-q -q -y update"
+      end
+    end
+
+    def _safe_upgrade
+      with :debian_frontend => "noninteractive" do
+        execute :aptitude, "-q -q -y safe-upgrade"
+      end
     end
 
     def _each_package(host)

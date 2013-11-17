@@ -57,7 +57,9 @@ namespace :fiftyfive do
 
     task :bootstrap_ubuntu_for_ruby_compile do
       privileged_on roles(:all) do |host, user|
-        execute "~#{user}/.rbenv/plugins/rbenv-bootstrap/bin/rbenv-bootstrap-ubuntu-12-04"
+        with :debian_frontend => "noninteractive" do
+          execute "~#{user}/.rbenv/plugins/rbenv-bootstrap/bin/rbenv-bootstrap-ubuntu-12-04"
+        end
       end
     end
 

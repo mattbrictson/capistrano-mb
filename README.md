@@ -123,12 +123,10 @@ These steps assume you have loaded the full set of capistrano-fiftyfive
 recipes in your Capfile.
 
 1. Provision an Ubuntu 12.04 VPS at your hosting provider of choice.
-2. Install your public SSH key for the root user.
-3. SSH into that VPS as root and run `aptitude update && aptitude safe-upgrade`
-   to ensure your server has the latest packages.
-4. Repeat steps 1-3 for all the servers in your cluster, if you are using
+2. Install your public SSH key for the root user. Some providers (e.g. DigitalOcean) can do this for you automatically when you provision a new VPS.
+3. Repeat steps 1-2 for all the servers in your cluster, if you are using
    a multi-server setup (e.g. separate web, app, and database servers).
-5. Let capistrano-fiftyfive take it from here:
+4. Let capistrano-fiftyfive take it from here:
 
         cap staging provision
         cap staging deploy
