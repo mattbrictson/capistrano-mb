@@ -69,7 +69,7 @@ namespace :fiftyfive do
         unless test("rbenv versions | grep -q '#{ruby_version}'")
           execute "CFLAGS=-O3 rbenv install #{ruby_version}"
           execute "rbenv global #{ruby_version}"
-          execute "gem install bundler --no-ri --no-rdoc"
+          execute "gem install bundler --no-document"
           execute "rbenv rehash"
         end
       end
