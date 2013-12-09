@@ -31,7 +31,7 @@ Add these gems to the development group of your Rails application's Gemfile:
     group :development do
       gem 'capistrano-bundler'
       gem 'capistrano-rails'
-      gem 'capistrano-fiftyfive', :github => '55minutes/capistrano-fiftyfive', :branch => "capistrano-3.0"
+      gem 'capistrano-fiftyfive', :github => '55minutes/capistrano-fiftyfive'
     end
 
 And then execute:
