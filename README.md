@@ -1,6 +1,9 @@
 # capistrano-fiftyfive
 
-**Additional recipes for use with capistrano to automate installation of a
+*Note that this is a legacy branch for capistrano 2.x. It is not actively
+developed.*
+
+**Additional recipes for use with capistrano 2.x to automate installation of a
 full-stack Rails environment!** No need to mess with Chef, Puppet, etc.
 Several of these recipes are based on the
 [Capistrano Recipes (#337)][cast337] and
@@ -26,7 +29,7 @@ Add the capistrano-fiftyfive gem to the development group of your Rails
 application's Gemfile:
 
     group :development do
-      gem 'capistrano-fiftyfive', :github => '55minutes/capistrano-fiftyfive', :branch => :master
+      gem 'capistrano-fiftyfive', :github => '55minutes/capistrano-fiftyfive', :branch => 'capistrano-2.x'
     end
 
 And then execute:
@@ -133,5 +136,4 @@ TODO
 [Postmark]:https://postmarkapp.com
 [cast337]:http://railscasts.com/episodes/337-capistrano-recipes
 [cast373]:http://railscasts.com/episodes/373-zero-downtime-deployment
-[hooks]:https://github.com/55minutes/capistrano-fiftyfive/blob/master/lib/capistrano/fiftyfive/autorun.rb
-[rails-starter]:https://github.com/55minutes/rails-starter/tree/master/config
+[rails-starter]:https://github.com/55minutes/rails-starter/tree/5f1153cae83da6a54e03ab784863aaca795e4998/
