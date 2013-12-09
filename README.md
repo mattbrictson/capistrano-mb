@@ -29,9 +29,9 @@ compatible.
 Add these gems to the development group of your Rails application's Gemfile:
 
     group :development do
-      gem 'capistrano-bundler'
-      gem 'capistrano-rails'
-      gem 'capistrano-fiftyfive', :github => '55minutes/capistrano-fiftyfive'
+      gem 'capistrano-bundler', :require => false
+      gem 'capistrano-rails', :require => false
+      gem 'capistrano-fiftyfive', :require => false, :github => '55minutes/capistrano-fiftyfive'
     end
 
 And then execute:
