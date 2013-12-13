@@ -1,6 +1,5 @@
 fiftyfive_recipe :postgresql do
   during :provision, %w(
-    tune
     create_user
     create_database
     database_yml
