@@ -39,6 +39,7 @@ namespace :load do
 
     ask_secretly :fiftyfive_postgresql_password
     set :fiftyfive_postgresql_max_connections, 25
+    set :fiftyfive_postgresql_pool_size, 5
     set :fiftyfive_postgresql_host, "localhost"
     set :fiftyfive_postgresql_database,
         proc { "#{application_basename}_#{fetch(:rails_env)}" }
