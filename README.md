@@ -55,6 +55,7 @@ Add these lines to the **bottom** of your app's `Capfile`
     require 'capistrano/bundler'
     require 'capistrano/fiftyfive'
     require 'capistrano/rails/assets'
+    require 'capistrano/rails/migrations'
 
 
 ### 4. Choose which recipes to auto-run

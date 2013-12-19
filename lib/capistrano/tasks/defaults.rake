@@ -100,6 +100,7 @@ namespace :load do
       config/secrets.yml
       config/unicorn.rb
     )
+    set :migration_role, :app
     set :rails_env, proc { fetch(:stage) }
     set :ssh_options, :compression => false
 
