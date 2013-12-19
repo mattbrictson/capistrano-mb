@@ -20,7 +20,7 @@ All recipes are tailored for:
 
 ## Installation
 
-Please note that this project requires **Capistrano 3.x** which is a complete
+Please note that this project requires **Capistrano 3.1** which is a complete
 rewrite of the Capistrano 2.x you may be used to. The two versions are not
 compatible.
 
@@ -31,7 +31,8 @@ Add these gems to the development group of your Rails application's Gemfile:
     group :development do
       gem 'capistrano-bundler', :require => false
       gem 'capistrano-rails', :require => false
-      gem 'capistrano-fiftyfive', :require => false, :github => '55minutes/capistrano-fiftyfive'
+      gem 'capistrano', :require => false, :github => 'capistrano/capistrano', :branch => :master
+      gem 'capistrano-fiftyfive', :require => false, :github => '55minutes/capistrano-fiftyfive', :branch => :master
     end
 
 And then execute:
