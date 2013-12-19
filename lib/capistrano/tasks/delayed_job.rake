@@ -3,7 +3,7 @@ fiftyfive_recipe :delayed_job do
   during "deploy:start", "start"
   during "deploy:stop", "stop"
   during "deploy:restart", "restart"
-  during "deploy:publishing", "restart" unless deploy_includes_restart?
+  during "deploy:publishing", "restart"
 end
 
 namespace :fiftyfive do

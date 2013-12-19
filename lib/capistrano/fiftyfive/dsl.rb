@@ -2,13 +2,6 @@ module Capistrano
   module Fiftyfive
     module DSL
 
-      # Capistrano 3.0 automatically runs deploy:restart during
-      # deploy:publishing, but newer versions do not.
-      #
-      def deploy_includes_restart?
-        !! (Capistrano::VERSION =~ /^3\.0/)
-      end
-
       # Invoke the given task. If a task with that name is not defined,
       # silently skip it.
       #
