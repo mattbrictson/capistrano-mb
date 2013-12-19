@@ -8,7 +8,7 @@ namespace :fiftyfive do
       keys = fetch(:fiftyfive_secrets_keys)
       keys.each { |k| ask_secretly(k) && fetch(k) }
 
-      on roles(:all) do
+      on release_roles(:all) do
         secrets = keys.each_with_object({}) do |key, h|
           h[key.to_s] = fetch(key)
         end

@@ -20,7 +20,7 @@ namespace :fiftyfive do
     end
 
     task :write_vars do
-      on roles(:all) do
+      on release_roles(:all) do
         execute :mkdir, "-p ~/.rbenv"
         execute :touch, "~/.rbenv/vars"
         execute :chmod, "0600 ~/.rbenv/vars"
@@ -36,7 +36,7 @@ namespace :fiftyfive do
     end
 
     task :run_installer do
-      on roles(:all) do
+      on release_roles(:all) do
         execute :curl,
                 "-L https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer",
                 "|", :bash
@@ -44,7 +44,7 @@ namespace :fiftyfive do
     end
 
     task :modify_bashrc do
-      on roles(:all) do
+      on release_roles(:all) do
         unless test("grep -qs 'rbenv init' ~/.bashrc")
           template("rbenv_bashrc", "/tmp/rbenvrc")
           execute :cat, "/tmp/rbenvrc ~/.bashrc > /tmp/bashrc"
@@ -56,7 +56,7 @@ namespace :fiftyfive do
     end
 
     task :bootstrap_ubuntu_for_ruby_compile do
-      privileged_on roles(:all) do |host, user|
+      privileged_on release_roles(:all) do |host, user|
         with :debian_frontend => "noninteractive" do
           execute "~#{user}/.rbenv/plugins/rbenv-bootstrap/bin/rbenv-bootstrap-ubuntu-12-04"
         end
@@ -65,7 +65,7 @@ namespace :fiftyfive do
 
     task :compile_ruby do
       ruby_version = fetch(:fiftyfive_rbenv_ruby_version)
-      on roles(:all) do
+      on release_roles(:all) do
         unless test("rbenv versions | grep -q '#{ruby_version}'")
           execute "CFLAGS=-O3 rbenv install #{ruby_version}"
           execute "rbenv global #{ruby_version}"
@@ -76,7 +76,7 @@ namespace :fiftyfive do
     end
 
     task :update_rbenv do
-      on roles(:all) do
+      on release_roles(:all) do
         execute "rbenv update"
       end
     end

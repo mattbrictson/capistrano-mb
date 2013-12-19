@@ -8,7 +8,7 @@ namespace :fiftyfive do
       git_version = {}
       branch = fetch(:branch)
 
-      on roles(:all).first do
+      on release_roles(:all).first do
         with fetch(:git_environmental_variables) do
           within repo_path do
             git_version[:tag] = \
@@ -20,7 +20,7 @@ namespace :fiftyfive do
         end
       end
 
-      on roles(:all) do
+      on release_roles(:all) do
         template "version.rb.erb",
                  "#{release_path}/config/initializers/version.rb",
                  :binding => binding

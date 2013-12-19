@@ -61,7 +61,7 @@ namespace :fiftyfive do
 
     task :database_yml do
       fetch(:fiftyfive_postgresql_password)
-      on roles(:all) do
+      on release_roles(:all) do
         template "postgresql.yml.erb",
                  "#{shared_path}/config/database.yml",
                  :mode => "600"
@@ -70,7 +70,7 @@ namespace :fiftyfive do
 
     task :pgpass do
       fetch(:fiftyfive_postgresql_password)
-      on roles(:all) do
+      on release_roles(:all) do
         template "pgpass.erb",
                  fetch(:fiftyfive_postgresql_pgpass_path),
                  :mode => "600"
