@@ -3,6 +3,7 @@ fiftyfive_recipe :seed do
 end
 
 namespace :fiftyfive do
+  desc "Run rake db:seed"
   task :seed do
     on primary(:app) do
       within release_path do

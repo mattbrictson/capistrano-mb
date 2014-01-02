@@ -3,6 +3,7 @@ fiftyfive_recipe :crontab do
 end
 
 namespace :fiftyfive do
+  desc "Install crontab using crontab.erb template"
   task :crontab do
     on roles(:cron) do
       tmp_file = "/tmp/crontab"

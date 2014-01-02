@@ -8,6 +8,7 @@ end
 
 namespace :fiftyfive do
   namespace :unicorn do
+    desc "Install service script for unicorn"
     task :init_d do
       privileged_on roles(:app) do |host, user|
         unicorn_user = fetch(:fiftyfive_unicorn_user) || user
@@ -21,6 +22,7 @@ namespace :fiftyfive do
       end
     end
 
+    desc "Create config/unicorn.rb"
     task :config_rb do
       on release_roles(:all) do
         template "unicorn.rb.erb", "#{shared_path}/config/unicorn.rb"
@@ -28,6 +30,7 @@ namespace :fiftyfive do
     end
 
     %w[start stop restart].each do |command|
+      desc "#{command} unicorn"
       task command do
         on roles(:app) do
           execute "service unicorn_#{application_basename} #{command}"

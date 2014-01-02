@@ -10,6 +10,7 @@ end
 
 namespace :fiftyfive do
   namespace :postgresql do
+    desc "Update postgresql.conf using pgtune"
     task :tune do
       privileged_on primary(:db), :in => :sequence do
         pgtune_dir = "/tmp/pgtune"
@@ -37,6 +38,7 @@ namespace :fiftyfive do
       end
     end
 
+    desc "Create user if it doesn't already exist"
     task :create_user do
       privileged_on primary(:db) do
         user = fetch(:fiftyfive_postgresql_user)
@@ -48,6 +50,7 @@ namespace :fiftyfive do
       end
     end
 
+    desc "Create database if it doesn't already exist"
     task :create_database do
       privileged_on primary(:db) do
         user = fetch(:fiftyfive_postgresql_user)
@@ -59,6 +62,7 @@ namespace :fiftyfive do
       end
     end
 
+    desc "Generate database.yml"
     task :database_yml do
       fetch(:fiftyfive_postgresql_password)
       on release_roles(:all) do
@@ -68,6 +72,7 @@ namespace :fiftyfive do
       end
     end
 
+    desc "Generate pgpass file (needed by backup scripts)"
     task :pgpass do
       fetch(:fiftyfive_postgresql_password)
       on release_roles(:all) do
@@ -77,6 +82,7 @@ namespace :fiftyfive do
       end
     end
 
+    desc "Configure logrotate to back up the database daily"
     task :logrotate_backup do
       on roles(:backup) do
         backup_path = fetch(:fiftyfive_postgresql_backup_path)

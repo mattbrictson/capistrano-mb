@@ -4,6 +4,7 @@ end
 
 namespace :fiftyfive do
   namespace :version do
+    desc "Write initializers/version.rb with git version and date information"
     task :write_initializer do
       git_version = {}
       branch = fetch(:branch)

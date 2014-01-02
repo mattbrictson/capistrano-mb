@@ -4,6 +4,7 @@ end
 
 namespace :fiftyfive do
   namespace :secrets do
+    desc "Prompt for secrets and put them in secrets.yml"
     task :create_yml do
       keys = fetch(:fiftyfive_secrets_keys)
       keys.each { |k| ask_secretly(k) && fetch(k) }

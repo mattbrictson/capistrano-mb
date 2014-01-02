@@ -4,6 +4,7 @@ end
 
 namespace :fiftyfive do
   namespace :ufw do
+    desc "Configure role-based ufw rules on each server"
     task :configure do
       fetch(:fiftyfive_ufw_rules).each do |command, *role_names|
         privileged_on roles(*role_names.flatten) do

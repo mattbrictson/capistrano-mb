@@ -4,6 +4,7 @@ end
 
 namespace :fiftyfive do
   namespace :user do
+    desc "Create the UNIX user if it doesn't already exist"
     task :add do
       privileged_on roles(:all) do |host, user|
         unless test("grep -q #{user}: /etc/passwd")
@@ -12,6 +13,8 @@ namespace :fiftyfive do
       end
     end
 
+    desc "Copy root's authorized_keys to the user account if it doesn't "\
+         "already have its own keys"
     task :install_public_key do
       privileged_on roles(:all) do |host, user|
         unless test("[ -f /home/#{user}/.ssh/authorized_keys ]")

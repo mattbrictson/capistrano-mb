@@ -6,6 +6,8 @@ end
 
 namespace :fiftyfive do
   namespace :migrate do
+    desc "Deploy the app, stopping it and showing a 503 maintenance page "\
+         "while database migrations are being performed; then start the app"
     task :deploy do
       set(:fiftyfive_restart_during_migrate, true)
       invoke :deploy

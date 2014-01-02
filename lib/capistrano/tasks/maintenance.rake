@@ -4,6 +4,8 @@ end
 
 namespace :fiftyfive do
   namespace :maintenance do
+    desc "Tell nginx to display a 503 page for all web requests, using the "\
+         "maintenance.html.erb template"
     task :enable do
       on roles(:web) do
         reason = ENV["REASON"]
@@ -16,6 +18,7 @@ namespace :fiftyfive do
       end
     end
 
+    desc "Remove the 503 page"
     task :disable do
       on roles(:web) do
         execute :rm, "-f", "#{current_path}/public/system/maintenance.html"
