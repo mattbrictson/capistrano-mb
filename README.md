@@ -1,32 +1,39 @@
 # capistrano-fiftyfive
 
-**Additional recipes for use with Capistrano 3.x to automate installation of a
-full-stack Rails environment!** No need to mess with Chef, Puppet, etc.
-Several of these recipes are based on the
-[Capistrano Recipes (#337)][cast337] and
-[Zero-Downtime Deployment (#373)][cast373] episodes of RailsCasts.
+Capistrano is great for deploying Rails applications, but what about all the prerequisites, like Nginx and PostgreSQL? Do you have a firewall configured on your VPS? Have you installed the latest OS security updates? Is HTTPS working right?
 
-We use these recipes at 55 Minutes to standardize our Rails deployments.
-All recipes are tailored for:
+The capistrano-fiftyfive gem adds a `cap <stage> provision` task to Capistrano that takes care of all that. Out of the box, `provision` will:
+
+* Install the latest `postgresql`, `node.js`, and `nginx` apt packages
+* Install all libraries needed to build Ruby
+* Lock down your VPS using `ufw` (a simple front-end to iptables)
+* Set up `logrotated` for your Rails logs
+* Schedule an automatic daily backup of your Rails database
+* Generate a self-signed SSL certificate if you need one
+* Set up ngnix with the latest SSL practices and integrate it with Unicorn for your Rails app
+* Create the `deployer` user and install an SSH public key
+* Install `rbenv` and use `ruby-build` to compile the version of Ruby required by your app (by inspecting your `.ruby-version` file)
+* And more!
+
+The gem is named "capistrano-fiftyfive" because it is built first and foremost for serving our deployment needs here at [55 Minutes](http://55minutes.com). You'll notice that capistrano-fiftyfive is opinionated and strictly uses the following stack:
 
 * Ubuntu 12.04 LTS
 * PostgreSQL
 * Unicorn
 * Nginx
 * rbenv
-* delayed_job
-* [Postmark][] for mail delivery
+
+Not quite to your liking? Consider forking the project to meet your needs.
 
 
 ## Installation
 
-Please note that this project requires **Capistrano 3.1** which is a complete
-rewrite of the Capistrano 2.x you may be used to. The two versions are not
-compatible.
+Please note that this project requires **Capistrano 3.1**, which is a complete
+rewrite of Capistrano 2.x. The two versions are not compatible.
 
 ### 1. Gemfile
 
-Add these gems to the development group of your Rails application's Gemfile:
+Add these gems to the development group of your Rails application's Gemfile (version 3.1 of Capistrano hasn't been released yet, so we have to point to `master`):
 
     group :development do
       gem 'capistrano-bundler', :require => false
@@ -60,18 +67,14 @@ Add these lines to the **bottom** of your app's `Capfile`
 
 ### 4. Choose which recipes to auto-run
 
-Most of the capistrano-fiftyfive recipes are designed to run automatically as
-part of `cap [stage] deploy`. Several recipes also contribute to
-`cap [stage] provision`, for installing and setting up various bits of the
-Rails infrastructure, like nginx, unicorn, and postgres.
+Most of the capistrano-fiftyfive recipes are designed to run automatically as part of `cap <stage> provision`, for installing and setting up various bits of the Rails infrastructure, like nginx, unicorn, and postgres. Some recipes also contribute to the `cap <stage> deploy` process.
 
 *This auto-run behavior is fully under your control.*  In your `deploy.rb`,
 set `:fiftyfive_recipes` to an array of the desired recipes.
-If you don't want a recipe to execute as part of `deploy`, simply omit it from
+If you don't want a recipe to execute as part of `deploy`/`provision`, simply omit it from
 the list.
 
-This list will suffice for most out-of-the-box Rails apps. The order of the
-list is not important.
+The following list will suffice for most out-of-the-box Rails apps. The order of the list is not important.
 
     set :fiftyfive_recipes, %w(
       aptitude
@@ -115,9 +118,6 @@ The power of the capistrano-fiftyfive recipes is that they take care of the
 entire setup of a bare Ubuntu 12.04 server, all the way to a fully configured
 and running Rails app on top up Unicorn, Nginx, rbenv, and PostgreSQL.
 
-Of course, if you want full control, feel free to fork this project and make
-it your own.
-
 ### Deploying to a new server from scratch
 
 These steps assume you have loaded the full set of capistrano-fiftyfive
@@ -141,7 +141,7 @@ For a full description of all available tasks, run:
 All tasks from capistrano-fiftyfive will be prefixed with `fiftyfive:`. You
 can run these tasks just like any other capistrano task, like so:
 
-    cap staging fiftyfive:migrate
+    cap staging fiftyfive:seed
 
 
 ## Contributing
