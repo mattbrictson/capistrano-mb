@@ -31,8 +31,8 @@ namespace :fiftyfive do
 
     desc "restart sidekiq"
     task :restart do
-      invoke :stop
-      invoke :start
+      invoke "fiftyfive:sidekiq:stop"
+      invoke "fiftyfive:sidekiq:start"
     end
   end
 end
