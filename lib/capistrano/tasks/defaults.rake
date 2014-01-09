@@ -3,6 +3,7 @@ namespace :load do
 
     set :fiftyfive_recipes, %w(
       aptitude
+      crontab
       logrotate
       migrate
       nginx

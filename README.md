@@ -78,6 +78,7 @@ The following list will suffice for most out-of-the-box Rails apps. The order of
 
     set :fiftyfive_recipes, %w(
       aptitude
+      crontab
       logrotate
       migrate
       nginx
