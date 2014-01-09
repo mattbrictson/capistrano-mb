@@ -67,6 +67,9 @@ namespace :load do
 
     set :fiftyfive_secrets_keys, %w(rails_secret_key_base postmark_api_key)
 
+    set :fiftyfive_sidekiq_concurrency, 25
+    set :fiftyfive_sidekiq_role, :sidekiq
+
     set :fiftyfive_ssl_csr_country, "US"
     set :fiftyfive_ssl_csr_state, "California"
     set :fiftyfive_ssl_csr_city, "Albany"
