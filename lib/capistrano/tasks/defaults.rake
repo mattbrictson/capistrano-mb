@@ -87,6 +87,7 @@ namespace :load do
     set :fiftyfive_unicorn_log, proc{ "#{current_path}/log/unicorn.log" }
     set :fiftyfive_unicorn_pid, proc{ "#{current_path}/tmp/pids/unicorn.pid" }
 
+    set :bundle_flags, '--deployment --quiet -j4'
     set :deploy_to, proc { "/home/deployer/apps/#{fetch(:application)}" }
     set :keep_releases, 10
     set :format, :pretty
