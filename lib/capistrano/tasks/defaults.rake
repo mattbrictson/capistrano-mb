@@ -91,15 +91,17 @@ namespace :load do
     set :deploy_to, proc { "/home/deployer/apps/#{fetch(:application)}" }
     set :keep_releases, 10
     set :format, :pretty
-    set :linked_dirs, %w(
-      bin
-      log
-      tmp/pids
-      tmp/cache
-      tmp/sockets
-      vendor/bundle
-      public/system
-    )
+    set :linked_dirs, -> {
+        ["public/#{fetch(:assets_prefix, 'assets')}"] +
+        %w(
+          bin
+          log
+          tmp/pids
+          tmp/cache
+          tmp/sockets
+          public/system
+        )
+    }
     set :linked_files, %w(
       config/database.yml
       config/secrets.yml
