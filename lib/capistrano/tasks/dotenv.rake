@@ -36,7 +36,9 @@ namespace :fiftyfive do
 
       fetch(:fiftyfive_dotenv_keys).each do |key|
         next if existing =~ /^#{Regexp.escape(key.upcase)}=/
-        updated << "#{key.upcase}=#{fetch(key)}\n"
+        fetch(:fiftyfive_dotenv_monitor).synchronize do
+          updated << "#{key.upcase}=#{fetch(key)}\n"
+        end
       end
 
       unless existing == updated

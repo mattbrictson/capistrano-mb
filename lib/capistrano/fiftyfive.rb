@@ -1,3 +1,4 @@
+require "monitor"
 require "capistrano/fiftyfive/version"
 require "capistrano/fiftyfive/dsl"
 require "capistrano/fiftyfive/recipe"

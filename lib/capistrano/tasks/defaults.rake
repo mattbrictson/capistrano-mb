@@ -35,6 +35,7 @@ namespace :load do
     set :fiftyfive_delayed_job_script, "bin/delayed_job"
 
     set :fiftyfive_dotenv_keys, %w(rails_secret_key_base postmark_api_key)
+    set :fiftyfive_dotenv_monitor, Monitor.new
 
     set :fiftyfive_nginx_force_https, false
     set :fiftyfive_nginx_redirect_hosts, {}
