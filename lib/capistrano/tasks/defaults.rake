@@ -4,12 +4,12 @@ namespace :load do
     set :fiftyfive_recipes, %w(
       aptitude
       crontab
+      dotenv
       logrotate
       migrate
       nginx
       postgresql
       rbenv
-      secrets
       seed
       ssl
       ufw
@@ -33,6 +33,8 @@ namespace :load do
 
     set :fiftyfive_delayed_job_args, "-n 2"
     set :fiftyfive_delayed_job_script, "bin/delayed_job"
+
+    set :fiftyfive_dotenv_keys, %w(rails_secret_key_base postmark_api_key)
 
     set :fiftyfive_nginx_force_https, false
     set :fiftyfive_nginx_redirect_hosts, {}
@@ -64,8 +66,6 @@ namespace :load do
         "PGPASSFILE" => fetch(:fiftyfive_postgresql_pgpass_path)
       }
     }
-
-    set :fiftyfive_secrets_keys, %w(rails_secret_key_base postmark_api_key)
 
     set :fiftyfive_sidekiq_concurrency, 25
     set :fiftyfive_sidekiq_role, :sidekiq
@@ -103,8 +103,8 @@ namespace :load do
         )
     }
     set :linked_files, %w(
+      .env
       config/database.yml
-      config/secrets.yml
       config/unicorn.rb
     )
     set :log_level, :info

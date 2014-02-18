@@ -22,6 +22,7 @@ The gem is named "capistrano-fiftyfive" because it is built first and foremost f
 * Unicorn
 * Nginx
 * rbenv
+* dotenv
 
 Not quite to your liking? Consider forking the project to meet your needs.
 
@@ -79,12 +80,12 @@ The following list will suffice for most out-of-the-box Rails apps. The order of
     set :fiftyfive_recipes, %w(
       aptitude
       crontab
+      dotenv
       logrotate
       migrate
       nginx
       postgresql
       rbenv
-      secrets
       seed
       ssl
       ufw
