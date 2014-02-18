@@ -34,12 +34,12 @@ rewrite of Capistrano 2.x. The two versions are not compatible.
 
 ### 1. Gemfile
 
-Add these gems to the development group of your Rails application's Gemfile (version 3.1 of Capistrano hasn't been released yet, so we have to point to `master`):
+Add these gems to the development group of your Rails application's Gemfile:
 
     group :development do
       gem 'capistrano-bundler', :require => false
       gem 'capistrano-rails', :require => false
-      gem 'capistrano', :require => false, :github => 'capistrano/capistrano', :branch => :master
+      gem 'capistrano', '~> 3.1.0', :require => false
       gem 'capistrano-fiftyfive', :require => false, :github => '55minutes/capistrano-fiftyfive', :branch => :master
     end
 
