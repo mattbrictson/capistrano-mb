@@ -1,4 +1,5 @@
 fiftyfive_recipe :dotenv do
+  during "provision", "update"
   prior_to "deploy:publishing", "update"
 end
 
