@@ -77,6 +77,7 @@ namespace :load do
     set :fiftyfive_ssl_csr_org, "55 Minutes, Inc."
     set :fiftyfive_ssl_csr_name, "example.55minutes.com"
 
+    # WARNING: misconfiguring firewall rules could lock you out of the server!
     set :fiftyfive_ufw_rules,
         "allow ssh" => :all,
         "allow http" => :web,

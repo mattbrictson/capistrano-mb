@@ -6,13 +6,26 @@ namespace :fiftyfive do
   namespace :ufw do
     desc "Configure role-based ufw rules on each server"
     task :configure do
-      fetch(:fiftyfive_ufw_rules).each do |command, *role_names|
+      rules = fetch(:fiftyfive_ufw_rules, {})
+      distinct_roles = rules.values.flatten.uniq
+
+      # First reset the firewall on all affected servers
+      privileged_on roles(*distinct_roles) do
+        execute "ufw --force reset"
+        execute "ufw default deny incoming"
+        execute "ufw default allow outgoing"
+      end
+
+      # Then set up all ufw rules according to the fiftyfive_ufw_rules hash
+      rules.each do |command, *role_names|
         privileged_on roles(*role_names.flatten) do
-          execute "ufw disable"
-          execute "ufw default deny"
           execute "ufw #{command}"
-          execute "yes | ufw enable"
         end
+      end
+
+      # Finally, enable the firewall on all affected servers
+      privileged_on roles(*distinct_roles) do
+        execute "ufw --force enable"
       end
     end
   end
