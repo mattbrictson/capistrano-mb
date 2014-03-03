@@ -112,7 +112,7 @@ namespace :load do
     set :log_level, :info
     set :migration_role, :app
     set :rails_env, proc { fetch(:stage) }
-    set :ssh_options, :compression => false
+    set :ssh_options, :compression => false, :keepalive => true
 
     SSHKit.config.command_map[:rake] = "bundle exec rake"
   end
