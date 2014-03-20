@@ -26,7 +26,7 @@ namespace :load do
         "git-core"                               => :all,
         "libpq-dev@ppa:pitti/postgresql"         => :all,
         "nginx@ppa:nginx/stable"                 => :web,
-        "nodejs@ppa:chris-lea/node.js"           => :web,
+        "nodejs@ppa:chris-lea/node.js"           => :all,
         "postgresql-client@ppa:pitti/postgresql" => :all,
         "postgresql@ppa:pitti/postgresql"        => :db,
         "ufw"                                    => :all
