@@ -73,7 +73,7 @@ namespace :fiftyfive do
         if force
           execute "CFLAGS=-O3 rbenv install --force #{ruby_version}"
           execute "rbenv global #{ruby_version}"
-          execute "gem install bundler --no-document"
+          execute "gem install bundler psych --no-document"
           execute "rbenv rehash"
         end
       end
