@@ -29,8 +29,8 @@ Not quite to your liking? Consider forking the project to meet your needs.
 
 ## Installation
 
-Please note that this project requires **Capistrano 3.1**, which is a complete
-rewrite of Capistrano 2.x. The two versions are not compatible.
+Please note that this project requires **Capistrano 3.x**, which is a complete
+rewrite of Capistrano 2.x. The two major versions are not compatible.
 
 ### 1. Gemfile
 
@@ -39,7 +39,7 @@ Add these gems to the development group of your Rails application's Gemfile:
     group :development do
       gem 'capistrano-bundler', :require => false
       gem 'capistrano-rails', :require => false
-      gem 'capistrano', '~> 3.1.0', :require => false
+      gem 'capistrano', '~> 3.2.0', :require => false
       gem 'capistrano-fiftyfive', :require => false, :github => '55minutes/capistrano-fiftyfive', :branch => :master
     end
 
