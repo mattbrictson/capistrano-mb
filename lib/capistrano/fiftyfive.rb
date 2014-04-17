@@ -1,5 +1,6 @@
 require "monitor"
 require "capistrano/fiftyfive/version"
+require "capistrano/fiftyfive/compatibility"
 require "capistrano/fiftyfive/dsl"
 require "capistrano/fiftyfive/recipe"
 include Capistrano::Fiftyfive::DSL
