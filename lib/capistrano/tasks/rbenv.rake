@@ -67,7 +67,7 @@ namespace :fiftyfive do
       ruby_version = fetch(:fiftyfive_rbenv_ruby_version)
       on release_roles(:all) do
         force = ENV["RBENV_FORCE_INSTALL"] || begin
-          test("rbenv versions | grep -q '#{ruby_version}'")
+          ! test("rbenv versions | grep -q '#{ruby_version}'")
         end
 
         if force
