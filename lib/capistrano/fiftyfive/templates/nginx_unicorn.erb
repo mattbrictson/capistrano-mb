@@ -18,7 +18,7 @@ upstream unicorn_<%= application_basename %> {
   <% end %>
 
   server {
-    listen <%= port %> spdy default deferred; # for Linux
+    listen <%= port %> <%= "spdy" if port == 443 %> default deferred; # for Linux
 
     <% if port == 80 && fetch(:fiftyfive_nginx_force_https) %>
       rewrite ^(.*) https://$http_host$1 permanent;
