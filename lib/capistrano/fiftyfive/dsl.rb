@@ -29,19 +29,14 @@ module Capistrano
         fetch(:application).to_s.gsub(/[^a-zA-Z0-9_]/, "_")
       end
 
-      # Like capistrano's built-in ask(), but does not echo user input.
-      # Suitable for passwords, etc. Requires the highline gem.
-      #
-      #   ask_secretly(:postgresql_password)
+      # As of Capistrano > 3.2.1, use the built-in ask(.., .., :echo => false)
+      # instead. This method will be removed.
       #
       def ask_secretly(key, default=nil)
-        require "highline"
-        set key, proc{
-          hint = default ? " [#{default}]" : ""
-          answer = HighLine.new.ask("Enter #{key}#{hint}: ") do |q|
-            q.echo = false
-          end.to_s
-        }
+        $stderr.puts("DEPRECATION: use ask(.., .., :echo => false) "\
+                     "instead of ask_secretly.")
+
+        ask(key, default, :echo => false)
       end
 
       # Like capistrano's built-in on(), but connects to the server as root.
