@@ -21,8 +21,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "capistrano", ">= 3.1.0"
-  spec.add_dependency "sshkit", ">= 1.3.0"
+  spec.add_dependency "capistrano", ">= 3.2.1"
+  spec.add_dependency "sshkit", ">= 1.4.0"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
