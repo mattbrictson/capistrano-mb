@@ -36,7 +36,7 @@ namespace :load do
 
     set :fiftyfive_dotenv_keys, %w(rails_secret_key_base postmark_api_key)
     set :fiftyfive_dotenv_monitor, Monitor.new
-    set :fiftyfive_dotenv_filename, proc { ".env.#{fetch(:rails_env)}" }
+    set :fiftyfive_dotenv_filename, -> { ".env.#{fetch(:rails_env)}" }
 
     set :fiftyfive_nginx_force_https, false
     set :fiftyfive_nginx_redirect_hosts, {}
@@ -46,23 +46,23 @@ namespace :load do
     set :fiftyfive_postgresql_pool_size, 5
     set :fiftyfive_postgresql_host, "localhost"
     set :fiftyfive_postgresql_database,
-        proc { "#{application_basename}_#{fetch(:rails_env)}" }
-    set :fiftyfive_postgresql_user, proc { application_basename }
+        -> { "#{application_basename}_#{fetch(:rails_env)}" }
+    set :fiftyfive_postgresql_user, -> { application_basename }
     set :fiftyfive_postgresql_pgpass_path,
         proc{ "#{shared_path}/config/pgpass" }
-    set :fiftyfive_postgresql_backup_path, proc {
+    set :fiftyfive_postgresql_backup_path, -> {
       "#{shared_path}/backups/postgresql-dump.dmp"
     }
     set :fiftyfive_postgresql_backup_exclude_tables, []
-    set :fiftyfive_postgresql_dump_options, proc {
+    set :fiftyfive_postgresql_dump_options, -> {
       options = fetch(:fiftyfive_postgresql_backup_exclude_tables).map do |t|
         "-T #{t.shellescape}"
       end
       options.join(" ")
     }
 
-    set :fiftyfive_rbenv_ruby_version, proc { IO.read(".ruby-version").strip }
-    set :fiftyfive_rbenv_vars, proc {
+    set :fiftyfive_rbenv_ruby_version, -> { IO.read(".ruby-version").strip }
+    set :fiftyfive_rbenv_vars, -> {
       {
         "RAILS_ENV" => fetch(:rails_env),
         "PGPASSFILE" => fetch(:fiftyfive_postgresql_pgpass_path)
@@ -92,7 +92,7 @@ namespace :load do
 
     set :bundle_binstubs, false
     set :bundle_flags, '--deployment --quiet -j4'
-    set :deploy_to, proc { "/home/deployer/apps/#{fetch(:application)}" }
+    set :deploy_to, -> { "/home/deployer/apps/#{fetch(:application)}" }
     set :keep_releases, 10
     set :format, :pretty
     set :linked_dirs, -> {
@@ -114,7 +114,7 @@ namespace :load do
     }
     set :log_level, :info
     set :migration_role, :app
-    set :rails_env, proc { fetch(:stage) }
+    set :rails_env, -> { fetch(:stage) }
     set :ssh_options, :compression => false, :keepalive => true
 
     SSHKit.config.command_map[:rake] = "bundle exec rake"
