@@ -32,9 +32,6 @@ end
 before_exec do |server|
   # Ensure unicorn picks up our newest Gemfile
   ENV['BUNDLE_GEMFILE'] = "<%= current_path %>/Gemfile"
-
-  # Pick up any changes to .env values
-  Dotenv.overload if defined?(Dotenv)
 end
 
 before_fork do |server, worker|

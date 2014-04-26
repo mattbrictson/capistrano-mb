@@ -25,7 +25,7 @@ namespace :fiftyfive do
     end
 
     def shared_dotenv_path
-      "#{shared_path}/.env"
+      "#{shared_path}/#{fetch(:fiftyfive_dotenv_filename)}"
     end
 
     def set_up_secret_prompts

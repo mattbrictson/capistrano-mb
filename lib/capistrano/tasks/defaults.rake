@@ -36,6 +36,7 @@ namespace :load do
 
     set :fiftyfive_dotenv_keys, %w(rails_secret_key_base postmark_api_key)
     set :fiftyfive_dotenv_monitor, Monitor.new
+    set :fiftyfive_dotenv_filename, proc { ".env.#{fetch(:rails_env)}" }
 
     set :fiftyfive_nginx_force_https, false
     set :fiftyfive_nginx_redirect_hosts, {}
@@ -104,11 +105,13 @@ namespace :load do
           public/system
         )
     }
-    set :linked_files, %w(
-      .env
-      config/database.yml
-      config/unicorn.rb
-    )
+    set :linked_files, -> {
+        [fetch(:fiftyfive_dotenv_filename)] +
+        %w(
+          config/database.yml
+          config/unicorn.rb
+        )
+    }
     set :log_level, :info
     set :migration_role, :app
     set :rails_env, proc { fetch(:stage) }
