@@ -19,8 +19,10 @@ namespace :fiftyfive do
       set_up_secret_prompts
 
       on release_roles(:all) do
-        existing_env = capture("cat #{shared_dotenv_path} || echo")
-        update_dotenv_file(existing_env)
+        existing_env = if test("[ -f #{shared_dotenv_path} ]")
+          download!(shared_dotenv_path)
+        end
+        update_dotenv_file(existing_env || "")
       end
     end
 
