@@ -11,22 +11,42 @@ module SSHKit
         end
       end
 
+      class << self
+        attr_accessor :current_task
+
+        def monkey_patch_rake_task!
+          return if @rake_patched
+
+          eval(<<-EVAL)
+            class ::Rake::Task
+              alias :_original_execute_cap55 :execute
+              def execute(args=nil)
+                SSHKit::Formatter::Abbreviated.current_task = name
+                _original_execute_cap55(args)
+              end
+            end
+          EVAL
+
+          @rake_patched = true
+        end
+      end
+
       def initialize(io)
         super
+
+        self.class.monkey_patch_rake_task!
 
         @log_file = fetch(:fiftyfive_log_file) || "capistrano.log"
         @log_file_formatter = SSHKit::Formatter::Pretty.new(
           ::Logger.new("log/capistrano.log", 1, 20971520)
         )
+
+        original_output << "Using abbreviated format. " +
+                           "Full cap output is being written to " +
+                           c.blue(@log_file) + ".\n"
       end
 
       def write(obj)
-        unless log_started?
-          original_output << "Using abbreviated format. " +
-                             "Full cap output is being written to " +
-                             c.blue(@log_file) + ".\n"
-        end
-
         @log_file_formatter << obj
 
         case obj
@@ -43,47 +63,57 @@ module SSHKit
       def write_command(command)
         return unless command.verbosity > SSHKit::Logger::DEBUG
 
-        if new_command?(command) && ! command.started?
-          original_output << command_description(command) + "\n"
-        elsif command.finished?
-          original_output << command_status_message(command) + "\n"
+        write_clock_and_current_task_once
+        write_command_once(command)
+
+        if command.finished?
+          write_command_finished(command)
         end
+      end
+
+      def write_clock_and_current_task_once
+        task = self.class.current_task
+        return if @last_written_task == task
+        @last_written_task = task
+
+        original_output << clock + c.blue(task) + "\n"
+      end
+
+      def write_command_once(cmd, prefix="      ")
+        cmd_str = prefix + cmd.to_s.sub(%r(^/usr/bin/env ), "")
+        return if @last_commmand_s == cmd_str
+        @last_commmand_s = cmd_str
+
+        cmd_str = truncate_to_console(cmd_str)
+        original_output << c.yellow(cmd_str) + "\n"
+      end
+
+      def write_command_finished(command, prefix="      ")
+        host = command.host.to_s
+        elapsed = c.faint(sprintf(" %5.3fs", command.runtime))
+
+        status = if command.failure?
+          c.red("✘ #{host} (see #{@log_file} for details)")
+        else
+          c.green("✔ #{host}")
+        end
+
+        original_output << prefix + status + elapsed + "\n"
       end
 
       def write_log_message(log_message)
         return unless log_message.verbosity > SSHKit::Logger::INFO
-        original_output << log_message
+        original_output << log_message + "\n"
       end
 
-      def command_description(command)
+      def truncate_to_console(str)
         rows, columns = if original_output.tty?
           IO.console.winsize
         else
           [20, 80]
         end
 
-        width = columns - 6
-
-        desc = command.to_s.sub(%r(^/usr/bin/env ), "")
-        if desc.length > width
-          desc = desc[0...(width-1)] + "…"
-        end
-
-        clock + c.yellow(desc)
-      end
-
-      def command_status_message(command)
-        prefix = "     "
-        host = c.blue(command.host.to_s)
-        elapsed = c.faint(sprintf("%5.3fs", command.runtime))
-
-        status = if command.failure?
-          c.red("✘ (see #{@log_file} for details)")
-        else
-          c.green("✔")
-        end
-
-        [prefix, status, host, elapsed].join(" ")
+        str.length <= columns ? str : str[0...(columns-1)] + "…"
       end
 
       def clock
@@ -101,24 +131,6 @@ module SSHKit
           Term::ANSIColor
         else
           NoColor.new
-        end
-      end
-
-      def new_command?(command)
-        if @last_commmand_s == command.to_s
-          false
-        else
-          @last_commmand_s = command.to_s
-          true
-        end
-      end
-
-      def log_started?
-        if @log_started
-          true
-        else
-          @log_started = true
-          false
         end
       end
     end
