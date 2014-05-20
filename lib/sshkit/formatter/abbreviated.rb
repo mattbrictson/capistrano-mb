@@ -93,7 +93,7 @@ module SSHKit
         minutes = (duration / 60).to_i
         seconds = (duration - minutes * 60).to_i
 
-        c.faint("%02d:%02d " % [minutes, seconds])
+        "%02d:%02d " % [minutes, seconds]
       end
 
       def c
