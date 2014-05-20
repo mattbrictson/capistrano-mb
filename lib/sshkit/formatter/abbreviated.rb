@@ -4,6 +4,13 @@ require 'term/ansicolor'
 module SSHKit
   module Formatter
     class Abbreviated < SSHKit::Formatter::Abstract
+
+      class NoColor
+        def method_missing(color, string)
+          return string
+        end
+      end
+
       def initialize(io)
         super
 
@@ -90,7 +97,11 @@ module SSHKit
       end
 
       def c
-        @c ||= Term::ANSIColor
+        @c ||= if original_output.tty?
+          Term::ANSIColor
+        else
+          NoColor.new
+        end
       end
 
       def new_command?(command)
