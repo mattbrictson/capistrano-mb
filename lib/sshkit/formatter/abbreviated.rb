@@ -64,7 +64,7 @@ module SSHKit
 
         width = columns - 6
 
-        desc = command.to_s
+        desc = command.to_s.sub(%r(^/usr/bin/env ), "")
         if desc.length > width
           desc = desc[0...(width-1)] + "…"
         end
