@@ -78,7 +78,7 @@ module SSHKit
         elapsed = c.faint(sprintf("%5.3fs", command.runtime))
 
         status = if command.failure?
-          c.red('✘ (see log/capistrano.log for details)')
+          c.red("✘ (see #{@log_file} for details)")
         else
           c.green("✔")
         end
