@@ -38,6 +38,8 @@ namespace :load do
     set :fiftyfive_dotenv_monitor, Monitor.new
     set :fiftyfive_dotenv_filename, -> { ".env.#{fetch(:rails_env)}" }
 
+    set :fiftyfive_log_file, "log/capistrano.log"
+
     set :fiftyfive_nginx_force_https, false
     set :fiftyfive_nginx_redirect_hosts, {}
 
@@ -91,10 +93,10 @@ namespace :load do
     set :fiftyfive_unicorn_pid, proc{ "#{current_path}/tmp/pids/unicorn.pid" }
 
     set :bundle_binstubs, false
-    set :bundle_flags, '--deployment --quiet -j4'
+    set :bundle_flags, '--deployment -j4'
     set :deploy_to, -> { "/home/deployer/apps/#{fetch(:application)}" }
+    set :format, :abbreviated
     set :keep_releases, 10
-    set :format, :pretty
     set :linked_dirs, -> {
         ["public/#{fetch(:assets_prefix, 'assets')}"] +
         %w(
@@ -112,7 +114,7 @@ namespace :load do
           config/unicorn.rb
         )
     }
-    set :log_level, :info
+    set :log_level, :debug
     set :migration_role, :app
     set :rails_env, -> { fetch(:stage) }
     set :ssh_options, :compression => false, :keepalive => true

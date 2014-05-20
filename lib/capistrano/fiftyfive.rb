@@ -3,6 +3,7 @@ require "capistrano/fiftyfive/version"
 require "capistrano/fiftyfive/compatibility"
 require "capistrano/fiftyfive/dsl"
 require "capistrano/fiftyfive/recipe"
+require "sshkit/formatter/abbreviated"
 include Capistrano::Fiftyfive::DSL
 
 load File.expand_path("../tasks/defaults.rake", __FILE__)
