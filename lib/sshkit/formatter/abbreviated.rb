@@ -89,13 +89,15 @@ module SSHKit
       end
 
       def write_command_finished(command, prefix="      ")
+        user = command.user { command.host.user }
         host = command.host.to_s
+        user_at_host = [user, host].join("@")
         elapsed = c.faint(sprintf(" %5.3fs", command.runtime))
 
         status = if command.failure?
-          c.red("✘ #{host} (see #{@log_file} for details)")
+          c.red("✘ #{user_at_host} (see #{@log_file} for details)")
         else
-          c.green("✔ #{host}")
+          c.green("✔ #{user_at_host}")
         end
 
         original_output << prefix + status + elapsed + "\n"
