@@ -1,13 +1,23 @@
+require 'colorize'
 require 'io/console'
-require 'term/ansicolor'
 
 module SSHKit
   module Formatter
     class Abbreviated < SSHKit::Formatter::Abstract
 
-      class NoColor
-        def method_missing(color, string)
-          return string
+      # TODO: use SSHKit::Color in SSHKit 1.5+ when released?
+      class Color
+        attr_reader :tty
+
+        def initialize(output)
+          @tty = output.tty?
+        end
+
+        String::COLORS.map(&:first).each do |style|
+          define_method(style) do |string|
+            return string unless tty
+            string.colorize(style)
+          end
         end
       end
 
@@ -92,7 +102,7 @@ module SSHKit
         user = command.user { command.host.user }
         host = command.host.to_s
         user_at_host = [user, host].join("@")
-        elapsed = c.faint(sprintf(" %5.3fs", command.runtime))
+        elapsed = c.light_black(sprintf(" %5.3fs", command.runtime))
 
         status = if command.failure?
           c.red("✘ #{user_at_host} (see #{@log_file} for details)")
@@ -129,11 +139,7 @@ module SSHKit
       end
 
       def c
-        @c ||= if original_output.tty?
-          Term::ANSIColor
-        else
-          NoColor.new
-        end
+        @c ||= Color.new(original_output)
       end
     end
   end
