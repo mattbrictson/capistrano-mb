@@ -24,6 +24,8 @@ The gem is named "capistrano-fiftyfive" because it is built first and foremost f
 * rbenv
 * dotenv
 
+In addition, capistrano-fiftyfive changes many of Capistrano's defaults, including the deployment location, Bundler behavior, and SSH keep-alive settings. It also overhauls and simplifies the logging format. (See [defaults.rake][] for details.)
+
 Not quite to your liking? Consider forking the project to meet your needs.
 
 
