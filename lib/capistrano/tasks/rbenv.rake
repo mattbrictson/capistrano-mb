@@ -25,13 +25,17 @@ namespace :fiftyfive do
         execute :touch, "~/.rbenv/vars"
         execute :chmod, "0600 ~/.rbenv/vars"
 
+        vars = ""
+
         fetch(:fiftyfive_rbenv_vars).each do |name, value|
           execute :sed, "--in-place '/^#{name}=/d' ~/.rbenv/vars"
-
-          put "#{name}=#{value}\n", "/tmp/rbenv_var"
-          execute :cat, "/tmp/rbenv_var >> ~/.rbenv/vars"
-          execute :rm, "/tmp/rbenv_var"
+          vars << "#{name}=#{value}\n"
         end
+
+        tmp_file = "/tmp/rbenv_vars"
+        put vars, tmp_file
+        execute :cat, tmp_file, ">> ~/.rbenv/vars"
+        execute :rm, tmp_file
       end
     end
 
