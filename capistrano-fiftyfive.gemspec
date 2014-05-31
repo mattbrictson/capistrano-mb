@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["opensource@55minutes.com"]
   spec.description   = \
     "Capistrano 3.1+ recipes that we use at 55 Minutes to standardize "\
-    "our Rails deployments. These are tailored for Ubuntu 12.04 LTS, "\
+    "our Rails deployments. These are tailored for Ubuntu 14.04 LTS, "\
     "PostgreSQL, Nginx, Unicorn, rbenv, and Rails 3/4."
   spec.summary       = %q{Additional Capistrano recipes from 55 Minutes}
   spec.homepage      = "https://github.com/55minutes/capistrano-fiftyfive"
