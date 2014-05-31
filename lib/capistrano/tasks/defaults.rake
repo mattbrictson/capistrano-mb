@@ -21,15 +21,15 @@ namespace :load do
     set :fiftyfive_privileged_user, "root"
 
     set :fiftyfive_aptitude_packages,
-        "curl"                                   => :all,
-        "debian-goodies"                         => :all,
-        "git-core"                               => :all,
-        "libpq-dev@ppa:pitti/postgresql"         => :all,
-        "nginx@ppa:nginx/stable"                 => :web,
-        "nodejs@ppa:chris-lea/node.js"           => :all,
-        "postgresql-client@ppa:pitti/postgresql" => :all,
-        "postgresql@ppa:pitti/postgresql"        => :db,
-        "ufw"                                    => :all
+        "curl"                         => :all,
+        "debian-goodies"               => :all,
+        "git-core"                     => :all,
+        "libpq-dev"                    => :all,
+        "nginx@ppa:nginx/stable"       => :web,
+        "nodejs@ppa:chris-lea/node.js" => :all,
+        "postgresql-client"            => :all,
+        "postgresql"                   => :db,
+        "ufw"                          => :all
 
     set :fiftyfive_delayed_job_args, "-n 2"
     set :fiftyfive_delayed_job_script, "bin/delayed_job"
