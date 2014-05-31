@@ -1,6 +1,6 @@
 require 'colorize'
 
-unless defined?(Capistrano) && respond_to?(:namespace)
+unless defined?(Capistrano) && defined?(:namespace)
   $stderr.puts\
     "WARNING: capistrano/fiftyfive must be loaded by Capistrano in order "\
     "to work.\nRequire this gem by using Capistrano's Capfile, "\
