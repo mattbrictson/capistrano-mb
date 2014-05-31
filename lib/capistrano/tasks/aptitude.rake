@@ -28,9 +28,9 @@ namespace :fiftyfive do
           end
         end
 
-        repos_to_add.each { |repo| _add_repository(repo) }
+        repos_to_add.uniq.each { |repo| _add_repository(repo) }
         _update
-        packages_to_install.each { |pkg| _install(pkg) }
+        packages_to_install.uniq.each { |pkg| _install(pkg) }
       end
     end
 
