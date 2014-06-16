@@ -1,5 +1,7 @@
 # capistrano-fiftyfive
 
+[![Gem Version](https://badge.fury.io/rb/capistrano-fiftyfive.svg)](http://badge.fury.io/rb/capistrano-fiftyfive)
+
 Capistrano is great for deploying Rails applications, but what about all the prerequisites, like Nginx and PostgreSQL? Do you have a firewall configured on your VPS? Have you installed the latest OS security updates? Is HTTPS working right?
 
 The capistrano-fiftyfive gem adds a `cap <stage> provision` task to Capistrano that takes care of all that. Out of the box, `provision` will:
@@ -42,7 +44,7 @@ Add these gems to the development group of your Rails application's Gemfile:
       gem 'capistrano-bundler', :require => false
       gem 'capistrano-rails', :require => false
       gem 'capistrano', '~> 3.2.1', :require => false
-      gem 'capistrano-fiftyfive', :require => false, :github => '55minutes/capistrano-fiftyfive', :branch => :master
+      gem 'capistrano-fiftyfive', '~> 0.9.0', :require => false
     end
 
 And then execute:

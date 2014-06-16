@@ -1,4 +1,4 @@
-Copyright (c) 2013 55 Minutes Inc
+Copyright (c) 2014 55 Minutes Inc
 
 MIT License
 

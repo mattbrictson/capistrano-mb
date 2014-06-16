@@ -26,6 +26,7 @@ module Capistrano
         end
 
         write(string + "\n")
+        @output.flush
       end
 
       # Writes directly through to the IO with no truncation or color logic.
