@@ -1,5 +1,7 @@
 fiftyfive_recipe :aptitude do
   during :provision, %w(upgrade install)
+  before "provision:14_04", "fiftyfive:aptitude:install_postgres_repo"
+  before "provision:14_04", "fiftyfive:aptitude:change_postgres_packages"
 end
 
 namespace :fiftyfive do
@@ -34,15 +36,37 @@ namespace :fiftyfive do
       end
     end
 
+    desc "Add the official apt repository for PostgreSQL"
+    task :install_postgres_repo do
+      privileged_on roles(:all) do |host|
+        _add_repository(
+          "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main",
+          :key => "https://www.postgresql.org/media/keys/ACCC4CF8.asc")
+      end
+    end
+
+    desc "Change 12.04 PostgreSQL package requirements to 14.04 versions"
+    task :change_postgres_packages do
+      packages = fetch(:fiftyfive_aptitude_packages, {})
+      packages = Hash[packages.map do |key, value|
+        [key.sub(/@ppa:pitti\/postgresql$/, ""), value]
+      end]
+      set(:fiftyfive_aptitude_packages, packages)
+    end
+
     def _already_installed?(pkg)
       test(:dpkg, "-s", pkg, "2>/dev/null", "|", :grep, "-q 'ok installed'")
     end
 
-    def _add_repository(repo)
+    def _add_repository(repo, options={})
       unless _already_installed?("python-software-properties")
         _install("python-software-properties")
       end
-      execute :"apt-add-repository", "-y", repo
+      execute :"apt-add-repository", "-y '#{repo}'"
+
+      if (key = options.fetch(:key, nil))
+        execute "wget --quiet -O - #{key} | sudo apt-key add -"
+      end
     end
 
     def _install(pkg)
