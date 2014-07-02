@@ -19,7 +19,7 @@ The capistrano-fiftyfive gem adds a `cap <stage> provision` task to Capistrano t
 
 The gem is named "capistrano-fiftyfive" because it is built first and foremost for serving our deployment needs here at [55 Minutes](http://55minutes.com). You'll notice that capistrano-fiftyfive is opinionated and strictly uses the following stack:
 
-* Ubuntu 12.04 LTS
+* Ubuntu 12.04 LTS or 14.04 LTS
 * PostgreSQL
 * Unicorn
 * Nginx
@@ -121,7 +121,7 @@ Check out our [rails-starter][] project for a sample Capfile and deploy.rb.
 ## Usage
 
 The power of the capistrano-fiftyfive recipes is that they take care of the
-entire setup of a bare Ubuntu 12.04 server, all the way to a fully configured
+entire setup of a bare Ubuntu 12.04 or 14.04 server, all the way to a fully configured
 and running Rails app on top up Unicorn, Nginx, rbenv, and PostgreSQL.
 
 ### Deploying to a new server from scratch
@@ -129,13 +129,14 @@ and running Rails app on top up Unicorn, Nginx, rbenv, and PostgreSQL.
 These steps assume you have loaded the full set of capistrano-fiftyfive
 recipes in your Capfile.
 
-1. Provision an Ubuntu 12.04 VPS at your hosting provider of choice.
+1. Provision an Ubuntu 12.04 or 14.04 VPS at your hosting provider of choice.
 2. Install your public SSH key for the root user. Some providers (e.g. DigitalOcean) can do this for you automatically when you provision a new VPS.
 3. Repeat steps 1-2 for all the servers in your cluster, if you are using
    a multi-server setup (e.g. separate web, app, and database servers).
 4. Let capistrano-fiftyfive take it from here:
 
-        cap staging provision
+        cap staging provision       # for 12.04 LTS
+        cap staging provision:14_04 # for 14.04 LTS
         cap staging deploy
 
 ### Running individual tasks
