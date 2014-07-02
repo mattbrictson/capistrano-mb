@@ -7,6 +7,7 @@ require "capistrano/fiftyfive/console"
 require "sshkit/formatter/abbreviated"
 include Capistrano::Fiftyfive::DSL
 
+load File.expand_path("../tasks/provision.rake", __FILE__)
 load File.expand_path("../tasks/defaults.rake", __FILE__)
 load File.expand_path("../tasks/user.rake", __FILE__)
 load File.expand_path("../tasks/aptitude.rake", __FILE__)
