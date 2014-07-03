@@ -1,5 +1,9 @@
 # capistrano-fiftyfive Changelog
 
+## `0.10.0`
+
+Add support for Ubuntu 14.04 LTS. To provision a 14.04 server, use the new `provision:14_04` task.
+
 ## `0.9.1`
 
 Flush console output after each line is printed. This allows deployment progress to be monitored in e.g. Jenkins.
