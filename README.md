@@ -44,7 +44,7 @@ Add these gems to the development group of your Rails application's Gemfile:
       gem 'capistrano-bundler', :require => false
       gem 'capistrano-rails', :require => false
       gem 'capistrano', '~> 3.2.1', :require => false
-      gem 'capistrano-fiftyfive', '~> 0.9.0', :require => false
+      gem 'capistrano-fiftyfive', '~> 0.10.0', :require => false
     end
 
 And then execute:
