@@ -64,7 +64,7 @@ module SSHKit
 
       def write_log_message(log_message)
         return unless log_message.verbosity > SSHKit::Logger::INFO
-        original_output << log_message + "\n"
+        original_output << log_message.to_s + "\n"
       end
 
       def write_command(command)

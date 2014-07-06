@@ -1,4 +1,4 @@
-fiftyfive_recipe :unicorn do
+fiftyfive_recipe :puma do
   during "deploy:starting", "starting"
   during :provision, %w(init_d nginx_site config_rb)
   during "deploy:start", "start"
@@ -8,28 +8,28 @@ fiftyfive_recipe :unicorn do
 end
 
 namespace :fiftyfive do
-  namespace :unicorn do
+  namespace :puma do
     task :starting do
-      fetch(:linked_files, []) << "config/unicorn.rb"
+      fetch(:linked_files, []) << "config/puma.rb"
     end
 
-    desc "Install service script for unicorn"
+    desc "Install service script for puma"
     task :init_d do
       privileged_on roles(:app) do |host, user|
-        unicorn_user = fetch(:fiftyfive_unicorn_user) || user
+        puma_user = fetch(:fiftyfive_puma_user) || user
 
-        template "unicorn_init.erb",
-                 "/etc/init.d/unicorn_#{application_basename}",
+        template "puma_init.erb",
+                 "/etc/init.d/puma_#{application_basename}",
                  :mode => "a+rx",
                  :binding => binding
 
-        execute "update-rc.d -f unicorn_#{application_basename} defaults"
+        execute "update-rc.d -f puma_#{application_basename} defaults"
       end
     end
 
-    desc "Install unicorn proxy into nginx sites and restart nginx"
+    desc "Install puma proxy into nginx sites and restart nginx"
     task :nginx_site do
-      set(:fiftyfive_server_name, "unicorn")
+      set(:fiftyfive_server_name, "puma")
 
       privileged_on roles(:web) do
         template "nginx_site.erb",
@@ -40,19 +40,27 @@ namespace :fiftyfive do
       end
     end
 
-    desc "Create config/unicorn.rb"
+    desc "Create config/puma.rb"
     task :config_rb do
       on release_roles(:all) do
-        template "unicorn.rb.erb", "#{shared_path}/config/unicorn.rb"
+        template "puma.rb.erb", "#{shared_path}/config/puma.rb"
       end
     end
 
-    %w[start stop restart].each do |command|
-      desc "#{command} unicorn"
+    %w[start stop].each do |command|
+      desc "#{command} puma"
       task command do
         on roles(:app) do
-          execute "service unicorn_#{application_basename} #{command}"
+          execute "service puma_#{application_basename} #{command}"
         end
+      end
+    end
+
+    desc "restart puma"
+    task :restart do
+      on roles(:app) do
+        execute "service puma_#{application_basename} restart || "\
+                "service puma_#{application_basename} start"
       end
     end
   end

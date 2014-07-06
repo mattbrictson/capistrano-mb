@@ -1,0 +1,43 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          puma
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Manage puma server
+# Description:       Start, stop, restart puma server for a specific application.
+### END INIT INFO
+set -e
+
+APP_ROOT=<%= current_path %>
+PUMACTL_CMD="cd <%= current_path %>; bundle exec pumactl -F <%= fetch(:fiftyfive_puma_config) %>"
+AS_USER=<%= puma_user %>
+set -u
+
+pumactl () {
+  if [ "$(id -un)" = "$AS_USER" ]; then
+    eval $PUMACTL_CMD $1
+  else
+    su -c "$PUMACTL_CMD $1" - $AS_USER
+  fi
+}
+
+case "$1" in
+start)
+  pumactl "start"
+  ;;
+stop)
+  pumactl "stop"
+  ;;
+restart|reload)
+  pumactl "phased-restart"
+  ;;
+status)
+  pumactl "status"
+  ;;
+*)
+  echo >&2 "Usage: $0 <start|stop|restart|status>"
+  exit 1
+  ;;
+esac

@@ -1,10 +1,7 @@
 # Based on https://github.com/defunkt/unicorn/blob/master/examples/nginx.conf
 
-upstream unicorn_<%= application_basename %> {
-  # fail_timeout=0 means we always retry an upstream even if it failed
-  # to return a good HTTP response (in case the Unicorn master nukes a
-  # single worker for timing out).
-  server unix:/tmp/unicorn.<%= application_basename %>.sock fail_timeout=0;
+upstream <%= fetch(:fiftyfive_server_name) %>_<%= application_basename %> {
+  server unix:/tmp/<%= fetch(:fiftyfive_server_name) %>.<%= application_basename %>.sock fail_timeout=0;
 }
 
 <% [80, 443].each do |port| %>
@@ -69,9 +66,9 @@ upstream unicorn_<%= application_basename %> {
 
       # Prefer to serve static files directly from nginx to avoid unnecessary
       # data copies from the application server.
-      try_files $uri/index.html $uri @unicorn;
+      try_files $uri/index.html $uri @<%= fetch(:fiftyfive_server_name) %>;
 
-      location @unicorn {
+      location @<%= fetch(:fiftyfive_server_name) %> {
         # an HTTP header important enough to have its own Wikipedia entry:
         #   http://en.wikipedia.org/wiki/X-Forwarded-For
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -87,7 +84,7 @@ upstream unicorn_<%= application_basename %> {
         # redirects, we set the Host: header above already.
         proxy_redirect off;
 
-        proxy_pass http://unicorn_<%= application_basename %>;
+        proxy_pass http://<%= fetch(:fiftyfive_server_name) %>_<%= application_basename %>;
       }
 
       # Rails error pages

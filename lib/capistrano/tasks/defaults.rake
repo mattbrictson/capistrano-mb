@@ -63,6 +63,14 @@ namespace :load do
       options.join(" ")
     }
 
+    set :fiftyfive_puma_threads, "0, 8"
+    set :fiftyfive_puma_workers, 2
+    set :fiftyfive_puma_timeout, 30
+    set :fiftyfive_puma_config, ->{ "#{current_path}/config/puma.rb" }
+    set :fiftyfive_puma_stdout_log, ->{ "#{current_path}/log/puma.stdout.log" }
+    set :fiftyfive_puma_stderr_log, ->{ "#{current_path}/log/puma.stderr.log" }
+    set :fiftyfive_puma_pid, ->{ "#{current_path}/tmp/pids/puma.pid" }
+
     set :fiftyfive_rbenv_ruby_version, -> { IO.read(".ruby-version").strip }
     set :fiftyfive_rbenv_vars, -> {
       {
@@ -111,7 +119,6 @@ namespace :load do
         [fetch(:fiftyfive_dotenv_filename)] +
         %w(
           config/database.yml
-          config/unicorn.rb
         )
     }
     set :log_level, :debug

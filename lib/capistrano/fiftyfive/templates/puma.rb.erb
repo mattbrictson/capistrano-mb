@@ -1,0 +1,22 @@
+#!/usr/bin/env puma
+
+directory "<%= current_path %>"
+environment "<%= fetch(:rails_env) %>"
+
+daemonize
+pidfile "<%= fetch(:fiftyfive_puma_pid) %>"
+state_path "<%= current_path %>/tmp/pids/puma.state"
+stdout_redirect "<%= fetch(:fiftyfive_puma_stdout_log) %>",
+                "<%= fetch(:fiftyfive_puma_stderr_log) %>",
+                true
+
+threads <%= fetch(:fiftyfive_puma_threads) %>
+
+<% if fetch(:fiftyfive_puma_workers, 0) > 1 %>
+  workers <%= fetch(:fiftyfive_puma_workers) %>
+  worker_timeout <%= fetch(:fiftyfive_puma_timeout) %>
+<% end %>
+
+bind "unix:/tmp/puma.<%= application_basename %>.sock"
+prune_bundler
+tag "<%= application_basename %>"
