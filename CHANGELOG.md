@@ -1,5 +1,9 @@
 # capistrano-fiftyfive Changelog
 
+## `0.11.0`
+
+* INFO log messages are now included in abbreviated output (e.g. upload/download progress).
+
 ## `0.10.0`
 
 Add support for Ubuntu 14.04 LTS. To provision a 14.04 server, use the new `provision:14_04` task.

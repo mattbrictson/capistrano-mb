@@ -63,8 +63,8 @@ module SSHKit
       private
 
       def write_log_message(log_message)
-        return unless log_message.verbosity > SSHKit::Logger::INFO
-        original_output << log_message + "\n"
+        return unless log_message.verbosity >= SSHKit::Logger::INFO
+        @console.print_line(light_black("      " + log_message.to_s))
       end
 
       def write_command(command)
