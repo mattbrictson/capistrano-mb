@@ -4,6 +4,7 @@
 
 * INFO log messages are now included in abbreviated output (e.g. upload/download progress).
 * Add `agree()` method to the DSL, which delegates to `HighLine.new.agree`.
+* Add `fiftyfive:postgresql:dump`/`restore` tasks.
 
 ## `0.10.0`
 

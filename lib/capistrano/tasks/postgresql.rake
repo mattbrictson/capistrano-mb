@@ -99,5 +99,65 @@ namespace :fiftyfive do
           :binding => binding
       end
     end
+
+    desc "Dump the database to FILE"
+    task :dump do
+      on primary(:db) do
+        with_pgpassfile do
+          execute :pg_dump,
+            "-Fc -Z9 -O",
+            "-x", fetch(:fiftyfive_postgresql_dump_options),
+            "-f", remote_dump_file,
+            connection_flags,
+            fetch(:fiftyfive_postgresql_database)
+        end
+
+        download!(remote_dump_file, local_dump_file)
+
+        info(
+          "Exported #{fetch(:fiftyfive_postgresql_database)} "\
+          "to #{local_dump_file}."
+          )
+      end
+    end
+
+    desc "Restore database from FILE"
+    task :restore do
+      on primary(:db) do
+        exit 1 unless agree(
+          "\nErase existing #{fetch(:rails_env)} database "\
+          "and restore from local file: #{local_dump_file}? "
+          )
+
+        upload!(local_dump_file, remote_dump_file)
+
+        with_pgpassfile do
+          execute :pg_restore,
+            "-O -c",
+            connection_flags,
+            "-d", fetch(:fiftyfive_postgresql_database),
+            remote_dump_file
+        end
+      end
+    end
+
+    def local_dump_file
+      ENV.fetch("FILE", "#{fetch(:fiftyfive_postgresql_database)}.dmp")
+    end
+
+    def remote_dump_file
+      "/tmp/#{fetch(:fiftyfive_postgresql_database)}.dmp"
+    end
+
+    def connection_flags
+      [
+        "-U", fetch(:fiftyfive_postgresql_user),
+        "-h", fetch(:fiftyfive_postgresql_host)
+      ].join(" ")
+    end
+
+    def with_pgpassfile(&block)
+      with(:pgpassfile => fetch(:fiftyfive_postgresql_pgpass_path), &block)
+    end
   end
 end
