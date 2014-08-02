@@ -44,6 +44,12 @@ module Capistrano
         }
       end
 
+      # Delegates to HighLine's agree() method.
+      def agree(yes_or_no_question, character=nil)
+        require "highline"
+        HighLine.new.agree(yes_or_no_question, character)
+      end
+
       # Like capistrano's built-in on(), but connects to the server as root.
       # To use a user other than root, set :fiftyfive_privileged_user or
       # specify :privileged_user as a server property.
