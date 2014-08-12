@@ -1,3 +1,4 @@
+require "digest"
 require "monitor"
 require "capistrano/fiftyfive/version"
 require "capistrano/fiftyfive/compatibility"

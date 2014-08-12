@@ -45,7 +45,9 @@ namespace :fiftyfive do
 
         unless test("sudo -u postgres psql -c '\\du' | grep -q #{user}")
           passwd = fetch(:fiftyfive_postgresql_password)
-          execute %Q[sudo -u postgres psql -c "create user #{user} with password '#{passwd}';"]
+          md5 = Digest::MD5.hexdigest(passwd + user)
+          execute "sudo -u postgres psql -c " +
+                  %Q["CREATE USER #{user} PASSWORD 'md5#{md5}';"]
         end
       end
     end
@@ -64,11 +66,22 @@ namespace :fiftyfive do
 
     desc "Generate database.yml"
     task :database_yml do
+      yaml = {
+        fetch(:rails_env).to_s => {
+          "adapter" => "postgresql",
+          "encoding" => "unicode",
+          "database" => fetch(:fiftyfive_postgresql_database).to_s,
+          "pool" => fetch(:fiftyfive_postgresql_pool_size).to_i,
+          "username" => fetch(:fiftyfive_postgresql_user).to_s,
+          "password" => fetch(:fiftyfive_postgresql_password).to_s,
+          "host" => fetch(:fiftyfive_postgresql_host).to_s
+        }
+      }
       fetch(:fiftyfive_postgresql_password)
       on release_roles(:all) do
-        template "postgresql.yml.erb",
-                 "#{shared_path}/config/database.yml",
-                 :mode => "600"
+        put YAML.dump(yaml),
+            "#{shared_path}/config/database.yml",
+            :mode => "600"
       end
     end
 
