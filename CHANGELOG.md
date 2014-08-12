@@ -1,5 +1,9 @@
 # capistrano-fiftyfive Changelog
 
+## `0.11.1`
+
+Fixes errors caused by PostgreSQL password containing shell-unsafe characters. Passwords are now safely hashed with MD5 before being used in the `CREATE USER` command.
+
 ## `0.11.0`
 
 * INFO log messages are now included in abbreviated output (e.g. upload/download progress).
