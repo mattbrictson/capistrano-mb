@@ -64,20 +64,19 @@ module SSHKit
 
       def write_log_message(log_message)
         return unless log_message.verbosity >= SSHKit::Logger::INFO
+        print_task_if_changed
         @console.print_line(light_black("      " + log_message.to_s))
       end
 
       def write_command(command)
         return unless command.verbosity > SSHKit::Logger::DEBUG
 
+        print_task_if_changed
+
         ctx = context_for_command(command)
         number = '%02d' % ctx.number
 
         if ctx.first_execution?
-          if ctx.first_command_of_task?
-            print_line "#{clock} #{blue(ctx.task)}"
-          end
-
           description = yellow(ctx.shell_string)
           print_line "      #{number} #{description}"
         end
@@ -88,9 +87,33 @@ module SSHKit
         end
       end
 
-      def context_for_command(command)
+      def print_task_if_changed
+        status = current_task_status
+
+        if status.changed
+          print_line "#{clock} #{blue(status.task)}"
+        end
+      end
+
+      def current_task_status
         task = self.class.current_rake_task.to_s
-        task_commands = @tasks[task] ||= []
+        if @tasks[task]
+          changed = false
+        else
+          changed = true
+          @tasks[task] = []
+        end
+
+        OpenStruct.new(
+          :task => task,
+          :commands => @tasks[task],
+          :changed => changed
+        )
+      end
+
+      def context_for_command(command)
+        status = current_task_status
+        task_commands = status.commands
 
         shell_string = command.to_s.sub(%r(^/usr/bin/env ), "")
 
@@ -105,9 +128,7 @@ module SSHKit
 
         OpenStruct.new({
           :first_execution? => first_execution,
-          :first_command_of_task? => (number == 1),
           :number => number,
-          :task => task,
           :shell_string => shell_string
         })
       end
