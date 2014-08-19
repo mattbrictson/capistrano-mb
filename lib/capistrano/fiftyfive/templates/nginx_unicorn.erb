@@ -87,6 +87,10 @@ upstream unicorn_<%= application_basename %> {
         # redirects, we set the Host: header above already.
         proxy_redirect off;
 
+        # enable caching (honors cache-control headers sent by Rails)
+        proxy_cache default;
+        add_header X-Cache-Status $upstream_cache_status;
+
         proxy_pass http://unicorn_<%= application_basename %>;
       }
 
