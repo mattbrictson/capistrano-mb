@@ -15,11 +15,12 @@ module Capistrano
 
       # Writes to the IO after first truncating the output to fit the console
       # width. If the underlying IO is not a TTY, ANSI colors are removed from
-      # the output. A newline is always added.
+      # the output. A newline is always added. Color output can be forced by
+      # setting the SSHKIT_COLOR environment variable.
       def print_line(obj)
         string = obj.to_s
 
-        if @output.tty?
+        if ENV["SSHKIT_COLOR"] || @output.tty?
           string = truncate_to_console_width(string)
         else
           string = strip_ascii_color(string)
