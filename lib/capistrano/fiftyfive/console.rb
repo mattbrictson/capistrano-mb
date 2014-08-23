@@ -20,9 +20,10 @@ module Capistrano
       def print_line(obj)
         string = obj.to_s
 
-        if ENV["SSHKIT_COLOR"] || @output.tty?
+        if console_width
           string = truncate_to_console_width(string)
-        else
+        end
+        unless ENV["SSHKIT_COLOR"] || @output.tty?
           string = strip_ascii_color(string)
         end
 
