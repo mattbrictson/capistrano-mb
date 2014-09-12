@@ -1,5 +1,11 @@
 # capistrano-fiftyfive Changelog
 
+## `0.12.0`
+
+* capistrano-fiftyfive's abbreviated format now honors the new `SSHKIT_COLOR` environment variable. Set `SSHKIT_COLOR=1` to force ANSI color even on non-ttys (e.g. Jenkins).
+* The generated nginx config now enables reverse proxy caching by default.
+* INFO messages printed by sshkit are now printed to console under the appropriate rake task heading.
+
 ## `0.11.1`
 
 Fixes errors caused by PostgreSQL password containing shell-unsafe characters. Passwords are now safely hashed with MD5 before being used in the `CREATE USER` command.
