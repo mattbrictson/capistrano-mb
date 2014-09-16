@@ -14,9 +14,10 @@ namespace :fiftyfive do
         template "sidekiq_init.erb",
                  "/etc/init.d/sidekiq_#{application_basename}",
                  :mode => "a+rx",
-                 :binding => binding
+                 :binding => binding,
+                 :sudo => true
 
-        execute "update-rc.d -f sidekiq_#{application_basename} defaults"
+        execute "sudo update-rc.d -f sidekiq_#{application_basename} defaults"
       end
     end
 

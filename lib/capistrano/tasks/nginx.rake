@@ -7,14 +7,15 @@ namespace :fiftyfive do
     desc "Install nginx.conf files and restart nginx"
     task :configure do
       privileged_on roles(:web) do
-        template("nginx.erb", "/etc/nginx/nginx.conf")
+        template("nginx.erb", "/etc/nginx/nginx.conf", :sudo => true)
 
         template "nginx_unicorn.erb",
-                 "/etc/nginx/sites-enabled/#{application_basename}"
+                 "/etc/nginx/sites-enabled/#{application_basename}",
+                 :sudo => true
 
-        execute "rm -f /etc/nginx/sites-enabled/default"
-        execute "mkdir -p /etc/nginx/#{application_basename}-locations"
-        execute "service nginx restart"
+        execute "sudo rm -f /etc/nginx/sites-enabled/default"
+        execute "sudo mkdir -p /etc/nginx/#{application_basename}-locations"
+        execute "sudo service nginx restart"
       end
     end
 
@@ -22,7 +23,7 @@ namespace :fiftyfive do
       desc "#{command} nginx"
       task command.intern do
         privileged_on roles(:web) do
-          execute "service nginx #{command}"
+          execute "sudo service nginx #{command}"
         end
       end
     end

@@ -84,6 +84,13 @@ module Capistrano
       # remote file.
       #
       def put(string_or_io, remote_path, opts={})
+        sudo_exec = ->(*cmd) {
+          cmd = [:sudo] + cmd if opts[:sudo]
+          execute *cmd
+        }
+
+        tmp_path = "/tmp/#{SecureRandom.uuid}"
+
         owner = opts[:owner]
         mode = opts[:mode]
 
@@ -93,12 +100,13 @@ module Capistrano
           StringIO.new(string_or_io.to_s)
         end
 
-        execute :mkdir, "-p", File.dirname(remote_path)
+        sudo_exec.call :mkdir, "-p", File.dirname(remote_path)
 
-        upload!(source, remote_path)
+        upload!(source, tmp_path)
 
-        execute(:chown, owner, remote_path) if owner
-        execute(:chmod, mode, remote_path) if mode
+        sudo_exec.call(:mv, "-f", tmp_path, remote_path)
+        sudo_exec.call(:chown, owner, remote_path) if owner
+        sudo_exec.call(:chmod, mode, remote_path) if mode
       end
 
 

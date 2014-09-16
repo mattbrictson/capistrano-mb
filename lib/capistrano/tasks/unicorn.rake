@@ -16,9 +16,10 @@ namespace :fiftyfive do
         template "unicorn_init.erb",
                  "/etc/init.d/unicorn_#{application_basename}",
                  :mode => "a+rx",
-                 :binding => binding
+                 :binding => binding,
+                 :sudo => true
 
-        execute "update-rc.d -f unicorn_#{application_basename} defaults"
+        execute "sudo update-rc.d -f unicorn_#{application_basename} defaults"
       end
     end
 

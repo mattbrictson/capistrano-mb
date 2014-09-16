@@ -14,9 +14,10 @@ namespace :fiftyfive do
         template "delayed_job_init.erb",
                  "/etc/init.d/delayed_job_#{application_basename}",
                  :mode => "a+rx",
-                 :binding => binding
+                 :binding => binding,
+                 :sudo => true
 
-        execute "update-rc.d -f delayed_job_#{application_basename} defaults"
+        execute "sudo update-rc.d -f delayed_job_#{application_basename} defaults"
       end
     end
 

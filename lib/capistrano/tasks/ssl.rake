@@ -19,7 +19,7 @@ namespace :fiftyfive do
     def _run_ssl_script(opt="")
       privileged_on primary(:web) do
         files_exist = %w(.key .csr .crt).any? do |ext|
-          test("[ -f /etc/ssl/#{application_basename}#{ext} ]")
+          test("sudo [ -f /etc/ssl/#{application_basename}#{ext} ]")
         end
 
         if files_exist
@@ -34,12 +34,12 @@ namespace :fiftyfive do
           config = "/tmp/csr_config"
           ssl_script = "/tmp/ssl_script"
 
-          template("csr_config.erb", config)
-          template("ssl_setup", ssl_script, :mode => "+x")
+          template("csr_config.erb", config, :sudo => true)
+          template("ssl_setup", ssl_script, :mode => "+x", :sudo => true)
 
           within "/etc/ssl" do
-            execute ssl_script, opt, application_basename, config
-            execute :rm, ssl_script, config
+            execute :sudo, ssl_script, opt, application_basename, config
+            execute :sudo, "rm", ssl_script, config
           end
         end
       end

@@ -9,7 +9,8 @@ namespace :fiftyfive do
       template "logrotate.erb",
                "/etc/logrotate.d/#{application_basename}-logs",
                :mode => 644,
-               :owner => "root:root"
+               :owner => "root:root",
+               :sudo => true
     end
   end
 end

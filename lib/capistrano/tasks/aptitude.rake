@@ -55,14 +55,14 @@ namespace :fiftyfive do
     end
 
     def _already_installed?(pkg)
-      test(:dpkg, "-s", pkg, "2>/dev/null", "|", :grep, "-q 'ok installed'")
+      test(:sudo, "dpkg", "-s", pkg, "2>/dev/null", "|", :grep, "-q 'ok installed'")
     end
 
     def _add_repository(repo, options={})
       unless _already_installed?("python-software-properties")
         _install("python-software-properties")
       end
-      execute :"apt-add-repository", "-y '#{repo}'"
+      execute :sudo, "apt-add-repository", "-y '#{repo}'"
 
       if (key = options.fetch(:key, nil))
         execute "wget --quiet -O - #{key} | sudo apt-key add -"
@@ -71,19 +71,19 @@ namespace :fiftyfive do
 
     def _install(pkg)
       with :debian_frontend => "noninteractive" do
-        execute :aptitude, "-y -q install", pkg
+        execute :sudo, "aptitude", "-y -q install", pkg
       end
     end
 
     def _update
       with :debian_frontend => "noninteractive" do
-        execute :aptitude, "-q -q -y update"
+        execute :sudo, "aptitude", "-q -q -y update"
       end
     end
 
     def _safe_upgrade
       with :debian_frontend => "noninteractive" do
-        execute :aptitude, "-q -q -y safe-upgrade"
+        execute :sudo, "aptitude", "-q -q -y safe-upgrade"
       end
     end
 

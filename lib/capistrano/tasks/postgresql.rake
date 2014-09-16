@@ -17,24 +17,24 @@ namespace :fiftyfive do
         pgtune_output = "/tmp/postgresql.conf.pgtune"
         pg_conf = "/etc/postgresql/9.1/main/postgresql.conf"
 
-        execute :rm, "-rf", pgtune_dir
-        execute :git,
+        execute :sudo, "rm", "-rf", pgtune_dir
+        execute :sudo, "git",
                 "clone",
                 "-q",
                 "https://github.com/gregs1104/pgtune.git",
                 pgtune_dir
 
-        execute "#{pgtune_dir}/pgtune",
+        execute "sudo #{pgtune_dir}/pgtune",
                 "--input-config", pg_conf,
                 "--output-config", pgtune_output,
                 "--type", "Web",
                 "--connections", fetch(:fiftyfive_postgresql_max_connections)
 
         # Log diff for informational purposes
-        execute :diff, pg_conf, pgtune_output, "|| true"
+        execute :sudo, "diff", pg_conf, pgtune_output, "|| true"
 
-        execute :cp, pgtune_output, pg_conf
-        execute :service, "postgresql", "restart"
+        execute :sudo, "cp", pgtune_output, pg_conf
+        execute :sudo, "service", "postgresql", "restart"
       end
     end
 
@@ -109,7 +109,8 @@ namespace :fiftyfive do
           "/etc/logrotate.d/postgresql-backup-#{application_basename}",
           :owner => "root:root",
           :mode => "644",
-          :binding => binding
+          :binding => binding,
+          :sudo => true
       end
     end
 
