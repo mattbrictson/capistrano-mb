@@ -1,5 +1,15 @@
 # capistrano-fiftyfive Changelog
 
+## `0.13.0`
+
+The provisioning tasks now work for a non-root user that has password-less sudo privileges. Assuming a user named `matt` that can sudo without being prompted for a password ([instructions here](http://askubuntu.com/questions/192050/how-to-run-sudo-command-with-no-password)), simply modify `deploy.rb` with:
+
+```ruby
+set :fiftyfive_privileged_user, "matt"
+```
+
+Now all provisioning tasks that would normally run as root will instead run as `matt` using `sudo`.
+
 ## `0.12.0`
 
 * capistrano-fiftyfive's abbreviated format now honors the new `SSHKIT_COLOR` environment variable. Set `SSHKIT_COLOR=1` to force ANSI color even on non-ttys (e.g. Jenkins).
