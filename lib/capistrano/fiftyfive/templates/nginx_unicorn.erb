@@ -88,7 +88,10 @@ upstream unicorn_<%= application_basename %> {
         proxy_redirect off;
 
         # enable caching (honors cache-control headers sent by Rails)
+        # lock and use_stale help prevent a cache stampede
         proxy_cache default;
+        proxy_cache_lock on;
+        proxy_cache_use_stale updating;
         add_header X-Cache-Status $upstream_cache_status;
 
         proxy_pass http://unicorn_<%= application_basename %>;
