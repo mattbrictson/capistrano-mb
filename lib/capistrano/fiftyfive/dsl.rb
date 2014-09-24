@@ -30,12 +30,11 @@ module Capistrano
       end
 
       # Like capistrano's built-in ask(), but does not echo user input.
-      # Suitable for passwords, etc. Requires the highline gem.
+      # Suitable for passwords, etc. Uses the highline gem.
       #
       #   ask_secretly(:postgresql_password)
       #
       def ask_secretly(key, default=nil)
-        require "highline"
         set key, proc{
           hint = default ? " [#{default}]" : ""
           answer = HighLine.new.ask("Enter #{key}#{hint}: ") do |q|
@@ -46,7 +45,6 @@ module Capistrano
 
       # Delegates to HighLine's agree() method.
       def agree(yes_or_no_question, character=nil)
-        require "highline"
         HighLine.new.agree(yes_or_no_question, character)
       end
 
