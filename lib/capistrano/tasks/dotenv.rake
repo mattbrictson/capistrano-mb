@@ -18,7 +18,7 @@ namespace :fiftyfive do
     task :update do
       set_up_secret_prompts
 
-      on release_roles(:all) do
+      on release_roles(:all), :in => :sequence do
         existing_env = if test("[ -f #{shared_dotenv_path} ]")
           download!(shared_dotenv_path)
         end
@@ -39,10 +39,8 @@ namespace :fiftyfive do
 
       fetch(:fiftyfive_dotenv_keys).each do |key|
         next if existing =~ /^#{Regexp.escape(key.upcase)}=/
-        fetch(:fiftyfive_dotenv_monitor).synchronize do
-          updated << "\n" unless updated.end_with?("\n")
-          updated << "#{key.upcase}=#{fetch(key)}\n"
-        end
+        updated << "\n" unless updated.end_with?("\n")
+        updated << "#{key.upcase}=#{fetch(key)}\n"
       end
 
       unless existing == updated

@@ -35,7 +35,6 @@ namespace :load do
     set :fiftyfive_delayed_job_script, "bin/delayed_job"
 
     set :fiftyfive_dotenv_keys, %w(rails_secret_key_base postmark_api_key)
-    set :fiftyfive_dotenv_monitor, Monitor.new
     set :fiftyfive_dotenv_filename, -> { ".env.#{fetch(:rails_env)}" }
 
     set :fiftyfive_log_file, "log/capistrano.log"
