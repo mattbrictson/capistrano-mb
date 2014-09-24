@@ -7,7 +7,7 @@ namespace :fiftyfive do
   namespace :dotenv do
     desc "Replace/create .env file with values provided at console"
     task :replace do
-      set_up_secret_prompts
+      set_up_prompts
 
       on release_roles(:all) do
         update_dotenv_file
@@ -16,7 +16,7 @@ namespace :fiftyfive do
 
     desc "Update .env file with any missing values"
     task :update do
-      set_up_secret_prompts
+      set_up_prompts
 
       on release_roles(:all), :in => :sequence do
         existing_env = if test("[ -f #{shared_dotenv_path} ]")
@@ -30,8 +30,14 @@ namespace :fiftyfive do
       "#{shared_path}/#{fetch(:fiftyfive_dotenv_filename)}"
     end
 
-    def set_up_secret_prompts
-      fetch(:fiftyfive_dotenv_keys).each { |k| ask_secretly(k) }
+    def set_up_prompts
+      fetch(:fiftyfive_dotenv_keys).each do |key|
+        if key.to_s =~ /key|token|secret|password/i
+          ask_secretly(key)
+        else
+          ask(key, nil)
+        end
+      end
     end
 
     def update_dotenv_file(existing="")
