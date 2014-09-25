@@ -60,6 +60,17 @@ module SSHKit
       end
       alias :<< :write
 
+      def on_deploy_failure
+        err = Capistrano::Fiftyfive::Console.new($stderr)
+        err.print_line
+        err.print_line(red("** DEPLOY FAILED"))
+        err.print_line(yellow(
+          "** Refer to #{@log_file} for details. Here are the last 10 lines:"
+          ))
+        err.print_line
+        system("tail -n 10 #{@log_file.shellescape} 1>&2")
+      end
+
       private
 
       def write_log_message(log_message)

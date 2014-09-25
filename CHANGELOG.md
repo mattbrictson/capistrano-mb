@@ -1,5 +1,9 @@
 # capistrano-fiftyfive Changelog
 
+## `master`
+
+* Dump useful troubleshooting information when a deploy fails.
+
 ## `0.14.0`
 
 * The `highline` gem is now a dependency ([#3](https://github.com/55minutes/capistrano-fiftyfive/pull/3) from [@ahmozkya](https://github.com/ahmozkya)).
