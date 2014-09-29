@@ -59,10 +59,12 @@ upstream unicorn_<%= application_basename %> {
       <% end %>
 
       # Far-future expires and gzip for fingerprinted assets
-      location ^~ /<%= fetch(:assets_prefix, "assets") %>/.*-[0-9a-f]{32}.* {
-        gzip_static on;
+      location ~ "/<%= fetch(:assets_prefix, "assets") %>/.*-[0-9a-f]{32}.*" {
+        gzip on;
+        gzip_types application/javascript text/css;
         expires max;
         add_header Cache-Control public;
+        break;
       }
 
       include /etc/nginx/<%= application_basename%>-locations/*;

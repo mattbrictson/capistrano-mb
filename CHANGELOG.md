@@ -3,6 +3,7 @@
 ## `master`
 
 * Dump useful troubleshooting information when a deploy fails.
+* Nginx/unicorn: fix syntax errors introduced by changes in 0.14.0, and ensure that gzip is used even if sprockets is not producing gzipped files.
 
 ## `0.14.0`
 
