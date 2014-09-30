@@ -1,6 +1,6 @@
 # capistrano-fiftyfive Changelog
 
-## `master`
+## `0.15.0`
 
 * Dump useful troubleshooting information when a deploy fails.
 * Nginx/unicorn: fix syntax errors introduced by changes in 0.14.0, ensuring that gzip and far-future expires headers are sent as expected.
