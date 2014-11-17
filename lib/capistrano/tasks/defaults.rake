@@ -92,7 +92,7 @@ namespace :load do
     set :fiftyfive_unicorn_pid, proc{ "#{current_path}/tmp/pids/unicorn.pid" }
 
     set :bundle_binstubs, false
-    set :bundle_flags, '--deployment -j4'
+    set :bundle_flags, '--deployment'
     set :deploy_to, -> { "/home/deployer/apps/#{fetch(:application)}" }
     set :format, :abbreviated
     set :keep_releases, 10

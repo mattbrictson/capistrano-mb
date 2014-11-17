@@ -1,5 +1,9 @@
 # capistrano-fiftyfive Changelog
 
+## `0.15.1`
+
+* Remove `-j4` bundler flag
+
 ## `0.15.0`
 
 * Dump useful troubleshooting information when a deploy fails.
