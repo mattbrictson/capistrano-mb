@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
     "our Rails deployments. These are tailored for Ubuntu 12.04 LTS, "\
     "PostgreSQL, Nginx, Unicorn, rbenv, and Rails 3/4."
   spec.summary       = %q{Additional Capistrano recipes from 55 Minutes}
-  spec.homepage      = "https://github.com/55minutes/capistrano-fiftyfive"
+  spec.homepage      = "https://github.com/mattbrictson/capistrano-fiftyfive"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

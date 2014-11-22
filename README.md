@@ -164,4 +164,4 @@ can run these tasks just like any other capistrano task, like so:
 [cast337]:http://railscasts.com/episodes/337-capistrano-recipes
 [cast373]:http://railscasts.com/episodes/373-zero-downtime-deployment
 [defaults.rake]:lib/capistrano/tasks/defaults.rake
-[rails-starter]:https://github.com/55minutes/rails-starter/tree/master/config
+[rails-starter]:https://github.com/mattbrictson/rails-starter/tree/master/config

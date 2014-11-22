@@ -5,7 +5,7 @@ unless defined?(Capistrano) && defined?(:namespace)
     "WARNING: capistrano/fiftyfive must be loaded by Capistrano in order "\
     "to work.\nRequire this gem by using Capistrano's Capfile, "\
     "as described here:\n"\
-    "https://github.com/55minutes/capistrano-fiftyfive#installation"\
+    "https://github.com/mattbrictson/capistrano-fiftyfive#installation"\
     .colorize(:red)
 end
 

@@ -11,7 +11,7 @@
 
 ## `0.14.0`
 
-* The `highline` gem is now a dependency ([#3](https://github.com/55minutes/capistrano-fiftyfive/pull/3) from [@ahmozkya](https://github.com/ahmozkya)).
+* The `highline` gem is now a dependency ([#3](https://github.com/mattbrictson/capistrano-fiftyfive/pull/3) from [@ahmozkya](https://github.com/ahmozkya)).
 * Dotenv: only mask input when prompting for keys containing the words "key", "secret", "token", or "password". Input for other keys is echoed for easier data entry.
 * Dotenv: update `.env` files in sequence rather than in parallel, to avoid parallel command output clobbering the input prompt.
 * Nginx/unicorn: tweak reverse-proxy cache settings to prevent cache stampede.
