@@ -17,7 +17,7 @@ The capistrano-fiftyfive gem adds a `cap <stage> provision` task to Capistrano t
 * Install `rbenv` and use `ruby-build` to compile the version of Ruby required by your app (by inspecting your `.ruby-version` file)
 * And more!
 
-The gem is named "capistrano-fiftyfive" because it is built first and foremost for serving our deployment needs here at [55 Minutes](http://55minutes.com). You'll notice that capistrano-fiftyfive is opinionated and strictly uses the following stack:
+The gem is named "capistrano-fiftyfive" for historical reasons: it was initially built by [55 Minutes](http://55minutes.com) to automate deployments of its Rails projects. You'll notice that capistrano-fiftyfive is opinionated and strictly uses the following stack:
 
 * Ubuntu 12.04 LTS or 14.04 LTS
 * PostgreSQL
