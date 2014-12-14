@@ -1,5 +1,9 @@
 # capistrano-fiftyfive Changelog
 
+## `0.15.2`
+
+* The capistrano-fiftyfive GitHub repository has changed: it is now <https://github.com/mattbrictson/capistrano-fiftyfive>.
+
 ## `0.15.1`
 
 * Remove `-j4` bundler flag
