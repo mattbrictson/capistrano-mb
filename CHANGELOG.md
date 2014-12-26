@@ -1,5 +1,13 @@
 # capistrano-fiftyfive Changelog
 
+## `master`
+
+* capistrano-fiftyfive now requires capistrano >= 3.3.5 and sshkit => 1.6.1
+* `ask_secretly` has been removed in favor of Capistrano's built-in `ask ..., :echo => false`
+* `agree` no longer takes an optional second argument
+* highline dependency removed
+* Install libffi-dev so that Ruby 2.2.0 can be compiled
+
 ## `0.15.2`
 
 * The capistrano-fiftyfive GitHub repository has changed: it is now <https://github.com/mattbrictson/capistrano-fiftyfive>.
