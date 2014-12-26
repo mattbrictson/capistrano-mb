@@ -33,7 +33,7 @@ namespace :fiftyfive do
     def set_up_prompts
       fetch(:fiftyfive_dotenv_keys).each do |key|
         if key.to_s =~ /key|token|secret|password/i
-          ask_secretly(key)
+          ask(key, nil, :echo => false)
         else
           ask(key, nil)
         end

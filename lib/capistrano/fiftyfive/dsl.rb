@@ -29,23 +29,10 @@ module Capistrano
         fetch(:application).to_s.gsub(/[^a-zA-Z0-9_]/, "_")
       end
 
-      # Like capistrano's built-in ask(), but does not echo user input.
-      # Suitable for passwords, etc. Uses the highline gem.
-      #
-      #   ask_secretly(:postgresql_password)
-      #
-      def ask_secretly(key, default=nil)
-        set key, proc{
-          hint = default ? " [#{default}]" : ""
-          answer = HighLine.new.ask("Enter #{key}#{hint}: ") do |q|
-            q.echo = false
-          end.to_s
-        }
-      end
-
-      # Delegates to HighLine's agree() method.
-      def agree(yes_or_no_question, character=nil)
-        HighLine.new.agree(yes_or_no_question, character)
+      # Prints a question and returns truthy if the user answers "y" or "yes".
+      def agree(yes_or_no_question)
+        $stdout.print(yes_or_no_question)
+        $stdin.gets.to_s =~ /^y(es)?/i
       end
 
       # Like capistrano's built-in on(), but connects to the server as root.

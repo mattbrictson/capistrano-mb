@@ -1,5 +1,4 @@
 require "digest"
-require "highline"
 require "monitor"
 require "capistrano/fiftyfive/version"
 require "capistrano/fiftyfive/compatibility"

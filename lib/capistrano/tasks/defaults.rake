@@ -42,7 +42,7 @@ namespace :load do
     set :fiftyfive_nginx_force_https, false
     set :fiftyfive_nginx_redirect_hosts, {}
 
-    ask_secretly :fiftyfive_postgresql_password
+    ask :fiftyfive_postgresql_password, nil, :echo => false
     set :fiftyfive_postgresql_max_connections, 25
     set :fiftyfive_postgresql_pool_size, 5
     set :fiftyfive_postgresql_host, "localhost"
