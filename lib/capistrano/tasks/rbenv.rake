@@ -63,6 +63,7 @@ namespace :fiftyfive do
       privileged_on release_roles(:all) do |host, user|
         with :debian_frontend => "noninteractive" do
           execute "sudo ~#{user}/.rbenv/plugins/rbenv-bootstrap/bin/rbenv-bootstrap-ubuntu-12-04"
+          execute "sudo aptitude -y -q install libffi-dev"
         end
       end
     end
