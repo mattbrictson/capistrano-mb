@@ -1,6 +1,6 @@
 # capistrano-fiftyfive Changelog
 
-## `master`
+## `0.16.0`
 
 * capistrano-fiftyfive now requires capistrano >= 3.3.5 and sshkit => 1.6.1
 * `ask_secretly` has been removed in favor of Capistrano's built-in `ask ..., :echo => false`
