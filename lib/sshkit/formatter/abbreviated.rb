@@ -38,6 +38,7 @@ module SSHKit
         )
 
         @console = Capistrano::Fiftyfive::Console.new(original_output)
+        write_log_file_delimiter
         write_banner
       end
 
@@ -48,6 +49,19 @@ module SSHKit
       def write_banner
         print_line "Using abbreviated format."
         print_line "Full cap output is being written to #{blue(@log_file)}."
+      end
+
+      def write_log_file_delimiter
+        delimiter = []
+        delimiter << "-" * 75
+        delimiter << "START #{Time.now} cap #{ARGV.join(' ')}"
+        delimiter << "-" * 75
+        delimiter.each do |line|
+          @log_file_formatter << SSHKit::LogMessage.new(
+            SSHKit::Logger::INFO,
+            line
+            )
+        end
       end
 
       def write(obj)
@@ -65,10 +79,10 @@ module SSHKit
         err.print_line
         err.print_line(red("** DEPLOY FAILED"))
         err.print_line(yellow(
-          "** Refer to #{@log_file} for details. Here are the last 10 lines:"
+          "** Refer to #{@log_file} for details. Here are the last 20 lines:"
           ))
         err.print_line
-        system("tail -n 10 #{@log_file.shellescape} 1>&2")
+        system("tail -n 20 #{@log_file.shellescape} 1>&2")
       end
 
       private
