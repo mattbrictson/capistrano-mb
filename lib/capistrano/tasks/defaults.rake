@@ -75,9 +75,9 @@ namespace :load do
 
     set :fiftyfive_ssl_csr_country, "US"
     set :fiftyfive_ssl_csr_state, "California"
-    set :fiftyfive_ssl_csr_city, "Albany"
-    set :fiftyfive_ssl_csr_org, "55 Minutes, Inc."
-    set :fiftyfive_ssl_csr_name, "example.55minutes.com"
+    set :fiftyfive_ssl_csr_city, "San Francisco"
+    set :fiftyfive_ssl_csr_org, "Example Company"
+    set :fiftyfive_ssl_csr_name, "example.com"
 
     # WARNING: misconfiguring firewall rules could lock you out of the server!
     set :fiftyfive_ufw_rules,
