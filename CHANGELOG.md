@@ -1,5 +1,9 @@
 # capistrano-fiftyfive Changelog
 
+## `0.17.1`
+
+* Cosmetic changes to the gemspec.
+
 ## `0.17.0`
 
 * Write a banner message into `capistrano.log` at the start of each cap run, to aid in troubleshooting.

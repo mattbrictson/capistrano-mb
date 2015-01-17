@@ -6,13 +6,13 @@ require 'capistrano/fiftyfive/version'
 Gem::Specification.new do |spec|
   spec.name          = "capistrano-fiftyfive"
   spec.version       = Capistrano::Fiftyfive::VERSION
-  spec.authors       = ["Matt Brictson"]
-  spec.email         = ["opensource@55minutes.com"]
+  spec.author        = "Matt Brictson"
+  spec.email         = "matt@mattbrictson.com"
   spec.description   = \
-    "Capistrano 3.1+ recipes that we use at 55 Minutes to standardize "\
-    "our Rails deployments. These are tailored for Ubuntu 12.04 LTS, "\
-    "PostgreSQL, Nginx, Unicorn, rbenv, and Rails 3/4."
-  spec.summary       = %q{Additional Capistrano recipes from 55 Minutes}
+    "A broad selection of Capistrano 3 tasks used to standardize server "\
+    "provisioning and Rails deployments. Tailored for Ubuntu 12.04/14.04 LTS, "\
+    "PostgreSQL, Nginx, Unicorn, rbenv, dotenv, and Rails 3/4."
+  spec.summary       = "Additional Capistrano 3 recipes"
   spec.homepage      = "https://github.com/mattbrictson/capistrano-fiftyfive"
   spec.license       = "MIT"
 
