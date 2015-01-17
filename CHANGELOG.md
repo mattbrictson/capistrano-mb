@@ -1,5 +1,10 @@
 # capistrano-fiftyfive Changelog
 
+## `0.17.0`
+
+* Write a banner message into `capistrano.log` at the start of each cap run, to aid in troubleshooting.
+* Default self-signed SSL certificate is now more generic.
+
 ## `0.16.0`
 
 * capistrano-fiftyfive now requires capistrano >= 3.3.5 and sshkit => 1.6.1
