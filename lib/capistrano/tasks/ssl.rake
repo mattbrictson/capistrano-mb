@@ -25,12 +25,6 @@ namespace :fiftyfive do
         if files_exist
           info("Files exist; skipping SSL key generation.")
         else
-          ask :fiftyfive_ssl_csr_country, "US"
-          ask :fiftyfive_ssl_csr_state, "California"
-          ask :fiftyfive_ssl_csr_city, "Albany"
-          ask :fiftyfive_ssl_csr_org, "55 Minutes Inc."
-          ask :fiftyfive_ssl_csr_name, "www.55minutes.com"
-
           config = "/tmp/csr_config"
           ssl_script = "/tmp/ssl_script"
 

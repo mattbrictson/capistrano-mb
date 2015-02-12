@@ -73,11 +73,11 @@ namespace :load do
     set :fiftyfive_sidekiq_concurrency, 25
     set :fiftyfive_sidekiq_role, :sidekiq
 
-    set :fiftyfive_ssl_csr_country, "US"
-    set :fiftyfive_ssl_csr_state, "California"
-    set :fiftyfive_ssl_csr_city, "San Francisco"
-    set :fiftyfive_ssl_csr_org, "Example Company"
-    set :fiftyfive_ssl_csr_name, "example.com"
+    ask :fiftyfive_ssl_csr_country, "US"
+    ask :fiftyfive_ssl_csr_state, "California"
+    ask :fiftyfive_ssl_csr_city, "San Francisco"
+    ask :fiftyfive_ssl_csr_org, "Example Company"
+    ask :fiftyfive_ssl_csr_name, "www.example.com"
 
     # WARNING: misconfiguring firewall rules could lock you out of the server!
     set :fiftyfive_ufw_rules,

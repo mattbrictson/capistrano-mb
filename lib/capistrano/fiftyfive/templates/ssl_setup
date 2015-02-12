@@ -19,9 +19,9 @@
 # [ req_distinguished_name ]
 # C="US"
 # ST="California"
-# L="Albany"
-# O="55 Minutes Inc."
-# CN="www.55minutes.com"
+# L="San Francisco"
+# O="Example Company"
+# CN="www.example.com"
 
 if [[ $1 == --self ]]; then
   SELF_SIGN=1
