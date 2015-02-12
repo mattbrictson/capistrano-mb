@@ -1,5 +1,9 @@
 # capistrano-fiftyfive Changelog
 
+## `0.17.2`
+
+* Default self-signed SSL certificate is now more generic (for real this time).
+
 ## `0.17.1`
 
 * Cosmetic changes to the gemspec.
