@@ -1,5 +1,11 @@
 # capistrano-fiftyfive Changelog
 
+## `0.18.0`
+
+* **The abbreviated log formatter has been removed and is now available in a new gem: `airbrussh`.** With this change, capistrano-fiftyfive no longer automatically changes the logging format of capistrano. To opt into the prettier, more concise format, add the airbrussh gem to your project as explained in the [airbrussh README](https://github.com/mattbrictson/airbrussh#readme).
+* The version initializer that capistrano-fiftyfive adds during deployment sets a new value: `Rails.application.config.version_time`. You can use this value within your app for the date and time of the last commit that produced the version that is currently deployed.
+
+
 ## `0.17.2`
 
 * Default self-signed SSL certificate is now more generic (for real this time).
