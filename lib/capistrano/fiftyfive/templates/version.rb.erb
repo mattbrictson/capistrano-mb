@@ -1,2 +1,3 @@
 Rails.application.config.version = "<%= git_version[:tag] %>"
 Rails.application.config.version_date = Date.parse("<%= git_version[:date] %>")
+Rails.application.config.version_time = Time.zone.parse("<%= git_version[:time] %>")

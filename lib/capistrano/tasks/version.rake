@@ -17,6 +17,9 @@ namespace :fiftyfive do
             git_version[:date] = \
               capture(:git, "log", branch, '-1 --format="%ad" --date=short')\
               .chomp
+            git_version[:time] = \
+              capture(:git, "log", branch, '-1 --format="%ad" --date=iso')\
+              .chomp
           end
         end
       end
