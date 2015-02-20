@@ -94,7 +94,6 @@ namespace :load do
     set :bundle_binstubs, false
     set :bundle_flags, '--deployment'
     set :deploy_to, -> { "/home/deployer/apps/#{fetch(:application)}" }
-    set :format, :abbreviated
     set :keep_releases, 10
     set :linked_dirs, -> {
         ["public/#{fetch(:assets_prefix, 'assets')}"] +

@@ -4,8 +4,6 @@ require "capistrano/fiftyfive/version"
 require "capistrano/fiftyfive/compatibility"
 require "capistrano/fiftyfive/dsl"
 require "capistrano/fiftyfive/recipe"
-require "capistrano/fiftyfive/console"
-require "sshkit/formatter/abbreviated"
 include Capistrano::Fiftyfive::DSL
 
 load File.expand_path("../tasks/provision.rake", __FILE__)
@@ -28,4 +26,3 @@ load File.expand_path("../tasks/seed.rake", __FILE__)
 load File.expand_path("../tasks/version.rake", __FILE__)
 load File.expand_path("../tasks/rake.rake", __FILE__)
 load File.expand_path("../tasks/sidekiq.rake", __FILE__)
-load File.expand_path("../tasks/deploy.rake", __FILE__)
