@@ -22,7 +22,7 @@ namespace :fiftyfive do
         existing_env = if test("[ -f #{shared_dotenv_path} ]")
           download!(shared_dotenv_path)
         end
-        update_dotenv_file(existing_env || "")
+        update_dotenv_file(existing_env.is_a?(String) ? existing_env : "")
       end
     end
 
