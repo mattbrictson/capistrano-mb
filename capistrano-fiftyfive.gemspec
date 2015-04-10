@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.author        = "Matt Brictson"
   spec.email         = "matt@mattbrictson.com"
   spec.description   = \
-    "A broad selection of Capistrano 3 tasks used to standardize server "\
-    "provisioning and Rails deployments. Tailored for Ubuntu 12.04/14.04 LTS, "\
-    "PostgreSQL, Nginx, Unicorn, rbenv, dotenv, and Rails 3/4."
+    "Production-ready provisioning and deployment recipes for the full "\
+    "Rails 4 stack. Installs and configures Ruby, Nginx, Unicorn, "\
+    "PostgreSQL, dotenv, and more onto Ubuntu 14.04 LTS using Capistrano."
   spec.summary       = "Additional Capistrano 3 recipes"
   spec.homepage      = "https://github.com/mattbrictson/capistrano-fiftyfive"
   spec.license       = "MIT"
