@@ -2,6 +2,11 @@
 
 * Your contribution here!
 
+## 0.19.0 (2015-04-10)
+
+* Add `--retry=3` to bundle install options. This will help prevent deployment failures in case that a gem initially fails to download during the `bundle install` step.
+* Ensure that `--dry-run` works without crashing. This involved working around Capistrano's `download!` behavior (it returns a String normally, but an entirely different object during a dry run).
+
 ## 0.18.0
 
 * **The abbreviated log formatter has been removed and is now available in a new gem: `airbrussh`.** With this change, capistrano-fiftyfive no longer automatically changes the logging format of capistrano. To opt into the prettier, more concise format, add the airbrussh gem to your project as explained in the [airbrussh README](https://github.com/mattbrictson/airbrussh#readme).
