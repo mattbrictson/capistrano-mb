@@ -1,4 +1,5 @@
 fiftyfive_recipe :ssl do
+  during :provision, "generate_dh"
   during :provision, "generate_self_signed_crt"
 end
 
@@ -14,6 +15,16 @@ namespace :fiftyfive do
     task :generate_self_signed_crt do
       _run_ssl_script("--self")
       _copy_to_all_web_servers(%w(.key .csr .crt))
+    end
+
+    desc "Generate unique DH group"
+    task :generate_dh do
+      privileged_on roles(:web) do
+        unless test("sudo [ -f /etc/ssl/dhparams.pem ]")
+          execute :sudo, "openssl dhparam -out /etc/ssl/dhparams.pem 2048"
+          execute :sudo, "chmod 600 /etc/ssl/dhparams.pem"
+        end
+      end
     end
 
     def _run_ssl_script(opt="")

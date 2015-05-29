@@ -1,6 +1,7 @@
 ## Next release
 
 * Your contribution here!
+* Increase SSL/TLS security of the generated nginx configuration by following the suggestions of [weakdh.org](https://weakdh.org/sysadmin.html).
 
 ## 0.19.0 (2015-04-10)
 
