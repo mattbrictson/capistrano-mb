@@ -89,9 +89,9 @@ namespace :fiftyfive do
 
     def _each_package(host)
       return to_enum(:_each_package, host) unless block_given?
-
+      hostname = host.hostname
       fetch(:fiftyfive_aptitude_packages).each do |package_spec, *role_list|
-        next unless roles(*role_list.flatten).include?(host)
+        next unless roles(*role_list.flatten).map(&:hostname).include?(hostname)
 
         pkg, repo = package_spec.split("@")
         yield(pkg, repo)

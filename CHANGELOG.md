@@ -2,6 +2,10 @@
 
 * Your contribution here!
 
+## 0.20.1 (2015-05-29)
+
+* An internal change in Capistrano 3.4.0 caused `fiftyfive:aptitude:install` to fail to install packages. This is now fixed.
+
 ## 0.20.0 (2015-05-29)
 
 * Increase SSL/TLS security of the generated nginx configuration by following the suggestions of [weakdh.org](https://weakdh.org/sysadmin.html).
