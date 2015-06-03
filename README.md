@@ -1,5 +1,7 @@
 # capistrano-fiftyfive
 
+[![Join the chat at https://gitter.im/mattbrictson/capistrano-fiftyfive](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mattbrictson/capistrano-fiftyfive?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Gem Version](https://badge.fury.io/rb/capistrano-fiftyfive.svg)](http://badge.fury.io/rb/capistrano-fiftyfive)
 
 Capistrano is great for deploying Rails applications, but what about all the prerequisites, like Nginx and PostgreSQL? Do you have a firewall configured on your VPS? Have you installed the latest OS security updates? Is HTTPS working right?
