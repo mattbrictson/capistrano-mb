@@ -13,8 +13,8 @@ set -e
 # Feel free to change any of the following variables for your app:
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=<%= current_path %>
-PID=<%= fetch(:fiftyfive_unicorn_pid) %>
-CMD="cd <%= current_path %>; bundle exec unicorn -D -c <%= fetch(:fiftyfive_unicorn_config) %> -E <%= fetch(:rails_env) %>"
+PID=<%= fetch(:mb_unicorn_pid) %>
+CMD="cd <%= current_path %>; bundle exec unicorn -D -c <%= fetch(:mb_unicorn_config) %> -E <%= fetch(:rails_env) %>"
 AS_USER=<%= unicorn_user %>
 set -u
 

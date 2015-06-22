@@ -1,8 +1,8 @@
-fiftyfive_recipe :logrotate do
-  during :provision, "fiftyfive:logrotate"
+mb_recipe :logrotate do
+  during :provision, "mb:logrotate"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   desc "Configure logrotate for Rails logs"
   task :logrotate do
     privileged_on release_roles(:all) do

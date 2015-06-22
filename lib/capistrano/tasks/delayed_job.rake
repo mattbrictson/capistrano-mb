@@ -1,4 +1,4 @@
-fiftyfive_recipe :delayed_job do
+mb_recipe :delayed_job do
   during :provision, "init_d"
   during "deploy:start", "start"
   during "deploy:stop", "stop"
@@ -6,7 +6,7 @@ fiftyfive_recipe :delayed_job do
   during "deploy:publishing", "restart"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :delayed_job do
     desc "Install delayed_job service script"
     task :init_d do

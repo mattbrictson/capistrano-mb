@@ -1,0 +1,1 @@
+<%= fetch(:mb_postgresql_host) %>:5432:<%= fetch(:mb_postgresql_database) %>:<%= fetch(:mb_postgresql_user) %>:<%= fetch(:mb_postgresql_password).gsub(/([\\:])/, '\\\\\1') %>

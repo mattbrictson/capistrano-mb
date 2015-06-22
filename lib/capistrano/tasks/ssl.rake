@@ -1,9 +1,9 @@
-fiftyfive_recipe :ssl do
+mb_recipe :ssl do
   during :provision, "generate_dh"
   during :provision, "generate_self_signed_crt"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :ssl do
     desc "Generate an SSL key and CSR for Ngnix HTTPS"
     task :generate_csr do

@@ -1,8 +1,8 @@
-fiftyfive_recipe :crontab do
-  during :provision, "fiftyfive:crontab"
+mb_recipe :crontab do
+  during :provision, "mb:crontab"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   desc "Install crontab using crontab.erb template"
   task :crontab do
     on roles(:cron) do

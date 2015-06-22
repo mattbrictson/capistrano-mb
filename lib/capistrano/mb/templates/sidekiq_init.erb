@@ -16,8 +16,8 @@ SIDEKIQ="sidekiq"
 SIDEKIQCTL="sidekiqctl"
 APP_ENV="<%= fetch(:rails_env) %>"
 BUNDLE="bundle"
-AS_USER=<%= fetch(:fiftyfive_sidekiq_user, user) %>
-CONCURRENCY=<%= fetch(:fiftyfive_sidekiq_concurrency) %>
+AS_USER=<%= fetch(:mb_sidekiq_user, user) %>
+CONCURRENCY=<%= fetch(:mb_sidekiq_concurrency) %>
 
 START_CMD="cd $APP_DIR; $BUNDLE exec $SIDEKIQ -d -e $APP_ENV -P $PID_FILE --concurrency $CONCURRENCY -L $LOG_FILE"
 CTL_CMD="cd $APP_DIR; $BUNDLE exec $SIDEKIQCTL"

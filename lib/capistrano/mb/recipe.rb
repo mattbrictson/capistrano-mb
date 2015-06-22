@@ -1,5 +1,5 @@
 module Capistrano
-  module Fiftyfive
+  module MB
     class Recipe
       attr_reader :name
 
@@ -8,7 +8,7 @@ module Capistrano
       end
 
       def enabled?
-        fetch(:fiftyfive_recipes, []).map(&:to_s).include?(name)
+        fetch(:mb_recipes, []).map(&:to_s).include?(name)
       end
 
       def prior_to(task_to_extend, *recipe_tasks)
@@ -35,7 +35,7 @@ module Capistrano
       def apply_namespace(task_name)
         return task_name if task_name.include?(":")
 
-        "fiftyfive:#{name}:#{task_name}"
+        "mb:#{name}:#{task_name}"
       end
 
       def create_task_unless_exists(task_name)

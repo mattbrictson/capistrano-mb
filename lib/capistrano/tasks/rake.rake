@@ -1,12 +1,12 @@
-fiftyfive_recipe :rake do
+mb_recipe :rake do
   # No hooks
 end
 
-namespace :fiftyfive do
+namespace :mb do
   desc "Remotely execute a rake task"
   task :rake do
     if ENV['COMMAND'].nil?
-      raise "USAGE: cap #{fetch(:stage)} fiftyfive:rake COMMAND=my:task"
+      raise "USAGE: cap #{fetch(:stage)} mb:rake COMMAND=my:task"
     end
 
     on primary(:app) do

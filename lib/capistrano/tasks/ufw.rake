@@ -1,12 +1,12 @@
-fiftyfive_recipe :ufw do
+mb_recipe :ufw do
   during :provision, "configure"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :ufw do
     desc "Configure role-based ufw rules on each server"
     task :configure do
-      rules = fetch(:fiftyfive_ufw_rules, {})
+      rules = fetch(:mb_ufw_rules, {})
       distinct_roles = rules.values.flatten.uniq
 
       # First reset the firewall on all affected servers
@@ -16,7 +16,7 @@ namespace :fiftyfive do
         execute "sudo ufw default allow outgoing"
       end
 
-      # Then set up all ufw rules according to the fiftyfive_ufw_rules hash
+      # Then set up all ufw rules according to the mb_ufw_rules hash
       rules.each do |command, *role_names|
         privileged_on roles(*role_names.flatten) do
           execute "sudo ufw #{command}"

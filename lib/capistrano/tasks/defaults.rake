@@ -1,7 +1,7 @@
 namespace :load do
   task :defaults do
 
-    set :fiftyfive_recipes, %w(
+    set :mb_recipes, %w(
       aptitude
       crontab
       dotenv
@@ -18,9 +18,9 @@ namespace :load do
       version
     )
 
-    set :fiftyfive_privileged_user, "root"
+    set :mb_privileged_user, "root"
 
-    set :fiftyfive_aptitude_packages,
+    set :mb_aptitude_packages,
         "curl"                                   => :all,
         "debian-goodies"                         => :all,
         "git-core"                               => :all,
@@ -31,65 +31,65 @@ namespace :load do
         "postgresql@ppa:pitti/postgresql"        => :db,
         "ufw"                                    => :all
 
-    set :fiftyfive_delayed_job_args, "-n 2"
-    set :fiftyfive_delayed_job_script, "bin/delayed_job"
+    set :mb_delayed_job_args, "-n 2"
+    set :mb_delayed_job_script, "bin/delayed_job"
 
-    set :fiftyfive_dotenv_keys, %w(rails_secret_key_base postmark_api_key)
-    set :fiftyfive_dotenv_filename, -> { ".env.#{fetch(:rails_env)}" }
+    set :mb_dotenv_keys, %w(rails_secret_key_base postmark_api_key)
+    set :mb_dotenv_filename, -> { ".env.#{fetch(:rails_env)}" }
 
-    set :fiftyfive_log_file, "log/capistrano.log"
+    set :mb_log_file, "log/capistrano.log"
 
-    set :fiftyfive_nginx_force_https, false
-    set :fiftyfive_nginx_redirect_hosts, {}
+    set :mb_nginx_force_https, false
+    set :mb_nginx_redirect_hosts, {}
 
-    ask :fiftyfive_postgresql_password, nil, :echo => false
-    set :fiftyfive_postgresql_max_connections, 25
-    set :fiftyfive_postgresql_pool_size, 5
-    set :fiftyfive_postgresql_host, "localhost"
-    set :fiftyfive_postgresql_database,
+    ask :mb_postgresql_password, nil, :echo => false
+    set :mb_postgresql_max_connections, 25
+    set :mb_postgresql_pool_size, 5
+    set :mb_postgresql_host, "localhost"
+    set :mb_postgresql_database,
         -> { "#{application_basename}_#{fetch(:rails_env)}" }
-    set :fiftyfive_postgresql_user, -> { application_basename }
-    set :fiftyfive_postgresql_pgpass_path,
+    set :mb_postgresql_user, -> { application_basename }
+    set :mb_postgresql_pgpass_path,
         proc{ "#{shared_path}/config/pgpass" }
-    set :fiftyfive_postgresql_backup_path, -> {
+    set :mb_postgresql_backup_path, -> {
       "#{shared_path}/backups/postgresql-dump.dmp"
     }
-    set :fiftyfive_postgresql_backup_exclude_tables, []
-    set :fiftyfive_postgresql_dump_options, -> {
-      options = fetch(:fiftyfive_postgresql_backup_exclude_tables).map do |t|
+    set :mb_postgresql_backup_exclude_tables, []
+    set :mb_postgresql_dump_options, -> {
+      options = fetch(:mb_postgresql_backup_exclude_tables).map do |t|
         "-T #{t.shellescape}"
       end
       options.join(" ")
     }
 
-    set :fiftyfive_rbenv_ruby_version, -> { IO.read(".ruby-version").strip }
-    set :fiftyfive_rbenv_vars, -> {
+    set :mb_rbenv_ruby_version, -> { IO.read(".ruby-version").strip }
+    set :mb_rbenv_vars, -> {
       {
         "RAILS_ENV" => fetch(:rails_env),
-        "PGPASSFILE" => fetch(:fiftyfive_postgresql_pgpass_path)
+        "PGPASSFILE" => fetch(:mb_postgresql_pgpass_path)
       }
     }
 
-    set :fiftyfive_sidekiq_concurrency, 25
-    set :fiftyfive_sidekiq_role, :sidekiq
+    set :mb_sidekiq_concurrency, 25
+    set :mb_sidekiq_role, :sidekiq
 
-    ask :fiftyfive_ssl_csr_country, "US"
-    ask :fiftyfive_ssl_csr_state, "California"
-    ask :fiftyfive_ssl_csr_city, "San Francisco"
-    ask :fiftyfive_ssl_csr_org, "Example Company"
-    ask :fiftyfive_ssl_csr_name, "www.example.com"
+    ask :mb_ssl_csr_country, "US"
+    ask :mb_ssl_csr_state, "California"
+    ask :mb_ssl_csr_city, "San Francisco"
+    ask :mb_ssl_csr_org, "Example Company"
+    ask :mb_ssl_csr_name, "www.example.com"
 
     # WARNING: misconfiguring firewall rules could lock you out of the server!
-    set :fiftyfive_ufw_rules,
+    set :mb_ufw_rules,
         "allow ssh" => :all,
         "allow http" => :web,
         "allow https" => :web
 
-    set :fiftyfive_unicorn_workers, 2
-    set :fiftyfive_unicorn_timeout, 30
-    set :fiftyfive_unicorn_config, proc{ "#{current_path}/config/unicorn.rb" }
-    set :fiftyfive_unicorn_log, proc{ "#{current_path}/log/unicorn.log" }
-    set :fiftyfive_unicorn_pid, proc{ "#{current_path}/tmp/pids/unicorn.pid" }
+    set :mb_unicorn_workers, 2
+    set :mb_unicorn_timeout, 30
+    set :mb_unicorn_config, proc{ "#{current_path}/config/unicorn.rb" }
+    set :mb_unicorn_log, proc{ "#{current_path}/log/unicorn.log" }
+    set :mb_unicorn_pid, proc{ "#{current_path}/tmp/pids/unicorn.pid" }
 
     set :bundle_binstubs, false
     set :bundle_flags, "--deployment --retry=3"
@@ -106,7 +106,7 @@ namespace :load do
         )
     }
     set :linked_files, -> {
-        [fetch(:fiftyfive_dotenv_filename)] +
+        [fetch(:mb_dotenv_filename)] +
         %w(
           config/database.yml
           config/unicorn.rb

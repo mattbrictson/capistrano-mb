@@ -1,10 +1,10 @@
-fiftyfive_recipe :aptitude do
+mb_recipe :aptitude do
   during :provision, %w(upgrade install)
-  before "provision:14_04", "fiftyfive:aptitude:install_postgres_repo"
-  before "provision:14_04", "fiftyfive:aptitude:change_postgres_packages"
+  before "provision:14_04", "mb:aptitude:install_postgres_repo"
+  before "provision:14_04", "mb:aptitude:change_postgres_packages"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :aptitude do
 
     desc "Run `aptitude update` and then run `aptitude safe-upgrade`"
@@ -47,11 +47,11 @@ namespace :fiftyfive do
 
     desc "Change 12.04 PostgreSQL package requirements to 14.04 versions"
     task :change_postgres_packages do
-      packages = fetch(:fiftyfive_aptitude_packages, {})
+      packages = fetch(:mb_aptitude_packages, {})
       packages = Hash[packages.map do |key, value|
         [key.sub(/@ppa:pitti\/postgresql$/, ""), value]
       end]
-      set(:fiftyfive_aptitude_packages, packages)
+      set(:mb_aptitude_packages, packages)
     end
 
     def _already_installed?(pkg)
@@ -90,7 +90,7 @@ namespace :fiftyfive do
     def _each_package(host)
       return to_enum(:_each_package, host) unless block_given?
       hostname = host.hostname
-      fetch(:fiftyfive_aptitude_packages).each do |package_spec, *role_list|
+      fetch(:mb_aptitude_packages).each do |package_spec, *role_list|
         next unless roles(*role_list.flatten).map(&:hostname).include?(hostname)
 
         pkg, repo = package_spec.split("@")

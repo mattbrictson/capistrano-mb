@@ -1,8 +1,8 @@
-fiftyfive_recipe :user do
+mb_recipe :user do
   during :provision, %w(add install_public_key)
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :user do
     desc "Create the UNIX user if it doesn't already exist"
     task :add do
@@ -16,7 +16,7 @@ namespace :fiftyfive do
     desc "Copy root's authorized_keys to the user account if it doesn't "\
          "already have its own keys"
     task :install_public_key do
-      root = fetch(:fiftyfive_privileged_user)
+      root = fetch(:mb_privileged_user)
 
       privileged_on roles(:all) do |host, user|
         unless test("sudo [ -f /home/#{user}/.ssh/authorized_keys ]")
