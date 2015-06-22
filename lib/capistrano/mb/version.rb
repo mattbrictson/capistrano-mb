@@ -1,5 +1,5 @@
 module Capistrano
   module MB
-    VERSION = "0.20.1"
+    VERSION = "0.22.0"
   end
 end
