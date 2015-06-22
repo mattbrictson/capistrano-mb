@@ -125,8 +125,21 @@ module Capistrano
         binding = opts[:binding] || binding
 
         unless local_path.start_with?("/")
-          override_path = \
-            File.join("lib/capistrano/mb/templates", local_path)
+          override_path = File.join("lib/capistrano/mb/templates", local_path)
+
+          unless File.exist?(override_path)
+            override_path = File.join(
+              "lib/capistrano/fiftyfive/templates",
+              local_path
+            )
+            if File.exist?(override_path)
+              compatibility_warning(
+                "Please move #{override_path} from lib/capistrano/fiftyfive "\
+                "to lib/capistrano/mb to ensure future compatibility with "\
+                "capistrano-mb."
+              )
+            end
+          end
 
           local_path = if File.exist?(override_path)
             override_path

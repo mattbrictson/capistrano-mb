@@ -2,6 +2,10 @@
 
 * Your contribution here!
 
+## 0.22.2 (2015-06-22)
+
+* For backwards compatibility with capistrano-fiftyfive, also search `lib/capistrano/fiftyfive/templates` for template files (the preferred location is `lib/capistrano/mb/templates`).
+
 ## 0.22.1 (2015-06-22)
 
 * Remove "capistrano-fiftyfive has been renamed to capistrano-mb" post-install message.
