@@ -1,9 +1,9 @@
-fiftyfive_recipe :dotenv do
+mb_recipe :dotenv do
   during "provision", "update"
   prior_to "deploy:publishing", "update"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :dotenv do
     desc "Replace/create .env file with values provided at console"
     task :replace do
@@ -27,11 +27,11 @@ namespace :fiftyfive do
     end
 
     def shared_dotenv_path
-      "#{shared_path}/#{fetch(:fiftyfive_dotenv_filename)}"
+      "#{shared_path}/#{fetch(:mb_dotenv_filename)}"
     end
 
     def set_up_prompts
-      fetch(:fiftyfive_dotenv_keys).each do |key|
+      fetch(:mb_dotenv_keys).each do |key|
         if key.to_s =~ /key|token|secret|password/i
           ask(key, nil, :echo => false)
         else
@@ -43,7 +43,7 @@ namespace :fiftyfive do
     def update_dotenv_file(existing="")
       updated = existing.dup
 
-      fetch(:fiftyfive_dotenv_keys).each do |key|
+      fetch(:mb_dotenv_keys).each do |key|
         next if existing =~ /^#{Regexp.escape(key.upcase)}=/
         updated << "\n" unless updated.end_with?("\n")
         updated << "#{key.upcase}=#{fetch(key)}\n"

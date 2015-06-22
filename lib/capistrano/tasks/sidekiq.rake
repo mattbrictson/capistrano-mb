@@ -1,4 +1,4 @@
-fiftyfive_recipe :sidekiq do
+mb_recipe :sidekiq do
   during :provision, "init_d"
   during "deploy:start", "start"
   during "deploy:stop", "stop"
@@ -6,11 +6,11 @@ fiftyfive_recipe :sidekiq do
   during "deploy:publishing", "restart"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :sidekiq do
     desc "Install sidekiq service script"
     task :init_d do
-      privileged_on roles(fetch(:fiftyfive_sidekiq_role)) do |host, user|
+      privileged_on roles(fetch(:mb_sidekiq_role)) do |host, user|
         template "sidekiq_init.erb",
                  "/etc/init.d/sidekiq_#{application_basename}",
                  :mode => "a+rx",
@@ -24,7 +24,7 @@ namespace :fiftyfive do
     %w[start stop].each do |command|
       desc "#{command} sidekiq"
       task command do
-        on roles(fetch(:fiftyfive_sidekiq_role)) do
+        on roles(fetch(:mb_sidekiq_role)) do
           execute "service sidekiq_#{application_basename} #{command}"
         end
       end
@@ -32,8 +32,8 @@ namespace :fiftyfive do
 
     desc "restart sidekiq"
     task :restart do
-      invoke "fiftyfive:sidekiq:stop"
-      invoke "fiftyfive:sidekiq:start"
+      invoke "mb:sidekiq:stop"
+      invoke "mb:sidekiq:start"
     end
   end
 end

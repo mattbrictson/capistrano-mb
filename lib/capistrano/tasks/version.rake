@@ -1,8 +1,8 @@
-fiftyfive_recipe :version do
+mb_recipe :version do
   during "deploy:updating", "write_initializer"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :version do
     desc "Write initializers/version.rb with git version and date information"
     task :write_initializer do

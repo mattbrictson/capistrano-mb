@@ -1,8 +1,8 @@
-fiftyfive_recipe :maintenance do
+mb_recipe :maintenance do
   # No hooks for this recipe
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :maintenance do
     desc "Tell nginx to display a 503 page for all web requests, using the "\
          "maintenance.html.erb template"

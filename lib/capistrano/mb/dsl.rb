@@ -1,5 +1,5 @@
 module Capistrano
-  module Fiftyfive
+  module MB
     module DSL
 
       # Invoke the given task. If a task with that name is not defined,
@@ -9,16 +9,22 @@ module Capistrano
         invoke(task) if Rake::Task.task_defined?(task)
       end
 
-      # Used internally by capistrano-fiftyfive to register tasks such that
+      # Used internally by capistrano-mb to register tasks such that
       # those tasks are executed conditionally based on the presence of the
-      # recipe name in fetch(:fiftyfive_recipes).
+      # recipe name in fetch(:mb_recipes).
       #
-      #   fiftyfive_recipe :aptitude do
+      #   mb_recipe :aptitude do
       #     during :provision, %w(task1 task2 ...)
       #   end
       #
-      def fiftyfive_recipe(recipe_name, &block)
+      def mb_recipe(recipe_name, &block)
         Recipe.new(recipe_name).instance_exec(&block)
+      end
+
+      def compatibility_warning(warning)
+        warning = "WARNING: #{warning}"
+        warning = warning.colorize(:red) if $stderr.tty?
+        $stderr.puts(warning)
       end
 
       # Helper for calling fetch(:application) and making the value safe for
@@ -36,7 +42,7 @@ module Capistrano
       end
 
       # Like capistrano's built-in on(), but connects to the server as root.
-      # To use a user other than root, set :fiftyfive_privileged_user or
+      # To use a user other than root, set :mb_privileged_user or
       # specify :privileged_user as a server property.
       #
       #   task :reboot do
@@ -54,7 +60,7 @@ module Capistrano
 
             begin
               host.user = host.properties.privileged_user ||
-                          fetch(:fiftyfive_privileged_user)
+                          fetch(:mb_privileged_user)
               instance_exec(host, original_user, &block)
             ensure
               host.user = original_user
@@ -101,9 +107,9 @@ module Capistrano
       # options.
       #
       # Templates with relative paths are first searched for in
-      # lib/capistrano/fiftyfive/templates in the current project. This gives
+      # lib/capistrano/mb/templates in the current project. This gives
       # applications a chance to override. If an override is not found, the
-      # default template within the capistrano-fiftyfive gem is used.
+      # default template within the capistrano-mb gem is used.
       #
       #   task :create_database_yml do
       #     on roles(:app, :db) do
@@ -120,7 +126,7 @@ module Capistrano
 
         unless local_path.start_with?("/")
           override_path = \
-            File.join("lib/capistrano/fiftyfive/templates", local_path)
+            File.join("lib/capistrano/mb/templates", local_path)
 
           local_path = if File.exist?(override_path)
             override_path
@@ -133,6 +139,48 @@ module Capistrano
         rendered_template = ERB.new(erb).result(binding)
 
         put(rendered_template, remote_path, opts)
+      end
+    end
+  end
+end
+
+require "capistrano/dsl/env"
+
+module Capistrano
+  module DSL
+    module Env
+      # Overrides capistrano's default `set` to assist developers that are
+      # migrating from the `fiftyfive_*` to `mb_*` variable names. This will
+      # be removed in a future version of capistrano-mb.
+      alias_method :_orig_capistrano_set, :set
+      def set(name, *args, &block)
+        if name.to_s =~ /^fiftyfive_/
+          mb_name = name.to_s.gsub(/^fiftyfive_/, "mb_")
+          compatibility_warning(
+            "Use `set :#{mb_name}` instead of `set :#{name}` to ensure "\
+            "compatibility with future versions of capistrano-mb. The "\
+            "fiftyfive_* names have been deprecated."
+          )
+          name = mb_name.intern
+        end
+        _orig_capistrano_set(name, *args, &block)
+      end
+
+      # Overrides capistrano's default `fetch` to assist developers that are
+      # migrating from the `fiftyfive_*` to `mb_*` variable names. This will
+      # be removed in a future version of capistrano-mb.
+      alias_method :_orig_capistrano_fetch, :fetch
+      def fetch(name, *args, &block)
+        if name.to_s =~ /^fiftyfive_/
+          mb_name = name.to_s.gsub(/^fiftyfive_/, "mb_")
+          compatibility_warning(
+            "Use `fetch :#{mb_name}` instead of `fetch :#{name}` to ensure "\
+            "compatibility with future versions of capistrano-mb. The "\
+            "fiftyfive_* names have been deprecated."
+          )
+          name = mb_name.intern
+        end
+        _orig_capistrano_fetch(name, *args, &block)
       end
     end
   end

@@ -2,6 +2,14 @@
 
 * Your contribution here!
 
+## 0.22.0 (2015-06-22)
+
+**THIS GEM HAS A NEW NAME! It is now `capistrano-mb`.**
+
+* All settings now use the `mb_` prefix. E.g. if you are using `set(:fiftyfive_recipies, ...)`, change it to `set(:mb_recipes, ...)`.
+* All tasks now use the `mb` namespace. E.g. `cap fiftyfive:crontab` is now `cap mb:crontab`.
+* For backwards compatibility, you can still use the `fiftyfive` versions, but a deprecation warning will be printed. This compatibility will be removed in capistrano-mb 1.0.
+
 ## 0.21.0 (2015-06-22)
 
 * Add a post-install message explaining the rename of `capistrano-fiftyfive` to `capistrano-mb`.

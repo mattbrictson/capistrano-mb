@@ -1,6 +1,6 @@
 # Use at least one worker per core if you're on a dedicated server,
 # more will usually help for _short_ waits on databases/caches.
-worker_processes <%= fetch(:fiftyfive_unicorn_workers) %>
+worker_processes <%= fetch(:mb_unicorn_workers) %>
 
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
@@ -10,16 +10,16 @@ working_directory "<%= current_path %>"
 # we use a shorter backlog for quicker failover when busy
 listen "/tmp/unicorn.<%= application_basename %>.sock", :backlog => 64
 
-# nuke workers after <%= fetch(:fiftyfive_unicorn_timeout) %> seconds (default is 60)
-timeout <%= fetch(:fiftyfive_unicorn_timeout) %>
+# nuke workers after <%= fetch(:mb_unicorn_timeout) %> seconds (default is 60)
+timeout <%= fetch(:mb_unicorn_timeout) %>
 
-pid "<%= fetch(:fiftyfive_unicorn_pid) %>"
+pid "<%= fetch(:mb_unicorn_pid) %>"
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, some applications/frameworks log to stderr or stdout,
 # so prevent them from going to /dev/null when daemonized here:
-stderr_path "<%= fetch(:fiftyfive_unicorn_log) %>"
-stdout_path "<%= fetch(:fiftyfive_unicorn_log) %>"
+stderr_path "<%= fetch(:mb_unicorn_log) %>"
+stdout_path "<%= fetch(:mb_unicorn_log) %>"
 
 preload_app true
 

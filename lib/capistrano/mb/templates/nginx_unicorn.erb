@@ -9,18 +9,18 @@ upstream unicorn_<%= application_basename %> {
 
 <% [80, 443].each do |port| %>
 
-  <% fetch(:fiftyfive_nginx_redirect_hosts).each do |orig, desired| %>
+  <% fetch(:mb_nginx_redirect_hosts).each do |orig, desired| %>
     server {
       listen <%= port %>;
       server_name <%= orig %>;
-      return 301 <%= fetch(:fiftyfive_nginx_force_https) ? "https" : "$scheme" %>://<%= desired %>$request_uri;
+      return 301 <%= fetch(:mb_nginx_force_https) ? "https" : "$scheme" %>://<%= desired %>$request_uri;
     }
   <% end %>
 
   server {
     listen <%= port %> <%= "spdy" if port == 443 %> default deferred; # for Linux
 
-    <% if port == 80 && fetch(:fiftyfive_nginx_force_https) %>
+    <% if port == 80 && fetch(:mb_nginx_force_https) %>
       rewrite ^(.*) https://$http_host$1 permanent;
     <% else %>
 
@@ -54,7 +54,7 @@ upstream unicorn_<%= application_basename %> {
         ssl_certificate /etc/ssl/<%= application_basename %>.crt;
         ssl_certificate_key /etc/ssl/<%= application_basename %>.key;
 
-        <% if fetch(:fiftyfive_nginx_force_https) %>
+        <% if fetch(:mb_nginx_force_https) %>
           add_header Strict-Transport-Security "max-age=631138519";
         <% end %>
       <% end %>

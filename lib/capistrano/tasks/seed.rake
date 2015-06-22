@@ -1,8 +1,8 @@
-fiftyfive_recipe :seed do
-  prior_to "deploy:publishing", "fiftyfive:seed"
+mb_recipe :seed do
+  prior_to "deploy:publishing", "mb:seed"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   desc "Run rake db:seed"
   task :seed do
     on primary(:app) do

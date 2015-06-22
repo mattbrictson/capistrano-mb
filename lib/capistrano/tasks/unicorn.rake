@@ -1,4 +1,4 @@
-fiftyfive_recipe :unicorn do
+mb_recipe :unicorn do
   during :provision, %w(init_d config_rb)
   during "deploy:start", "start"
   during "deploy:stop", "stop"
@@ -6,12 +6,12 @@ fiftyfive_recipe :unicorn do
   during "deploy:publishing", "restart"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :unicorn do
     desc "Install service script for unicorn"
     task :init_d do
       privileged_on roles(:app) do |host, user|
-        unicorn_user = fetch(:fiftyfive_unicorn_user) || user
+        unicorn_user = fetch(:mb_unicorn_user) || user
 
         template "unicorn_init.erb",
                  "/etc/init.d/unicorn_#{application_basename}",

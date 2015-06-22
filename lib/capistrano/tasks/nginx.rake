@@ -1,8 +1,8 @@
-fiftyfive_recipe :nginx do
+mb_recipe :nginx do
   during :provision, "configure"
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :nginx do
     desc "Install nginx.conf files and restart nginx"
     task :configure do

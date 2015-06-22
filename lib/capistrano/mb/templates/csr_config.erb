@@ -1,0 +1,10 @@
+[ req ]
+distinguished_name="req_distinguished_name"
+prompt="no"
+
+[ req_distinguished_name ]
+C="<%= fetch(:mb_ssl_csr_country) %>"
+ST="<%= fetch(:mb_ssl_csr_state) %>"
+L="<%= fetch(:mb_ssl_csr_city) %>"
+O="<%= fetch(:mb_ssl_csr_org) %>"
+CN="<%= fetch(:mb_ssl_csr_name) %>"

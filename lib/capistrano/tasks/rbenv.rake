@@ -1,22 +1,22 @@
-fiftyfive_recipe :rbenv do
+mb_recipe :rbenv do
   during :provision, %w(install write_vars)
 end
 
-namespace :fiftyfive do
+namespace :mb do
   namespace :rbenv do
     desc "Install rbenv and compile ruby"
     task :install do
-      invoke "fiftyfive:rbenv:run_installer"
-      invoke "fiftyfive:rbenv:modify_bashrc"
-      invoke "fiftyfive:rbenv:bootstrap_ubuntu_for_ruby_compile"
-      invoke "fiftyfive:rbenv:compile_ruby"
+      invoke "mb:rbenv:run_installer"
+      invoke "mb:rbenv:modify_bashrc"
+      invoke "mb:rbenv:bootstrap_ubuntu_for_ruby_compile"
+      invoke "mb:rbenv:compile_ruby"
     end
 
     desc "Install the latest version of Ruby"
     task :upgrade do
-      invoke "fiftyfive:rbenv:update_rbenv"
-      invoke "fiftyfive:rbenv:bootstrap_ubuntu_for_ruby_compile"
-      invoke "fiftyfive:rbenv:compile_ruby"
+      invoke "mb:rbenv:update_rbenv"
+      invoke "mb:rbenv:bootstrap_ubuntu_for_ruby_compile"
+      invoke "mb:rbenv:compile_ruby"
     end
 
     task :write_vars do
@@ -27,7 +27,7 @@ namespace :fiftyfive do
 
         vars = ""
 
-        fetch(:fiftyfive_rbenv_vars).each do |name, value|
+        fetch(:mb_rbenv_vars).each do |name, value|
           execute :sed, "--in-place '/^#{name}=/d' ~/.rbenv/vars"
           vars << "#{name}=#{value}\n"
         end
@@ -69,7 +69,7 @@ namespace :fiftyfive do
     end
 
     task :compile_ruby do
-      ruby_version = fetch(:fiftyfive_rbenv_ruby_version)
+      ruby_version = fetch(:mb_rbenv_ruby_version)
       on release_roles(:all) do
         force = ENV["RBENV_FORCE_INSTALL"] || begin
           ! test("rbenv versions | grep -q '#{ruby_version}'")

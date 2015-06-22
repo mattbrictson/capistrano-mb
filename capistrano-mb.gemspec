@@ -1,14 +1,19 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'capistrano/fiftyfive/version'
+require "capistrano/mb/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "capistrano-fiftyfive"
-  spec.version       = Capistrano::Fiftyfive::VERSION
+  spec.name          = "capistrano-mb"
+  spec.version       = Capistrano::MB::VERSION
   spec.author        = "Matt Brictson"
   spec.email         = "matt@mattbrictson.com"
-  spec.summary       = "This gem has been renamed to capistrano-mb"
+  spec.description   = \
+    "Production-ready provisioning and deployment recipes for the full "\
+    "Rails 4 stack. Installs and configures Ruby, Nginx, Unicorn, "\
+    "PostgreSQL, dotenv, and more onto Ubuntu 14.04 LTS using Capistrano. "\
+    "(Note: this gem was formerly called capistrano-fiftyfive.)"
+  spec.summary       = "Additional Capistrano 3 recipes"
   spec.homepage      = "https://github.com/mattbrictson/capistrano-mb"
   spec.license       = "MIT"
 
