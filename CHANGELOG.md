@@ -1,6 +1,9 @@
 ## Next release
 
 * Your contribution here!
+
+## 0.21.0 (2015-06-22)
+
 * Add a post-install message explaining the rename of `capistrano-fiftyfive` to `capistrano-mb`.
 
 ## 0.20.1 (2015-05-29)
