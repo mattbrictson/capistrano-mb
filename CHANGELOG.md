@@ -2,6 +2,10 @@
 
 * Your contribution here!
 
+## 0.22.1 (2015-06-22)
+
+* Remove "capistrano-fiftyfive has been renamed to capistrano-mb" post-install message.
+
 ## 0.22.0 (2015-06-22)
 
 **THIS GEM HAS A NEW NAME! It is now `capistrano-mb`.**
