@@ -8,13 +8,12 @@ Gem::Specification.new do |spec|
   spec.version       = Capistrano::Fiftyfive::VERSION
   spec.author        = "Matt Brictson"
   spec.email         = "matt@mattbrictson.com"
-  spec.description   = \
-    "Production-ready provisioning and deployment recipes for the full "\
-    "Rails 4 stack. Installs and configures Ruby, Nginx, Unicorn, "\
-    "PostgreSQL, dotenv, and more onto Ubuntu 14.04 LTS using Capistrano."
-  spec.summary       = "Additional Capistrano 3 recipes"
-  spec.homepage      = "https://github.com/mattbrictson/capistrano-fiftyfive"
+  spec.summary       = "This gem has been renamed to capistrano-mb"
+  spec.homepage      = "https://github.com/mattbrictson/capistrano-mb"
   spec.license       = "MIT"
+
+  spec.post_install_message = "capistrano-fiftyfive has been renamed to "\
+                              "capistrano-mb. Please update your Gemfile."
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
