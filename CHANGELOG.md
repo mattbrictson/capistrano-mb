@@ -1,6 +1,7 @@
 ## Next release
 
 * Your contribution here!
+* No longer assume that the `colorize` gem is available (it may be removed in an upcoming version of SSHKit/capistrano).
 
 ## 0.22.2 (2015-06-22)
 
