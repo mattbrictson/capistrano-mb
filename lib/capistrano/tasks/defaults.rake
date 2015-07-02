@@ -3,6 +3,7 @@ namespace :load do
 
     set :mb_recipes, %w(
       aptitude
+      bundler
       crontab
       dotenv
       logrotate
@@ -30,6 +31,10 @@ namespace :load do
         "postgresql-client@ppa:pitti/postgresql" => :all,
         "postgresql@ppa:pitti/postgresql"        => :db,
         "ufw"                                    => :all
+
+    set :mb_bundler_lockfile, "Gemfile.lock"
+    set :mb_bundler_gem_install_command,
+        "gem install bundler --conservative --no-document"
 
     set :mb_delayed_job_args, "-n 2"
     set :mb_delayed_job_script, "bin/delayed_job"
