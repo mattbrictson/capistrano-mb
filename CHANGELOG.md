@@ -1,5 +1,9 @@
 ## Next release
 
+* Your contribution here!
+
+## 0.23.0 (2015-07-10)
+
 This release introduces a `bundler` recipe that automatically installs or upgrades bundler using `gem install bundler` during `cap deploy`. To disable this behavior:
 
 ```ruby
@@ -8,7 +12,6 @@ set :mb_bundler_gem_install_command, nil
 
 Other changes:
 
-* Your contribution here!
 * No longer assume that the `colorize` gem is available (it may be removed in an upcoming version of SSHKit/capistrano).
 
 ## 0.22.2 (2015-06-22)
