@@ -1,4 +1,4 @@
-## Next release
+## [Unreleased][]
 
 * Your contribution here!
 
