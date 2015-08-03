@@ -61,6 +61,7 @@ upstream unicorn_<%= application_basename %> {
 
       # Far-future expires for fingerprinted assets
       location ~ "/<%= fetch(:assets_prefix, "assets") %>/.*-[0-9a-f]{32}.*" {
+        gzip_static on;
         expires max;
         add_header Cache-Control public;
       }
