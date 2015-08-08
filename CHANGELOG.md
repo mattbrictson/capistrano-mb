@@ -2,6 +2,10 @@
 
 * Your contribution here!
 
+## [0.23.1][] (2015-08-08)
+
+* Ensure gzip is enable for all assets, not just fingerprinted ones.
+
 ## [0.23.0][] (2015-07-10)
 
 This release introduces a `bundler` recipe that automatically installs or upgrades bundler using `gem install bundler` during `cap deploy`. To disable this behavior:
@@ -133,7 +137,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.0...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.1...HEAD
+[0.23.1]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.0...v0.23.1
 [0.23.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.22.2...v0.23.0
 [0.22.2]: https://github.com/mattbrictson/capistrano-mb/compare/v0.22.1...v0.22.2
 [0.22.1]: https://github.com/mattbrictson/capistrano-mb/compare/v0.22.0...v0.22.1
