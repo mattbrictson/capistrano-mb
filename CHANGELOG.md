@@ -1,6 +1,6 @@
 ## [Unreleased][]
 
-* Your contribution here!
+* Expand the list of cipher suites used in the nginx SSL configuration. ([#7](https://github.com/mattbrictson/capistrano-mb/pull/7))
 
 ## [0.23.1][] (2015-08-08)
 
