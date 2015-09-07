@@ -41,10 +41,10 @@ rewrite of Capistrano 2.x. The two major versions are not compatible.
 Add these gems to the development group of your Rails application's Gemfile:
 
     group :development do
-      gem 'capistrano-bundler', :require => false
-      gem 'capistrano-rails', :require => false
-      gem 'capistrano', '~> 3.4.0', :require => false
-      gem 'capistrano-mb' :require => false
+      gem "capistrano-bundler", :require => false
+      gem "capistrano-rails", :require => false
+      gem "capistrano", "~> 3.4.0", :require => false
+      gem "capistrano-mb", :require => false
     end
 
 And then execute:
