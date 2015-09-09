@@ -128,7 +128,7 @@ production:
 
 ### 9. Provision and deploy!
 
-Run capistrano-mb's `provision:14_04` task (named for Ubuntu 14.04). This will ask you a few questions and and install Ruby, PostgreSQL, Nginx, etc., and set everything up. The entire process takes about 10 minutes (mostly due to compiling Ruby from source).
+Run capistrano-mb's `provision:14_04` task (named for Ubuntu 14.04). This will ask you a few questions, install Ruby, PostgreSQL, Nginx, etc., and set everything up. The entire process takes about 10 minutes (mostly due to compiling Ruby from source).
 
 ```
 bundle exec cap production provision:14_04
