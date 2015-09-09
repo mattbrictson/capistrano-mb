@@ -98,7 +98,7 @@ require "capistrano/mb"
 
 ### 6. deploy.rb
 
-Modify `config/deploy.rb` to set the specifics of your Rails app. At the minimum, you'll need to set these to options:
+Modify `config/deploy.rb` to set the specifics of your Rails app. At the minimum, you'll need to set these two options:
 
 ```ruby
 set :application, "my_app_name"
