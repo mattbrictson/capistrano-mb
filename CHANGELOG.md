@@ -1,5 +1,10 @@
 ## [Unreleased][]
 
+* Your contribution here!
+
+## [0.24.0][] (2015-09-11)
+
+* Improve README with step-by-step installation instructions.
 * Expand the list of cipher suites used in the nginx SSL configuration. ([#7](https://github.com/mattbrictson/capistrano-mb/pull/7))
 
 ## [0.23.1][] (2015-08-08)
@@ -137,7 +142,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.1...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.24.0...HEAD
+[0.24.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.1...v0.24.0
 [0.23.1]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.0...v0.23.1
 [0.23.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.22.2...v0.23.0
 [0.22.2]: https://github.com/mattbrictson/capistrano-mb/compare/v0.22.1...v0.22.2
