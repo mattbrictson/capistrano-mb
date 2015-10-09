@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* Add `X-Accel-Mapping` and appropriate NGINX configuration so that `send_file` used in a Rails controller is now accelerated using `X-Accel-Redirect`. For security this only works if the file being sent resides in the Rails app directory (e.g. `<rails_root>/tmp` or `<rails_root>/public`). This means `send_file` files will be served by NGINX natively, rather than through Rack.
 
 ## [0.24.0][] (2015-09-11)
 

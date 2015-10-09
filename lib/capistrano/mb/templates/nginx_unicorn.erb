@@ -72,6 +72,14 @@ upstream unicorn_<%= application_basename %> {
         break;
       }
 
+      # Internal-only URI for sending files with X-Accel-Redirect from within
+      # a release of the Rails app. See also corresponding proxy_set_header in
+      # @unicorn config below.
+      location /__send_file_accel {
+        internal;
+        alias <%= fetch(:deploy_to) %>/releases;
+      }
+
       include /etc/nginx/<%= application_basename%>-locations/*;
 
       # Prefer to serve static files directly from nginx to avoid unnecessary
@@ -93,6 +101,10 @@ upstream unicorn_<%= application_basename %> {
         # we don't want nginx trying to do something clever with
         # redirects, we set the Host: header above already.
         proxy_redirect off;
+
+        # send_file support
+        proxy_set_header X-Sendfile-Type X-Accel-Redirect;
+        proxy_set_header X-Accel-Mapping <%= fetch(:deploy_to) %>/releases/=/__send_file_accel/;
 
         # enable caching (honors cache-control headers sent by Rails)
         # lock and use_stale help prevent a cache stampede
