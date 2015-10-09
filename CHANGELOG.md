@@ -1,6 +1,9 @@
 ## [Unreleased][]
 
 * Your contribution here!
+
+## [0.25.0][] (2015-10-09)
+
 * Add `X-Accel-Mapping` and appropriate NGINX configuration so that `send_file` used in a Rails controller is now accelerated using `X-Accel-Redirect`. For security this only works if the file being sent resides in the Rails app directory (e.g. `<rails_root>/tmp` or `<rails_root>/public`). This means `send_file` files will be served by NGINX natively, rather than through Rack.
 
 ## [0.24.0][] (2015-09-11)
@@ -143,7 +146,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.24.0...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.25.0...HEAD
+[0.25.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.24.0...v0.25.0
 [0.24.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.1...v0.24.0
 [0.23.1]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.0...v0.23.1
 [0.23.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.22.2...v0.23.0
