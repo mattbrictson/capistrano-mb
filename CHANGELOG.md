@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* Remove `mb:postgresql:tune` task. The [pgtune](https://github.com/gregs1104/pgtune) tool no longer works with the latest versions of PostgresSQL.
 
 ## [0.25.0][] (2015-10-09)
 

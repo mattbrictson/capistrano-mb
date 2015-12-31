@@ -48,7 +48,6 @@ namespace :load do
     set :mb_nginx_redirect_hosts, {}
 
     ask :mb_postgresql_password, nil, :echo => false
-    set :mb_postgresql_max_connections, 25
     set :mb_postgresql_pool_size, 5
     set :mb_postgresql_host, "localhost"
     set :mb_postgresql_database,

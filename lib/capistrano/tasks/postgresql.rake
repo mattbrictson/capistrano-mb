@@ -10,34 +10,6 @@ end
 
 namespace :mb do
   namespace :postgresql do
-    desc "Update postgresql.conf using pgtune"
-    task :tune do
-      privileged_on primary(:db), :in => :sequence do
-        pgtune_dir = "/tmp/pgtune"
-        pgtune_output = "/tmp/postgresql.conf.pgtune"
-        pg_conf = "/etc/postgresql/9.1/main/postgresql.conf"
-
-        execute :sudo, "rm", "-rf", pgtune_dir
-        execute :sudo, "git",
-                "clone",
-                "-q",
-                "https://github.com/gregs1104/pgtune.git",
-                pgtune_dir
-
-        execute "sudo #{pgtune_dir}/pgtune",
-                "--input-config", pg_conf,
-                "--output-config", pgtune_output,
-                "--type", "Web",
-                "--connections", fetch(:mb_postgresql_max_connections)
-
-        # Log diff for informational purposes
-        execute :sudo, "diff", pg_conf, pgtune_output, "|| true"
-
-        execute :sudo, "cp", pgtune_output, pg_conf
-        execute :sudo, "service", "postgresql", "restart"
-      end
-    end
-
     desc "Create user if it doesn't already exist"
     task :create_user do
       privileged_on primary(:db) do
