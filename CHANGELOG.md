@@ -2,6 +2,12 @@
 
 * Your contribution here!
 * Remove `mb:postgresql:tune` task. The [pgtune](https://github.com/gregs1104/pgtune) tool no longer works with the latest versions of PostgresSQL.
+* Overhaul the `mb:rbenv:*` tasks.
+  * Use the official rbenv-installer script
+  * Install necessary dev packages via `mb:aptitude:install` rather than relying on an external (and outdated) script
+  * Remove several unused rbenv plugins, keeping only: `ruby-build`, `rbenv-vars`, `rbenv-update`
+  * Install plugins using our own code, rather than using external script
+  * No longer install the `psych` gem
 
 ## [0.25.0][] (2015-10-09)
 

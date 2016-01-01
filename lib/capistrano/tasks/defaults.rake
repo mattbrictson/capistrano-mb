@@ -22,15 +22,23 @@ namespace :load do
     set :mb_privileged_user, "root"
 
     set :mb_aptitude_packages,
+        "build-essential"                        => :all,
         "curl"                                   => :all,
         "debian-goodies"                         => :all,
         "git-core"                               => :all,
         "libpq-dev@ppa:pitti/postgresql"         => :all,
+        "libreadline-gplv2-dev"                  => :all,
+        "libssl-dev"                             => :all,
+        "libxml2"                                => :all,
+        "libxml2-dev"                            => :all,
+        "libxslt1-dev"                           => :all,
         "nginx@ppa:nginx/stable"                 => :web,
         "nodejs@ppa:chris-lea/node.js"           => :all,
         "postgresql-client@ppa:pitti/postgresql" => :all,
         "postgresql@ppa:pitti/postgresql"        => :db,
-        "ufw"                                    => :all
+        "tklib"                                  => :all,
+        "ufw"                                    => :all,
+        "zlib1g-dev"                             => :all
 
     set :mb_bundler_lockfile, "Gemfile.lock"
     set :mb_bundler_gem_install_command,
