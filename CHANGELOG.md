@@ -2,6 +2,7 @@
 
 * Your contribution here!
 * Symlink `.bundle` so that every release shares the same `.bundle/config`. This allows `bundle:check` to work, speeding up deployments when the Gemfile hasn't changed.
+* Work around a regression in capistrano-bundler so that the Bundler path stays the same. See [capistrano-bundler #79](https://github.com/capistrano/bundler/pull/79).
 
 ## [0.26.0][] (2016-01-08)
 
