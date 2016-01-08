@@ -1,6 +1,9 @@
 ## [Unreleased][]
 
 * Your contribution here!
+
+## [0.26.0][] (2016-01-08)
+
 * Remove `mb:postgresql:tune` task. The [pgtune](https://github.com/gregs1104/pgtune) tool no longer works with the latest versions of PostgresSQL.
 * Overhaul the `mb:rbenv:*` tasks.
   * Use the official rbenv-installer script
@@ -153,7 +156,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.25.0...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.26.0...HEAD
+[0.26.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.25.0...v0.26.0
 [0.25.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.24.0...v0.25.0
 [0.24.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.1...v0.24.0
 [0.23.1]: https://github.com/mattbrictson/capistrano-mb/compare/v0.23.0...v0.23.1
