@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* Symlink `.bundle` so that every release shares the same `.bundle/config`. This allows `bundle:check` to work, speeding up deployments when the Gemfile hasn't changed.
 
 ## [0.26.0][] (2016-01-08)
 

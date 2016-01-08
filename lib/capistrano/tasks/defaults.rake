@@ -110,6 +110,7 @@ namespace :load do
     set :linked_dirs, -> {
         ["public/#{fetch(:assets_prefix, 'assets')}"] +
         %w(
+          .bundle
           log
           tmp/pids
           tmp/cache
