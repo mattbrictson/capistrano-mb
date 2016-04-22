@@ -2,6 +2,8 @@
 
 * Your contribution here!
 * Add `--quiet` to the default `bundle install` flags
+* Enable SSH compression by default, now that zlib warning has been fixed in
+  SSHKit 1.10.0
 
 ## [0.27.0][] (2016-02-19)
 
