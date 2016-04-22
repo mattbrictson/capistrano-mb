@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* Add `--quiet` to the default `bundle install` flags
 
 ## [0.27.0][] (2016-02-19)
 

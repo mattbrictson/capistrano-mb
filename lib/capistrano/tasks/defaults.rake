@@ -104,7 +104,7 @@ namespace :load do
     set :mb_unicorn_pid, proc{ "#{current_path}/tmp/pids/unicorn.pid" }
 
     set :bundle_binstubs, false
-    set :bundle_flags, "--deployment --retry=3"
+    set :bundle_flags, "--deployment --retry=3 --quiet"
     set :bundle_path, -> { shared_path.join("bundle") }
     set :deploy_to, -> { "/home/deployer/apps/#{fetch(:application)}" }
     set :keep_releases, 10
