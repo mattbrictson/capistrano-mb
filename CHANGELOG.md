@@ -1,6 +1,9 @@
 ## [Unreleased][]
 
 * Your contribution here!
+
+## [0.28.0][] (2016-05-13)
+
 * Add `--quiet` to the default `bundle install` flags
 * Enable SSH compression by default, now that zlib warning has been fixed in
   SSHKit 1.10.0
@@ -164,7 +167,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.27.0...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.28.0...HEAD
+[0.28.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.27.0...v0.28.0
 [0.27.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.26.0...v0.27.0
 [0.26.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.25.0...v0.26.0
 [0.25.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.24.0...v0.25.0
