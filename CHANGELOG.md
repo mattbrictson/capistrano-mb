@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* Add `public/.well-known` to `:linked_dirs` to support Let's Encrypt renewals.
 
 ## [0.28.0][] (2016-05-13)
 

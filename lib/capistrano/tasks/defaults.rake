@@ -116,6 +116,7 @@ namespace :load do
           tmp/pids
           tmp/cache
           tmp/sockets
+          public/.well-known
           public/system
         )
     }
