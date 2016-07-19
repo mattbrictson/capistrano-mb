@@ -1,6 +1,9 @@
 ## [Unreleased][]
 
 * Your contribution here!
+
+## [0.29.0][] (2016-07-19)
+
 * Add `public/.well-known` to `:linked_dirs` to support Let's Encrypt renewals.
 * Fix recipe definition code so that Capistrano's `invoke` is not used
   redundantly. This is not a change in behavior, but it does fix a warning that
@@ -171,7 +174,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.28.0...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.29.0...HEAD
+[0.29.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.27.0...v0.28.0
 [0.27.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.26.0...v0.27.0
 [0.26.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.25.0...v0.26.0
