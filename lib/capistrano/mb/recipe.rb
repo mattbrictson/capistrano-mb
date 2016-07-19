@@ -26,9 +26,10 @@ module Capistrano
 
         recipe_tasks.flatten.each do |task|
           qualified_task = apply_namespace(task)
-          send(method, task_to_extend, "#{qualified_task}:if_enabled") do
+          create_task_unless_exists("#{qualified_task}:if_enabled") do
             invoke qualified_task if enabled?
           end
+          send(method, task_to_extend, "#{qualified_task}:if_enabled")
         end
       end
 
@@ -38,9 +39,9 @@ module Capistrano
         "mb:#{name}:#{task_name}"
       end
 
-      def create_task_unless_exists(task_name)
+      def create_task_unless_exists(task_name, &block)
         unless Rake::Task.task_defined?(task_name)
-          Rake::Task.define_task(task_name)
+          Rake::Task.define_task(task_name, &block)
         end
       end
     end

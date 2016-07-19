@@ -2,6 +2,9 @@
 
 * Your contribution here!
 * Add `public/.well-known` to `:linked_dirs` to support Let's Encrypt renewals.
+* Fix recipe definition code so that Capistrano's `invoke` is not used
+  redundantly. This is not a change in behavior, but it does fix a warning that
+  is printed starting in Capistrano 3.6.0.
 
 ## [0.28.0][] (2016-05-13)
 
