@@ -1,5 +1,5 @@
 mb_recipe :crontab do
-  during :provision, "mb:crontab"
+  during "deploy:published", "mb:crontab"
 end
 
 namespace :mb do
