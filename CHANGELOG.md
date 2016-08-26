@@ -4,6 +4,7 @@
 * Change the hooks such that `mb:crontab` is run at the end of every deployment,
   rather than once during provisioning. This means that the crontab will now be
   regenerated and installed every time you `cap deploy`.
+* Fix a `NoMethodError` when showing certain compatibility warnings [#14](https://github.com/mattbrictson/capistrano-mb/issues/14)
 
 ## [0.29.0][] (2016-07-19)
 

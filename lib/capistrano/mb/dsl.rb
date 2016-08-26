@@ -22,9 +22,7 @@ module Capistrano
       end
 
       def compatibility_warning(warning)
-        warning = "WARNING: #{warning}"
-        warning = warning.colorize(:red) if $stderr.tty?
-        $stderr.puts(warning)
+        Capistrano::MB::Compatibility.warn(warning)
       end
 
       # Helper for calling fetch(:application) and making the value safe for
