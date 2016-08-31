@@ -1,6 +1,9 @@
 ## [Unreleased][]
 
 * Your contribution here!
+
+## [0.30.0][] (2016-08-30)
+
 * Change the hooks such that `mb:crontab` is run at the end of every deployment,
   rather than once during provisioning. This means that the crontab will now be
   regenerated and installed every time you `cap deploy`.
@@ -178,7 +181,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.29.0...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.30.0...HEAD
+[0.30.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.29.0...v0.30.0
 [0.29.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.27.0...v0.28.0
 [0.27.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.26.0...v0.27.0
