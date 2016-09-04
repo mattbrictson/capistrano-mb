@@ -1,5 +1,6 @@
 mb_recipe :aptitude do
   during :provision, %w(upgrade install)
+  before "provision:14_04", "mb:aptitude:install_software_properties"
   before "provision:14_04", "mb:aptitude:install_postgres_repo"
   before "provision:14_04", "mb:aptitude:change_postgres_packages"
 end
@@ -52,6 +53,13 @@ namespace :mb do
         [key.sub(/@ppa:pitti\/postgresql$/, ""), value]
       end]
       set(:mb_aptitude_packages, packages)
+    end
+
+    desc "Install package needed for apt-add-repository on 14.04"
+    task :install_software_properties do
+      unless _already_installed?("software-properties-common")
+        _install("software-properties-common")
+      end
     end
 
     def _already_installed?(pkg)
