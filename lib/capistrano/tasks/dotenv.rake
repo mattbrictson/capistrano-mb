@@ -32,7 +32,7 @@ namespace :mb do
 
     def set_up_prompts
       fetch(:mb_dotenv_keys).each do |key|
-        if key.to_s =~ /key|token|secret|password/i
+        if key.to_s =~ /key|token|secret|password|pepper/i
           ask(key, nil, :echo => false)
         else
           ask(key, nil)
