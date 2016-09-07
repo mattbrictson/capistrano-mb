@@ -34,6 +34,7 @@ namespace :load do
         "libxslt1-dev"                           => :all,
         "nginx@ppa:nginx/stable"                 => :web,
         "nodejs@ppa:chris-lea/node.js"           => :all,
+        "ntp"                                    => :all,
         "postgresql-client@ppa:pitti/postgresql" => :all,
         "postgresql@ppa:pitti/postgresql"        => :db,
         "tklib"                                  => :all,
