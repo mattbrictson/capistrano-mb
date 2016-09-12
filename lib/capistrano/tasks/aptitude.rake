@@ -57,8 +57,10 @@ namespace :mb do
 
     desc "Install package needed for apt-add-repository on 14.04"
     task :install_software_properties do
-      unless _already_installed?("software-properties-common")
-        _install("software-properties-common")
+      privileged_on roles(:all) do |host|
+        unless _already_installed?("software-properties-common")
+          _install("software-properties-common")
+        end
       end
     end
 
