@@ -32,6 +32,9 @@ namespace :mb do
 
     desc "restart sidekiq"
     task :restart do
+      # Re-enable the "stop" task, just in case we called it once already
+      # (as would happen during deploy:migrate_and_restart).
+      Rake::Task["mb:sidekiq:stop"].reenable
       invoke "mb:sidekiq:stop"
       invoke "mb:sidekiq:start"
     end

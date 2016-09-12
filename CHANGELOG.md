@@ -4,6 +4,7 @@
 * Ensure `software-properties-common` package is installed during `provision:14_04` so that `apt-add-repository` works.
 * Don't echo dotenv values for keys with `pepper` in the name.
 * Add `ntp` to the list of packages installed on all server roles.
+* Fix "Capistrano tasks may only be invoked once" warning when using `deploy:migrate_and_restart` with Sidekiq.
 
 ## [0.30.0][] (2016-08-30)
 
