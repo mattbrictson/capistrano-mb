@@ -1,6 +1,9 @@
 ## [Unreleased][]
 
 * Your contribution here!
+
+## [0.31.0][] (2016-10-14)
+
 * Ensure `software-properties-common` package is installed during `provision:14_04` so that `apt-add-repository` works.
 * Don't echo dotenv values for keys with `pepper` in the name.
 * Add `ntp` to the list of packages installed on all server roles.
@@ -185,7 +188,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.30.0...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.31.0...HEAD
+[0.31.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.30.0...v0.31.0
 [0.30.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.29.0...v0.30.0
 [0.29.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.27.0...v0.28.0
