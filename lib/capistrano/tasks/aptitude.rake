@@ -75,7 +75,7 @@ namespace :mb do
       execute :sudo, "apt-add-repository", "-y '#{repo}'"
 
       if (key = options.fetch(:key, nil))
-        execute "wget --quiet -O - #{key} | sudo apt-key add -"
+        execute "wget --prefer-family=IPv4 --quiet -O - #{key} | sudo apt-key add -"
       end
     end
 

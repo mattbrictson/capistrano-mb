@@ -2,6 +2,7 @@
 
 * Your contribution here!
 * Add [immutable cache-control header](https://code.facebook.com/posts/557147474482256) to further boost performance of static assets
+* Prefer IPv4 when fetching apt repo keys
 
 ## [0.31.0][] (2016-10-14)
 
