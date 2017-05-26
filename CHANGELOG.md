@@ -1,6 +1,9 @@
 ## [Unreleased][]
 
 * Your contribution here!
+
+## [0.32.0][] (2017-05-26)
+
 * Add [immutable cache-control header](https://code.facebook.com/posts/557147474482256) to further boost performance of static assets
 * Prefer IPv4 when fetching apt repo keys
 
@@ -190,7 +193,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.31.0...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.32.0...HEAD
+[0.32.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.31.0...v0.32.0
 [0.31.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.30.0...v0.31.0
 [0.30.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.29.0...v0.30.0
 [0.29.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.28.0...v0.29.0
