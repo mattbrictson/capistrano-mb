@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* Remove the deprecated `fiftyfive` compatibility layer
 
 ## [0.32.0][] (2017-05-26)
 
