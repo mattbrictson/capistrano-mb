@@ -1,5 +1,5 @@
 mb_recipe :unicorn do
-  during :provision, %w(init_d config_rb)
+  during :provision, %w(systemd config_rb)
   during "deploy:start", "start"
   during "deploy:stop", "stop"
   during "deploy:restart", "restart"
@@ -8,18 +8,28 @@ end
 
 namespace :mb do
   namespace :unicorn do
-    desc "Install service script for unicorn"
-    task :init_d do
+    desc "Install unicorn systemd config"
+    task :systemd do
       privileged_on roles(:app) do |host, user|
         unicorn_user = fetch(:mb_unicorn_user) || user
 
-        template "unicorn_init.erb",
-                 "/etc/init.d/unicorn_#{application_basename}",
+        template "unicorn.service.erb",
+                 "/etc/systemd/system/unicorn_#{application_basename}.service",
                  :mode => "a+rx",
                  :binding => binding,
                  :sudo => true
 
-        execute "sudo update-rc.d -f unicorn_#{application_basename} defaults"
+        execute :sudo, "systemctl daemon-reload"
+        execute :sudo, "systemctl enable unicorn_#{application_basename}.service"
+
+        unless test(:sudo, "grep -qs unicorn_#{application_basename}.service /etc/sudoers.d/#{user}")
+          execute :sudo, "touch -f /etc/sudoers.d/#{user}"
+          execute :sudo, "chmod u+w /etc/sudoers.d/#{user}"
+          execute :sudo, "echo '#{user} ALL=NOPASSWD: /bin/systemctl start unicorn_#{application_basename}.service' >> /etc/sudoers.d/#{user}"
+          execute :sudo, "echo '#{user} ALL=NOPASSWD: /bin/systemctl stop unicorn_#{application_basename}.service' >> /etc/sudoers.d/#{user}"
+          execute :sudo, "echo '#{user} ALL=NOPASSWD: /bin/systemctl restart unicorn_#{application_basename}.service' >> /etc/sudoers.d/#{user}"
+          execute :sudo, "chmod 440 /etc/sudoers.d/#{user}"
+        end
       end
     end
 
@@ -34,7 +44,7 @@ namespace :mb do
       desc "#{command} unicorn"
       task command do
         on roles(:app) do
-          execute "service unicorn_#{application_basename} #{command}"
+          execute :sudo, "systemctl #{command} unicorn_#{application_basename}.service"
         end
       end
     end

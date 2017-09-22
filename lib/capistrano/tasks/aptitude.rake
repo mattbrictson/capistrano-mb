@@ -1,23 +1,30 @@
 mb_recipe :aptitude do
-  during :provision, %w(upgrade install)
-  before "provision:14_04", "mb:aptitude:install_software_properties"
-  before "provision:14_04", "mb:aptitude:install_postgres_repo"
-  before "provision:14_04", "mb:aptitude:change_postgres_packages"
+  during :provision, %w(check upgrade install)
 end
 
 namespace :mb do
   namespace :aptitude do
-
-    desc "Run `aptitude update` and then run `aptitude safe-upgrade`"
-    task :upgrade do
+    desc "Verify server is Ubuntu 16.04"
+    task :check do
       privileged_on roles(:all) do |host|
-        _update
-        _safe_upgrade
+        version = capture(:sudo, "lsb_release -a")[/^Release:\s+(\S+)$/, 1]
+        next if version == "16.04"
+
+        raise "Ubuntu version #{version || "unknown"} is not supported by "\
+              "capistrano-mb. Only Ubuntu 16.04 is supported. Downgrade "\
+              "capistrano-mb if you need to use an older version of Ubuntu."
       end
     end
 
+    desc "Run `apt update` and then run `apt upgrade`"
+    task :upgrade do
+      privileged_on roles(:all) do |host|
+        _update
+        _upgrade
+      end
+    end
 
-    desc "Run `aptitude install` for packages required by the roles of "\
+    desc "Run `apt install` for packages required by the roles of "\
          "each server."
     task :install do
       privileged_on roles(:all) do |host|
@@ -37,69 +44,37 @@ namespace :mb do
       end
     end
 
-    desc "Add the official apt repository for PostgreSQL"
-    task :install_postgres_repo do
-      privileged_on roles(:all) do |host|
-        _add_repository(
-          "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main",
-          :key => "https://www.postgresql.org/media/keys/ACCC4CF8.asc")
-      end
-    end
-
-    desc "Change 12.04 PostgreSQL package requirements to 14.04 versions"
-    task :change_postgres_packages do
-      packages = fetch(:mb_aptitude_packages, {})
-      packages = Hash[packages.map do |key, value|
-        [key.sub(/@ppa:pitti\/postgresql$/, ""), value]
-      end]
-      set(:mb_aptitude_packages, packages)
-    end
-
-    desc "Install package needed for apt-add-repository on 14.04"
-    task :install_software_properties do
-      privileged_on roles(:all) do |host|
-        unless _already_installed?("software-properties-common")
-          _install("software-properties-common")
-        end
-      end
-    end
-
     def _already_installed?(pkg)
       test(:sudo, "dpkg", "-s", pkg, "2>/dev/null", "|", :grep, "-q 'ok installed'")
     end
 
-    def _add_repository(repo, options={})
-      unless _already_installed?("python-software-properties")
-        _install("python-software-properties")
+    def _add_repository(repo)
+      unless _already_installed?("software-properties-common")
+        _install("software-properties-common")
       end
       execute :sudo, "apt-add-repository", "-y '#{repo}'"
-
-      if (key = options.fetch(:key, nil))
-        execute "wget --prefer-family=IPv4 --quiet -O - #{key} | sudo apt-key add -"
-      end
     end
 
     def _install(pkg)
-      with :debian_frontend => "noninteractive" do
-        execute :sudo, "aptitude", "-y -q install", pkg
-      end
+      execute :sudo, "DEBIAN_FRONTEND=noninteractive apt-get -y install", pkg
     end
 
     def _update
-      with :debian_frontend => "noninteractive" do
-        execute :sudo, "aptitude", "-q -q -y update"
-      end
+      execute :sudo, "DEBIAN_FRONTEND=noninteractive apt-get -y update"
     end
 
-    def _safe_upgrade
-      with :debian_frontend => "noninteractive" do
-        execute :sudo, "aptitude", "-q -q -y safe-upgrade"
-      end
+    def _upgrade
+      execute :sudo,
+              "DEBIAN_FRONTEND=noninteractive apt-get -y "\
+              '-o DPkg::options::="--force-confdef" '\
+              '-o DPkg::options::="--force-confold" '\
+              "upgrade"
     end
 
     def _each_package(host)
       return to_enum(:_each_package, host) unless block_given?
       hostname = host.hostname
+
       fetch(:mb_aptitude_packages).each do |package_spec, *role_list|
         next unless roles(*role_list.flatten).map(&:hostname).include?(hostname)
 

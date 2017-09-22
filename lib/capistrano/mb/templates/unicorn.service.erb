@@ -1,0 +1,21 @@
+[Unit]
+Description=unicorn for <%= fetch(:application) %>
+After=syslog.target network.target
+
+[Service]
+Environment=RAILS_ENV=<%= fetch(:rails_env) %>
+ExecReload=/usr/bin/kill -USR2 $MAINPID
+ExecStart=/bin/bash -lc 'exec bin/unicorn -c <%= fetch(:mb_unicorn_config) %> -E <%= fetch(:rails_env) %>'
+ExecStop=/usr/bin/kill -QUIT $MAINPID
+PIDFile=<%= fetch(:mb_unicorn_pid) %>
+Restart=always
+StandardError=syslog
+StandardInput=null
+StandardOutput=syslog
+SyslogIdentifier=<%= application_basename %>-unicorn
+TimeoutStopSec=5
+User=<%= unicorn_user %>
+WorkingDirectory=<%= current_path %>
+
+[Install]
+WantedBy=multi-user.target
