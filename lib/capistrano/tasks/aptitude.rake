@@ -1,12 +1,12 @@
 mb_recipe :aptitude do
-  during :provision, %w(check upgrade install)
+  during :provision, %w[check upgrade install]
 end
 
 namespace :mb do
   namespace :aptitude do
     desc "Verify server is Ubuntu 16.04"
     task :check do
-      privileged_on roles(:all) do |host|
+      privileged_on roles(:all) do
         version = capture(:sudo, "lsb_release -a")[/^Release:\s+(\S+)$/, 1]
         next if version == "16.04"
 
@@ -18,7 +18,7 @@ namespace :mb do
 
     desc "Run `apt update` and then run `apt upgrade`"
     task :upgrade do
-      privileged_on roles(:all) do |host|
+      privileged_on roles(:all) do
         _update
         _upgrade
       end
@@ -45,7 +45,9 @@ namespace :mb do
     end
 
     def _already_installed?(pkg)
-      test(:sudo, "dpkg", "-s", pkg, "2>/dev/null", "|", :grep, "-q 'ok installed'")
+      test(:sudo,
+           "dpkg", "-s", pkg,
+           "2>/dev/null", "|", :grep, "-q 'ok installed'")
     end
 
     def _add_repository(repo)
