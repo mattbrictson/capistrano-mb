@@ -5,6 +5,7 @@
 * Drop compatibility with older Ubuntu releases; now only Ubuntu 16.04 is supported via a single `provision` task
 * Remove dependencies on `ppa:pitti` and `ppa:chris-lea` for postgres and node.js, respectively; use the official Ubuntu releases instead
 * Replace init_d scripts with systemd configs
+* Completely remove delayed_job support
 
 ## [0.32.0][] (2017-05-26)
 

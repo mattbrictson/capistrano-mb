@@ -45,9 +45,6 @@ namespace :load do
     set :mb_bundler_gem_install_command,
         "gem install bundler --conservative --no-document"
 
-    set :mb_delayed_job_args, "-n 2"
-    set :mb_delayed_job_script, "bin/delayed_job"
-
     set :mb_dotenv_keys, %w(rails_secret_key_base postmark_api_key)
     set :mb_dotenv_filename, -> { ".env.#{fetch(:rails_env)}" }
 
