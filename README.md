@@ -34,7 +34,7 @@ Not quite to your liking? Consider forking the project to meet your needs.
 
 ## Roadmap
 
-I plan to continue maintaining this project for the benefit of deploying my own Rails apps for the foreseeable future. In practice, this means a new version of two per year. The behavior of capistrano-mb may change as I upgrade my apps to new versions of Rails. For example, at some point I might:
+I plan to continue maintaining this project for the benefit of deploying my own Rails apps for the foreseeable future. In practice, this means a new version or two per year. The behavior of capistrano-mb may change as I upgrade my apps to new versions of Rails. For example, at some point I might:
 
 * Replace Unicorn with Puma
 * Switch from dotenv to encrypted credentials
