@@ -1,6 +1,8 @@
 # capistrano-mb
 
-[![Gem Version](https://badge.fury.io/rb/capistrano-mb.svg)](http://badge.fury.io/rb/capistrano-mb)
+**An opinionated Capistrano task library for deploying Rails apps from scratch on Ubuntu 16.04 LTS.**
+
+[![Gem Version](https://badge.fury.io/rb/capistrano-mb.svg)](https://rubygems.org/gems/capistrano-mb)
 
 Capistrano is great for deploying Rails applications, but what about all the prerequisites, like Nginx and PostgreSQL? Do you have a firewall configured on your VPS? Have you installed the latest OS security updates? Is HTTPS working right?
 
@@ -17,9 +19,9 @@ The capistrano-mb gem adds a `cap <stage> provision` task to Capistrano that tak
 * Install `rbenv` and use `ruby-build` to compile the version of Ruby required by your app (by inspecting your `.ruby-version` file)
 * And more!
 
-The gem is named "capistrano-mb" because it is prescribes my ([@mattbrictson](https://github.com/mattbrictson)) personal preferences for automating deployments of Rails projects. I'm a freelance developer juggling lots of Rails codebases, so its important for me to have a good, consistent server configuration. You'll notice that capistrano-mb is opinionated and strictly uses the following stack:
+The gem is named "capistrano-mb" because it is prescribes my ([@mattbrictson](https://github.com/mattbrictson)) personal preferences for automating deployments of Rails projects. I've worked several years as a freelance developer juggling lots of Rails codebases, so its important for me to have a good, consistent server configuration. You'll notice that capistrano-mb is opinionated and strictly uses the following stack:
 
-* Ubuntu 14.04 LTS
+* Ubuntu 16.04 LTS
 * PostgreSQL
 * Unicorn
 * Nginx
@@ -30,14 +32,24 @@ In addition, capistrano-mb changes many of Capistrano's defaults, including the 
 
 Not quite to your liking? Consider forking the project to meet your needs.
 
+## Roadmap
+
+I plan to continue maintaining this project for the benefit of deploying my own Rails apps for the foreseeable future. In practice, this means a new version of two per year. The behavior of capistrano-mb may change as I upgrade my apps to new versions of Rails. For example, at some point I might:
+
+* Replace Unicorn with Puma
+* Switch from dotenv to encrypted credentials
+* Add Let's Encrypt
+* Use a more robust database backup solution
+
+*Future changes in capistrano-mb are not guaranteed to have graceful migration paths, so I recommend pinning your Gemfile dependency to a specific version and upgrading with extreme care.*
 
 ## Quick start
 
 Please note that this project requires **Capistrano 3.x**, which is a complete rewrite of Capistrano 2.x. The two major versions are not compatible.
 
-### 1. Purchase an Ubuntu 14.04 VPS
+### 1. Purchase an Ubuntu 16.04 VPS
 
-To use capistrano-mb, you'll need a clean Ubuntu server to deploy to. The only special requirement is that your public SSH key must be installed on the server for the `root` user.
+To use capistrano-mb, you'll need a clean **Ubuntu 16.04** server to deploy to. The only special requirement is that your public SSH key must be installed on the server for the `root` user.
 
 Test that you can SSH to the server as `root` without being prompted for a password. If that works, capistrano-mb can take care of the rest. You're ready to proceed!
 
@@ -46,10 +58,10 @@ Test that you can SSH to the server as `root` without being prompted for a passw
 capistrano-mb needs to know the version of Ruby that your app requires, so that it can install Ruby during the provisioning process. Place a `.ruby-version` file in the root of your project containing the desired version, like this:
 
 ```
-2.2.3
+2.5.0
 ```
 
-*If you are using `rbenv`, just run `rbenv local 2.2.3` and it will create this file for you.*
+*If you are using `rbenv`, just run `rbenv local 2.5.0` and it will create this file for you.*
 
 ### 3. Gemfile
 
@@ -67,15 +79,15 @@ Then for the capistrano-mb tools themselves, add these gems to the development g
 group :development do
   gem "capistrano-bundler", :require => false
   gem "capistrano-rails", :require => false
-  gem "capistrano", "~> 3.4.0", :require => false
-  gem "capistrano-mb", :require => false
+  gem "capistrano", "~> 3.10", :require => false
+  gem "capistrano-mb", "~> 0.33.0" :require => false
 end
 ```
 
 And then execute:
 
 ```
-$ bundle
+$ bundle install
 ```
 
 ### 4. cap install
@@ -83,7 +95,7 @@ $ bundle
 If your project doesn't yet have a `Capfile`, run `cap install` with the list of desired stages (environments). For simplicity, this installation guide will assume a single production stage:
 
 ```
-cap install STAGES=production
+bundle exec cap install STAGES=production
 ```
 
 ### 5. Capfile
@@ -112,14 +124,14 @@ Modify `config/deploy/production.rb` to specify the IP address of your productio
 ```ruby
 server "my.production.ip",
        :user => "deployer",
-       :roles => %w(app backup cron db web)
+       :roles => %w[app backup cron db web]
 ```
 
 *Note that you must include the `backup` and `cron` roles if you want to make use of capistrano-mb's database backups and crontab features.*
 
 ### 8. secrets.yml
 
-By default, Rails 4.2 apps have a `config/secrets.yml` file that specifies the Rails secret key. capistrano-mb configures dotenv to provide this secret in a `RAILS_SECRET_KEY_BASE` environment variable. You'll therefore need to modify `secrets.yml` as follows:
+Your Rails apps may have a `config/secrets.yml` file that specifies the Rails secret key. capistrano-mb configures dotenv to provide this secret in a `RAILS_SECRET_KEY_BASE` environment variable. You'll therefore need to modify `secrets.yml` as follows:
 
 ```ruby
 production:
@@ -128,10 +140,10 @@ production:
 
 ### 9. Provision and deploy!
 
-Run capistrano-mb's `provision:14_04` task (named for Ubuntu 14.04). This will ask you a few questions, install Ruby, PostgreSQL, Nginx, etc., and set everything up. The entire process takes about 10 minutes (mostly due to compiling Ruby from source).
+Run capistrano-mb's `provision` task. This will ask you a few questions, install Ruby, PostgreSQL, Nginx, etc., and set everything up. The entire process takes about 10 minutes (mostly due to compiling Ruby from source).
 
 ```
-bundle exec cap production provision:14_04
+bundle exec cap production provision
 ```
 
 Once that's done, your app is now ready to deploy!
@@ -151,8 +163,9 @@ Most of the capistrano-mb recipes are designed to run automatically as part of `
 The following list will suffice for most out-of-the-box Rails apps. The order of the list is not important.
 
 ```ruby
-set :mb_recipes, %w(
+set :mb_recipes, %w[
   aptitude
+  bundler
   crontab
   dotenv
   logrotate
@@ -166,7 +179,7 @@ set :mb_recipes, %w(
   unicorn
   user
   version
-)
+]
 ```
 
 Even if you don't include a recipe in the auto-run list, you can still invoke the tasks of those recipes manually at your discretion. Run `bundle exec cap -T` to see the full list of tasks.
@@ -189,9 +202,9 @@ Check out my [rails-template][] project, which generates Rails applications with
 
 ## History
 
-This gem used to be called capistrano-fiftyfive, because it was initially built by [55 Minutes](http://55minutes.com) to automate its Rails deployments. I have since taken over ownership of the gem and renamed it to capistrano-mb to avoid any confusion.
+This gem used to be called `capistrano-fiftyfive`. If you are upgrading from capistrano-fiftyfive, refer to the [CHANGELOG entry for v0.22.0](CHANGELOG.md#0220-2015-06-22) for migration instructions.
 
-If you are upgrading from `capistrano-fiftyfive`, refer to the [CHANGELOG entry for v0.22.0](CHANGELOG.md#0220-2015-06-22) for migration instructions.
+As of 0.33.0, capistrano-mb no longer supports Ubuntu 12.04 or 14.04. If your server runs one of these older versions, use [capistrano-mb 0.32.0](https://github.com/mattbrictson/capistrano-mb/tree/v0.32.0).
 
 ## Contributing
 
