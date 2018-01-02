@@ -1,4 +1,4 @@
-Copyright (c) 2016 Matt Brictson
+Copyright (c) 2018 Matt Brictson
 
 MIT License
 
