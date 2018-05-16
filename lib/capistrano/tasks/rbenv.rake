@@ -74,8 +74,6 @@ namespace :mb do
           template("rbenv_bashrc", "/tmp/rbenvrc")
           execute :cat, "/tmp/rbenvrc ~/.bashrc > /tmp/bashrc"
           execute :mv, "/tmp/bashrc ~/.bashrc"
-          execute %q{export PATH="$HOME/.rbenv/bin:$PATH"}
-          execute %q{eval "$(rbenv init -)"}
         end
       end
     end

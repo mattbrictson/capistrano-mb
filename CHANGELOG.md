@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* Remove unnecessary steps from `mb:rbenv:modify_bashrc`
 
 ## [0.33.0][] (2017-12-29)
 
