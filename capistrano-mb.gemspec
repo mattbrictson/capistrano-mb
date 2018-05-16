@@ -11,8 +11,8 @@ Gem::Specification.new do |spec|
   spec.description   = \
     "Production-ready provisioning and deployment recipes for Rails 4 and "\
     "Rails 5 stacks. Installs and configures Ruby, Nginx, Unicorn, "\
-    "PostgreSQL, dotenv, and more onto Ubuntu 16.04 LTS using Capistrano."
-  spec.summary       = "Deploy Rails apps from scratch on Ubuntu 16.04 LTS"
+    "PostgreSQL, dotenv, and more onto Ubuntu using Capistrano."
+  spec.summary       = "Deploy Rails apps from scratch on Ubuntu"
   spec.homepage      = "https://github.com/mattbrictson/capistrano-mb"
   spec.license       = "MIT"
 

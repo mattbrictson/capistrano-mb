@@ -1,6 +1,6 @@
 # capistrano-mb
 
-**An opinionated Capistrano task library for deploying Rails apps from scratch on Ubuntu 16.04 LTS.**
+**An opinionated Capistrano task library for deploying Rails apps from scratch on Ubuntu 16.04 or 18.04 LTS.**
 
 [![Gem Version](https://badge.fury.io/rb/capistrano-mb.svg)](https://rubygems.org/gems/capistrano-mb)
 
@@ -21,7 +21,7 @@ The capistrano-mb gem adds a `cap <stage> provision` task to Capistrano that tak
 
 The gem is named "capistrano-mb" because it is prescribes my ([@mattbrictson](https://github.com/mattbrictson)) personal preferences for automating deployments of Rails projects. I've worked several years as a freelance developer juggling lots of Rails codebases, so its important for me to have a good, consistent server configuration. You'll notice that capistrano-mb is opinionated and strictly uses the following stack:
 
-* Ubuntu 16.04 LTS
+* Ubuntu 16.04 or 18.04 LTS
 * PostgreSQL
 * Unicorn
 * Nginx
@@ -47,9 +47,9 @@ I plan to continue maintaining this project for the benefit of deploying my own 
 
 Please note that this project requires **Capistrano 3.x**, which is a complete rewrite of Capistrano 2.x. The two major versions are not compatible.
 
-### 1. Purchase an Ubuntu 16.04 VPS
+### 1. Purchase an Ubuntu 16.04 or 18.04 VPS
 
-To use capistrano-mb, you'll need a clean **Ubuntu 16.04** server to deploy to. The only special requirement is that your public SSH key must be installed on the server for the `root` user.
+To use capistrano-mb, you'll need a clean **Ubuntu 16.04 or 18.04** server to deploy to. The only special requirement is that your public SSH key must be installed on the server for the `root` user.
 
 Test that you can SSH to the server as `root` without being prompted for a password. If that works, capistrano-mb can take care of the rest. You're ready to proceed!
 

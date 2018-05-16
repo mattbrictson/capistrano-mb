@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* Ubuntu 18.04 LTS is now supported
 * Remove unnecessary steps from `mb:rbenv:modify_bashrc`
 
 ## [0.33.0][] (2017-12-29)

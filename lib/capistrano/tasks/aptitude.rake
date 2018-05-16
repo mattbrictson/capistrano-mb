@@ -4,15 +4,16 @@ end
 
 namespace :mb do
   namespace :aptitude do
-    desc "Verify server is Ubuntu 16.04"
+    desc "Verify server is Ubuntu 16.04 or 18.04"
     task :check do
       privileged_on roles(:all) do
         version = capture(:sudo, "lsb_release -a")[/^Release:\s+(\S+)$/, 1]
-        next if version == "16.04"
+        next if %w[16.04 18.04].include?(version)
 
         raise "Ubuntu version #{version || "unknown"} is not supported by "\
-              "capistrano-mb. Only Ubuntu 16.04 is supported. Downgrade "\
-              "capistrano-mb if you need to use an older version of Ubuntu."
+              "capistrano-mb. Only Ubuntu 16.04 and 18.04 are supported. "\
+              "Downgrade capistrano-mb if you need to use an older version of "\
+              "Ubuntu."
       end
     end
 
