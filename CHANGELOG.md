@@ -3,6 +3,7 @@
 * Your contribution here!
 * Ubuntu 18.04 LTS is now supported
 * Remove unnecessary steps from `mb:rbenv:modify_bashrc`
+* Remove defunct `provision:12_04` and `provision:14_04` tasks
 
 ## [0.33.0][] (2017-12-29)
 
