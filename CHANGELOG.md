@@ -1,6 +1,9 @@
 ## [Unreleased][]
 
 * Your contribution here!
+
+## [0.34.0][] (2018-05-20)
+
 * Ubuntu 18.04 LTS is now supported
 * Remove unnecessary steps from `mb:rbenv:modify_bashrc`
 * Remove defunct `provision:12_04` and `provision:14_04` tasks
@@ -204,7 +207,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.33.0...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.34.0...HEAD
+[0.34.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.33.0...v0.34.0
 [0.33.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.32.0...v0.33.0
 [0.32.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.31.0...v0.32.0
 [0.31.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.30.0...v0.31.0
