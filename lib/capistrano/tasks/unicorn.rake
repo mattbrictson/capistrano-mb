@@ -25,9 +25,9 @@ namespace :mb do
         unless test(:sudo, "grep -qs unicorn_#{application_basename}.service /etc/sudoers.d/#{user}")
           execute :sudo, "touch -f /etc/sudoers.d/#{user}"
           execute :sudo, "chmod u+w /etc/sudoers.d/#{user}"
-          execute :sudo, "echo '#{user} ALL=NOPASSWD: /bin/systemctl start unicorn_#{application_basename}.service' >> /etc/sudoers.d/#{user}"
-          execute :sudo, "echo '#{user} ALL=NOPASSWD: /bin/systemctl stop unicorn_#{application_basename}.service' >> /etc/sudoers.d/#{user}"
-          execute :sudo, "echo '#{user} ALL=NOPASSWD: /bin/systemctl restart unicorn_#{application_basename}.service' >> /etc/sudoers.d/#{user}"
+          execute :sudo, "echo '#{user} ALL=NOPASSWD: /bin/systemctl start unicorn_#{application_basename}.service' | sudo tee -a /etc/sudoers.d/#{user}"
+          execute :sudo, "echo '#{user} ALL=NOPASSWD: /bin/systemctl stop unicorn_#{application_basename}.service' | sudo tee -a /etc/sudoers.d/#{user}"
+          execute :sudo, "echo '#{user} ALL=NOPASSWD: /bin/systemctl restart unicorn_#{application_basename}.service' | sudo tee -a /etc/sudoers.d/#{user}"
           execute :sudo, "chmod 440 /etc/sudoers.d/#{user}"
         end
       end
