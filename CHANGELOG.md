@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* [#18](https://github.com/mattbrictson/capistrano-mb/pull/18): Use `tee` to fix a problem where certain provisioning steps would fail for a non-root user
 
 ## [0.34.0][] (2018-05-20)
 
