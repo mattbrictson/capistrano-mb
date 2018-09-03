@@ -1,6 +1,7 @@
 ## [Unreleased][]
 
 * Your contribution here!
+* Update x-sendfile configuration so that it works with Sidekiq's assets
 
 ## [0.34.1][] (2018-07-08)
 
