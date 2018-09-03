@@ -2,6 +2,7 @@
 
 * Your contribution here!
 * Update x-sendfile configuration so that it works with Sidekiq's assets
+* Move `dotenv:update` earlier in the deploy process so that new settings can be configured prior to the Rails app loading via `assets:precompile` or `db:migrate`
 
 ## [0.34.1][] (2018-07-08)
 

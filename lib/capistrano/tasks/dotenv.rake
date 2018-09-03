@@ -1,6 +1,6 @@
 mb_recipe :dotenv do
   during "provision", "update"
-  prior_to "deploy:publishing", "update"
+  during "deploy:updating", "update"
 end
 
 namespace :mb do
