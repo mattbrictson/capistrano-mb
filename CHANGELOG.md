@@ -1,6 +1,9 @@
 ## [Unreleased][]
 
 * Your contribution here!
+
+## [0.35.0][] (2018-09-03)
+
 * Update x-sendfile configuration so that it works with Sidekiq's assets
 * Move `dotenv:update` earlier in the deploy process so that new settings can be configured prior to the Rails app loading via `assets:precompile` or `db:migrate`
 
@@ -213,7 +216,8 @@ Flush console output after each line is printed. This allows deployment progress
 
 Initial Rubygems release!
 
-[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.34.1...HEAD
+[Unreleased]: https://github.com/mattbrictson/capistrano-mb/compare/v0.35.0...HEAD
+[0.35.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.34.1...v0.35.0
 [0.34.1]: https://github.com/mattbrictson/capistrano-mb/compare/v0.34.0...v0.34.1
 [0.34.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.33.0...v0.34.0
 [0.33.0]: https://github.com/mattbrictson/capistrano-mb/compare/v0.32.0...v0.33.0
