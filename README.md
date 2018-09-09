@@ -80,7 +80,7 @@ group :development do
   gem "capistrano-bundler", :require => false
   gem "capistrano-rails", :require => false
   gem "capistrano", "~> 3.10", :require => false
-  gem "capistrano-mb", "~> 0.35.0" :require => false
+  gem "capistrano-mb", "~> 0.35.0", :require => false
 end
 ```
 
