@@ -1,3 +1,7 @@
+⚠️ **This project is no longer maintained.** Thanks for your interest in capistrano-mb. I don't use this gem anymore and so I've chosen not to support it going forward. However, many of the lessons I've learned from building capistrano-mb I am now applying to a new project called [tomo](https://github.com/mattbrictson/tomo). Hope to see you there!
+
+---
+
 # capistrano-mb
 
 **An opinionated Capistrano task library for deploying Rails apps from scratch on Ubuntu 16.04 or 18.04 LTS.**
